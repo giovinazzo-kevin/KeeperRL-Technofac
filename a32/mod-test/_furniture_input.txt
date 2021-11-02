@@ -1,0 +1,34 @@
+"ELEC_SOURCE" {
+  name = "redstone torch"
+  viewId = { "torch" }
+  canBuildOutsideOfTerritory = true
+  tickType = Effect UpdateWires()
+}
+
+"PRESSURE_PLATE_INERT"
+{
+  name = "pressure plate (neutral)"
+  viewId = { "pressure_plate" }
+  tickType = Effect If(Health 0 100, PlaceFurniture "PRESSURE_PLATE_ACTIVE")
+  canBuildOutsideOfTerritory = true
+}
+
+"PRESSURE_PLATE_ACTIVE" inherit "PRESSURE_PLATE_INERT" 
+{ 
+  tickType = Effect If(Not Health 0 100, PlaceFurniture "PRESSURE_PLATE_INERT")
+}
+
+"LEVER_OFF"
+{
+  name = "lever (off)"
+  viewId = { "lever_off" }
+  usageType = UsageEffect "pull" PlaceFurniture "LEVER_ON"
+  canBuildOutsideOfTerritory = true
+}
+
+"LEVER_ON" inherit "LEVER_OFF" 
+{ 
+  name = "lever (on)"
+  viewId = { "lever_on" }
+  usageType = UsageEffect "pull" PlaceFurniture "LEVER_OFF"
+}

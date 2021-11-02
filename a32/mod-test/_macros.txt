@@ -1,0 +1,53 @@
+Def CardinalNeighbors(Cont)
+  Chain { 
+    Write0("b1") Write0("b2") Write0("b3") Write0("b4") 
+    Area 1 Chain {
+      # 4-bit binary counter
+      Inc("b1", "b2", Inc("b3", "b4", Write1("_carry")))
+      0x2() IfElse(Eq("b1", "b2", "b3", "b4"), Cont,
+        0x4() IfElse(Eq("b1", "b2", "b3", "b4"), Cont,
+          0x6() IfElse(Eq("b1", "b2", "b3", "b4"), Cont,
+            0x8() If(Eq("b1", "b2", "b3", "b4"), Cont))))
+    }
+  }
+End
+
+Def PowerSource()
+  Or { 
+    FurnitureType "ELEC_SOURCE" 
+    FurnitureType "PRESSURE_PLATE_ACTIVE" 
+    FurnitureType "LEVER_ON" 
+    FurnitureType "WIRE_LIVE" 
+  }
+End
+
+Def AnyCardinalNeighbor(Predicate, Match, Fail)
+  Chain {
+    Write0("any")
+    CardinalNeighbors(If(And { Predicate Is0("any") }, Write1("any")))
+    IfElse(Is1("any"), Match, Fail)
+  }
+End
+
+Def UpdateWires()
+  Chain {
+    IfElse(PowerSource(), Write1("_powerSource"), Write0("_powerSource"))
+    # Every electrical item is responsible for updating its left and top neighbor.
+    CardinalNeighbors(
+      IfElse(Is1("_powerSource"), {
+        If(FurnitureType "WIRE", PlaceFurniture "WIRE_LIVE")
+      },
+        AnyCardinalNeighbor(PowerSource(), {}, {
+          If(FurnitureType "WIRE_LIVE", PlaceFurniture "WIRE")
+        })
+      )
+    )
+  }
+End
+
+Def Powered(Body, Else)
+  Chain {
+    UpdateWires()
+    AnyCardinalNeighbor(PowerSource(), Body, Else)
+  }
+End

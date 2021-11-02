@@ -1,0 +1,35 @@
+"crafting" modify append {
+    { Furniture {{ "snta_capsule_maker" }     "WOOD" 0 }                    "Capsule Maker"         "Design" }
+    { Furniture {{ "snta_resource_chest" }     "WOOD" 0 }                    "Resource Chest"         "Design" }
+
+    { Furniture {{ "snta_belt_we_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    { Furniture {{ "snta_belt_ns_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    { Furniture {{ "snta_belt_ew_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    { Furniture {{ "snta_belt_sn_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+
+    # { Furniture {{ "snta_belt_es_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_en_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_sw_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_se_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_wn_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_ws_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_ne_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_nw_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+
+    { Furniture {{ "snta_belt_we_slag" }     "WOOD" 0 }                    "Conveyer Slag"         "Design" }
+    { Furniture {{ "snta_belt_ns_slag" }     "WOOD" 0 }                    "Conveyer Slag"         "Design" }
+    { Furniture {{ "snta_belt_ew_slag" }     "WOOD" 0 }                    "Conveyer Slag"         "Design" }
+    { Furniture {{ "snta_belt_sn_slag" }     "WOOD" 0 }                    "Conveyer Slag"         "Design" }
+
+    # { Furniture {{ "snta_belt_es_slag" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_en_slag" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_sw_slag" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_se_slag" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_wn_slag" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_ws_slag" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_ne_slag" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    # { Furniture {{ "snta_belt_nw_slag" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
+    { Furniture {{ "snta_conveyer_compressor" }     "WOOD" 0 }                    "Conveyer Compressor"         "Design" }
+    { Furniture {{ "snta_drill" }     "WOOD" 0 }                    "Drill"         "Design" }
+    { Furniture {{ "snta_furnace" }     "WOOD" 0 }                    "Furnace"         "Design" }
+}

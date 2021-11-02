@@ -1,0 +1,12 @@
+"WIRE" {
+  name = "wire"
+  viewId = { "wire" }
+  canBuildOutsideOfTerritory = true
+  tickType = Effect Powered(PlaceFurniture "WIRE_LIVE", {})
+}
+
+"WIRE_LIVE" inherit "WIRE" {
+  name = "wire (live)"
+  viewId = { "wire_live" }
+  tickType = Effect Powered({}, PlaceFurniture "WIRE")
+}

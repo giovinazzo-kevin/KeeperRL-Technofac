@@ -1,0 +1,100 @@
+Def Is0(X)
+  Not Flag X
+End
+
+Def Is1(X)
+  Flag X
+End
+
+Def Write0(X)
+  SetFlag X false
+End
+
+Def Write1(X)
+  SetFlag X true
+End
+
+Def GteBit(A, B)
+  Is1(A)
+End
+
+Def GtBit(A, B)
+  And { Is1(A) Is0(B) }
+End
+
+Def EqBit(A, B)
+  Or { And { Is0(A) Is0(B) } And { Is1(A) Is1(B) } }
+End
+
+Def LteBit(A, B)
+  Is0(A)
+End
+
+Def LtBit(A, B)
+  And { Is0(A) Is1(B) }
+End
+
+Def Copy(A, B)
+  if(Is1(A)){
+    Write1(B)
+  }
+  else(){
+    Write0(B)
+  }
+  endif()
+End
+
+Def IncBits(A, B, Cont)
+  if(Is0(A)) {
+    Write1(A)
+  }
+  else() {
+    Write0(A)
+    if(Is0(B)) {
+      Write1(B)
+    }
+    else() {
+      Write0(B)
+      Cont
+      Write0(B) Write0(A)
+    }
+    endif()
+  }
+  endif()
+End
+
+Def DecBits(A, B, Cont)
+  if(Is1(A)) {
+    Write0(A)
+  }
+  else() {
+    Write1(A)
+    if(Is1(B)) {
+      Write0(B)
+    }
+    else() {
+      Write1(B)
+      Cont
+    }
+    endif()
+  }
+  endif()
+End
+
+# Def AddBits(A, B, C, S, Carry)
+#   Chain {
+#     Write0(S)
+#     Write0(Carry)
+#     FirstSuccessful {
+#       Filter And { Is0(A) Is0(B) Is0(C) } {}
+#       Filter And { Is1(A) Is0(B) Is0(C) } Write1(S)
+#       Filter And { Is0(A) Is1(B) Is0(C) } Write1(S)
+#       Filter And { Is0(A) Is0(B) Is1(C) } Write1(S)
+#       Filter And { Is1(A) Is1(B) Is0(C) } Write1(Carry)
+#       Filter And { Is0(A) Is1(B) Is1(C) } Write1(Carry)
+#       Filter And { Is1(A) Is0(B) Is1(C) } Write1(Carry)
+#       Filter And { Is1(A) Is1(B) Is1(C) } Chain { Write1(Carry) Write1(S) }
+#     }
+#   }
+# End
+

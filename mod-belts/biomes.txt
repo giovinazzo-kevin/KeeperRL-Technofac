@@ -1,0 +1,60 @@
+
+"TAR_PIT" inherit "GRASSLAND"
+{
+  overrideMusic = DESERT
+  lakes = {
+    size = {20 50}
+    count = {7 11}
+  }
+  items = "desertItems"
+  itemCount = {7 12}
+  overrideWaterType = "TAR"
+  mountains = {
+    lowlandRatio = 0.20
+    hillRatio = 0.20
+    hill = "SAND"
+    grass = "MUD"
+    mountain = "MOUNTAIN"
+    mountainDeep = "MOUNTAIN2"
+    mountainFloor = "RED_SAND"
+  }
+  forests = {
+    {
+      ratio = 0.2
+      density = 0.025
+      onType = "MUD"
+      trees = "vegetationSwamp"
+    }
+    {
+      ratio = 0.4
+      density = 0.015
+      onType = "SAND"
+      trees = "vegetationDesert"
+    }
+  }
+  wildlife = {
+    count = { 6 12 }
+    all = {
+      1 "SNAKE"
+    }
+  }
+  darkKeeperEnemies = {
+    { id = "NOMAD_COTTAGE" count = { 3 5 } }
+    { id = "WIZARD_TOWER" probability = 0.1 }
+  }
+  whiteKeeperEnemies = {
+    { id = "NOMAD_COTTAGE" count = { 3 5 } }
+    { id = "WIZARD_TOWER" probability = 0.1 }
+  }
+  darkKeeperBaseEnemies = {
+    { id = "NOMAD_VILLAGE" }
+    { id = "ADOXIE_VAULT" }
+    { id = "BANDITS" }
+  }
+  whiteKeeperBaseEnemies = {
+    { id = "LIZARDMEN_SMALL" }
+    { id = "ADOXIE_VAULT" }
+    { id = "BANDITS" }
+  }
+  keeperBiome = { "pit" } "tar pit" 5
+}

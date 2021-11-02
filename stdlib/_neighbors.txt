@@ -1,0 +1,13 @@
+Def NthNeighbor(Index, Body)
+	0x0() cmp()
+	Index
+	Area 1 if(Not eq()) {
+		dec()
+		if(eq()) {
+      		Body
+		}
+    	endif()
+	}
+  	endif()
+End
+

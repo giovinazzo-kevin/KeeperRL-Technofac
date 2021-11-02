@@ -1,0 +1,567 @@
+Def Is0(X)
+  Not Flag X
+End
+
+Def Is1(X)
+  Flag X
+End
+
+Def Write0(X)
+  SetFlag X false
+End
+
+Def Write1(X)
+  SetFlag X true
+End
+
+Def GteBit(A, B)
+  Is1(A)
+End
+
+Def GtBit(A, B)
+  And { Is1(A) Is0(B) }
+End
+
+Def EqBit(A, B)
+  Or { And { Is0(A) Is0(B) } And { Is1(A) Is1(B) } }
+End
+
+Def LteBit(A, B)
+  Is0(A)
+End
+
+Def LtBit(A, B)
+  And { Is0(A) Is1(B) }
+End
+
+Def Copy(A, B)
+  if(Is1(A)){
+    Write1(B)
+  }
+  else(){
+    Write0(B)
+  }
+  endif()
+End
+
+Def IncBits(A, B, Cont)
+  if(Is0(A)) {
+    Write1(A)
+  }
+  else() {
+    Write0(A)
+    if(Is0(B)) {
+      Write1(B)
+    }
+    else() {
+      Write0(B)
+      Cont
+      Write0(B) Write0(A)
+    }
+    endif()
+  }
+  endif()
+End
+
+Def DecBits(A, B, Cont)
+  if(Is1(A)) {
+    Write0(A)
+  }
+  else() {
+    Write1(A)
+    if(Is1(B)) {
+      Write0(B)
+    }
+    else() {
+      Write1(B)
+      Cont
+    }
+    endif()
+  }
+  endif()
+End
+
+# Def AddBits(A, B, C, S, Carry)
+#   Chain {
+#     Write0(S)
+#     Write0(Carry)
+#     FirstSuccessful {
+#       Filter And { Is0(A) Is0(B) Is0(C) } {}
+#       Filter And { Is1(A) Is0(B) Is0(C) } Write1(S)
+#       Filter And { Is0(A) Is1(B) Is0(C) } Write1(S)
+#       Filter And { Is0(A) Is0(B) Is1(C) } Write1(S)
+#       Filter And { Is1(A) Is1(B) Is0(C) } Write1(Carry)
+#       Filter And { Is0(A) Is1(B) Is1(C) } Write1(Carry)
+#       Filter And { Is1(A) Is0(B) Is1(C) } Write1(Carry)
+#       Filter And { Is1(A) Is1(B) Is1(C) } Chain { Write1(Carry) Write1(S) }
+#     }
+#   }
+# End
+
+
+Def if(Cond)
+	FirstSuccessful {
+        Filter Cond Chain # <Body>
+End
+
+Def elseif(Cond) 
+        Filter Cond Chain # <Body>
+End
+
+Def else() 
+        Chain # <Body>
+End
+
+Def endif()
+    }
+End
+
+Def any(Iterator, Predicate) 
+	Write0("_TMP1")
+	Iterator if(And { Is0("_TMP1") Predicate }) {
+		Write1("_TMP1")
+	}
+	endif()
+End
+
+Def ifany(Iterator, Predicate)
+	any(Iterator, Predicate) if(Is1("_TMP1"))
+End
+
+Def elseifany(Iterator, Predicate)
+	any(Iterator, Predicate) elseif(Is1("_TMP1"))
+End
+
+Def all(Iterator, Predicate) 
+	Write1("_TMP1")
+	Iterator if(And { Is1("_TMP1") Not Predicate }) {
+		Write0("_TMP1")
+	}
+	endif()
+End
+
+Def ifall(Iterator, Predicate)
+	all(Iterator, Predicate) if(Is1("_TMP1"))
+End
+
+Def elseifall(Iterator, Predicate)
+	all(Iterator, Predicate) elseif(Is1("_TMP1"))
+End
+
+Def count(Iterator, Predicate) 
+	0x0()
+	Iterator if(Predicate) {
+		inc()
+	}
+	endif()
+End
+
+Def ifcount(Iterator, Cond, Match)
+	Match cmp()
+	count(Iterator, Predicate) if(eq())
+End
+
+Def elseifcount(Iterator, Cond, Match)
+	Match cmp()
+	count(Iterator, Predicate) elseif(eq())
+End
+
+Def while(Body)
+	CustomArea Filter Not eq() Chain {
+		Body
+		dec()
+End
+
+Def endwhile()
+	} { { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } }
+End
+
+
+Def 0x0() Chain { Write0("_SWP1") Write0("_SWP2") Write0("_SWP3") Write0("_SWP4") } End
+Def 0x1() Chain { Write1("_SWP1") Write0("_SWP2") Write0("_SWP3") Write0("_SWP4") } End
+Def 0x2() Chain { Write0("_SWP1") Write1("_SWP2") Write0("_SWP3") Write0("_SWP4") } End
+Def 0x3() Chain { Write1("_SWP1") Write1("_SWP2") Write0("_SWP3") Write0("_SWP4") } End
+Def 0x4() Chain { Write0("_SWP1") Write0("_SWP2") Write1("_SWP3") Write0("_SWP4") } End
+Def 0x5() Chain { Write1("_SWP1") Write0("_SWP2") Write1("_SWP3") Write0("_SWP4") } End
+Def 0x6() Chain { Write0("_SWP1") Write1("_SWP2") Write1("_SWP3") Write0("_SWP4") } End
+Def 0x7() Chain { Write1("_SWP1") Write1("_SWP2") Write1("_SWP3") Write0("_SWP4") } End
+Def 0x8() Chain { Write0("_SWP1") Write0("_SWP2") Write0("_SWP3") Write1("_SWP4") } End
+Def 0x9() Chain { Write1("_SWP1") Write0("_SWP2") Write0("_SWP3") Write1("_SWP4") } End
+Def 0xA() Chain { Write0("_SWP1") Write1("_SWP2") Write0("_SWP3") Write1("_SWP4") } End
+Def 0xB() Chain { Write1("_SWP1") Write1("_SWP2") Write0("_SWP3") Write1("_SWP4") } End
+Def 0xC() Chain { Write0("_SWP1") Write0("_SWP2") Write1("_SWP3") Write1("_SWP4") } End
+Def 0xD() Chain { Write1("_SWP1") Write0("_SWP2") Write1("_SWP3") Write1("_SWP4") } End
+Def 0xE() Chain { Write0("_SWP1") Write1("_SWP2") Write1("_SWP3") Write1("_SWP4") } End
+Def 0xF() Chain { Write1("_SWP1") Write1("_SWP2") Write1("_SWP3") Write1("_SWP4") } End
+
+Def cmp()
+  Chain { Copy("_SWP4", "_CMP4") Copy("_SWP3", "_CMP3") Copy("_SWP2", "_CMP2") Copy("_SWP1", "_CMP1") }
+End
+
+Def swp()
+  Chain { Copy("_CMP4", "_SWP4") Copy("_CMP3", "_SWP3") Copy("_CMP2", "_SWP2") Copy("_CMP1", "_SWP1") }
+End
+
+Def gt()
+  Or { GtBit("_SWP4", "_CMP4") GtBit("_SWP3", "_CMP3") GtBit("_SWP2", "_CMP2") GtBit("_SWP1", "_CMP1") }
+End
+
+Def gte()
+  Or { GteBit("_SWP4", "_CMP4") GteBit("_SWP3", "_CMP3") GteBit("_SWP2", "_CMP2") GteBit("_SWP1", "_CMP1") }
+End
+
+Def eq()
+  And { EqBit("_SWP4", "_CMP4") EqBit("_SWP3", "_CMP3") EqBit("_SWP2", "_CMP2") EqBit("_SWP1", "_CMP1") }
+End
+
+Def lt()
+  Or { LtBit("_SWP4", "_CMP4") LtBit("_SWP3", "_CMP3") LtBit("_SWP2", "_CMP2") LtBit("_SWP1", "_CMP1") }
+End
+
+Def lte()
+  Or { LteBit("_SWP4", "_CMP4") LteBit("_SWP3", "_CMP3") LteBit("_SWP2", "_CMP2") LteBit("_SWP1", "_CMP1") }
+End
+
+Def odd()
+  Is1("_CMP1")
+End
+
+Def even()
+  Is0("_CMP1")
+End
+
+Def inc()
+  IncBits("_SWP1", "_SWP2", IncBits("_SWP3", "_SWP4", {}))
+End
+
+Def dec()
+  DecBits("_SWP1", "_SWP2", DecBits("_SWP3", "_SWP4", {}))
+End
+
+
+Def NthNeighbor(Index, Body)
+	0x0() cmp()
+	Index
+	Area 1 if(Not eq()) {
+		dec()
+		if(eq()) {
+      		Body
+		}
+    	endif()
+	}
+  	endif()
+End
+
+
+"BELT_BASE" 
+{
+  name = "Base Conveyer"
+  canBuildOutsideOfTerritory = true
+  canSilentlyReplace = true
+  strength = 100
+  viewLayer = FLOOR
+}
+
+"snta_conveyer_compressor"
+{
+  name = "Conveyer Compressor"
+  viewId = { "snta_conveyer_compressor" }
+  blockMovement = true
+  usageTime = 5
+  canBuildOutsideOfTerritory = true
+  strength = 100
+}
+
+"snta_furnace"
+{
+  name = "Furnace"
+  viewId = { "snta_furnace" }
+  blockMovement = true
+  usageTime = 5
+  canBuildOutsideOfTerritory = true
+  strength = 100
+}
+
+"snta_capsule_maker"
+{
+  name = "Capsule maker"
+  viewId = { "snta_capsule_maker" }
+  blockMovement = true
+  usageTime = 5
+  canBuildOutsideOfTerritory = true
+  strength = 100
+}
+
+"snta_belt_ew_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (R->L)"
+  viewId = { "snta_belt_ew_empty" }
+  tickType = Effect Chain {
+    Write0("_FOUND")
+    NthNeighbor(0x4(), Chain {
+        Filter And { Is0("_FOUND") FurnitureType "snta_belt_ns_slag" } Chain {
+            Write1("_FOUND")
+            PlaceFurniture "snta_belt_ns_empty"
+        }
+    })
+    if(Is1("_FOUND")) {
+      PlaceFurniture "snta_belt_ew_slag"
+    }
+    endif()
+  }
+}
+
+"snta_belt_ew_empty_inactive" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (R->L)"
+  viewId = { "snta_belt_ew_empty" }
+  tickType = Effect PlaceFurniture "snta_belt_ew_empty"
+}
+
+"snta_belt_ew_slag" inherit "BELT_BASE"
+{
+  lightEmission = 3.2
+  name = "Slag Conveyer (R->L)"
+  viewId = { "snta_belt_ew_slag" }
+  tickType = Effect Chain {
+    Write0("_FOUND")
+    NthNeighbor(0x2(), Chain {
+      Filter And { Is0("_FOUND") FurnitureType "snta_belt_ew_empty" } Chain {
+        Write1("_FOUND")
+        PlaceFurniture "snta_belt_ew_slag"
+      }
+      Filter And { Is0("_FOUND") FurnitureType "snta_belt_ns_empty" } Chain {
+        Write1("_FOUND")
+        PlaceFurniture "snta_belt_ns_slag"
+      }
+      Filter And { Is0("_FOUND") FurnitureType "snta_belt_sn_empty" } Chain {
+        Write1("_FOUND")
+        PlaceFurniture "snta_belt_sn_slag"
+      }
+    })
+    if(Is1("_FOUND")) {
+      PlaceFurniture "snta_belt_ew_empty_inactive"
+    } 
+    endif()
+  }
+}
+"snta_belt_ns_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (U->D)"
+  viewId = { "snta_belt_ns_empty" }
+  tickType = Effect Chain {
+    Write0("_FOUND")
+    NthNeighbor(0x4(), Chain {
+        Filter And { Is0("_FOUND") FurnitureType "snta_belt_ns_slag" } Chain {
+            Write1("_FOUND")
+            PlaceFurniture "snta_belt_ns_empty"
+        }
+    })
+    NthNeighbor(0x2(), Chain {
+        Filter And { Is0("_FOUND") FurnitureType "snta_belt_we_slag" } Chain {
+            Write1("_FOUND")
+            PlaceFurniture "snta_belt_we_empty"
+        }
+    })
+    if(Is1("_FOUND")) {
+      PlaceFurniture "snta_belt_ns_slag_inactive"
+    } 
+    endif()
+  }
+}
+
+"snta_belt_ns_slag_inactive" inherit "BELT_BASE"
+{
+  lightEmission = 3.2
+  name = "Slag Conveyer (U->D)"
+  viewId = { "snta_belt_ns_slag" }
+  tickType = Effect PlaceFurniture "snta_belt_ns_slag"
+}
+
+"snta_belt_ns_slag" inherit "BELT_BASE"
+{
+  lightEmission = 3.2
+  name = "Slag Conveyer (U->D)"
+  viewId = { "snta_belt_ns_slag" }
+}
+
+"snta_belt_sn_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (D->U)"
+  viewId = { "snta_belt_sn_empty" }
+  tickType = Effect Chain {
+    Write0("_FOUND")
+    NthNeighbor(0x2(), Chain {
+        Filter And { Is0("_FOUND") FurnitureType "snta_belt_we_slag" } Chain {
+            Write1("_FOUND")
+            PlaceFurniture "snta_belt_we_empty"
+        }
+    })
+    if(Is1("_FOUND")) {
+      PlaceFurniture "snta_belt_sn_slag"
+    } 
+    endif()
+  }
+}
+
+"snta_belt_sn_empty_inactive" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (D->U)"
+  viewId = { "snta_belt_sn_empty" }
+  tickType = Effect PlaceFurniture "snta_belt_sn_empty"
+}
+
+"snta_belt_sn_slag" inherit "BELT_BASE"
+{
+  lightEmission = 3.2
+  name = "Slag Conveyer (D->U)"
+  viewId = { "snta_belt_sn_slag" }
+  tickType = Effect Chain {
+    Write0("_FOUND")
+    NthNeighbor(0x4(), Chain {
+      Filter And { Is0("_FOUND") FurnitureType "snta_belt_sn_empty" } Chain {
+        Write1("_FOUND")
+        PlaceFurniture "snta_belt_sn_slag"
+      }
+      Filter And { Is0("_FOUND") FurnitureType "snta_belt_we_empty" } Chain {
+        Write1("_FOUND")
+        PlaceFurniture "snta_belt_we_slag"
+      }
+      Filter And { Is0("_FOUND") FurnitureType "snta_belt_ew_empty" } Chain {
+        Write1("_FOUND")
+        PlaceFurniture "snta_belt_ew_slag"
+      }
+    })
+    if(Is1("_FOUND")) {
+      PlaceFurniture "snta_belt_sn_empty_inactive"
+    } 
+    endif()
+  }
+}
+
+"snta_belt_we_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (L->R)"
+  viewId = { "snta_belt_we_empty" }
+  tickType = Effect Chain {
+    Write0("_FOUND")
+    NthNeighbor(0x2(), Chain {
+        Filter And { Is0("_FOUND") FurnitureType "snta_belt_we_slag" } Chain {
+            Write1("_FOUND")
+            PlaceFurniture "snta_belt_we_empty"
+        }
+    })
+    NthNeighbor(0x4(), Chain {
+        Filter And { Is0("_FOUND") FurnitureType "snta_belt_ns_slag" } Chain {
+            Write1("_FOUND")
+            PlaceFurniture "snta_belt_ns_empty"
+        }
+    })
+    if(Is1("_FOUND")) {
+      PlaceFurniture "snta_belt_we_slag_inactive"
+    } 
+    endif()
+  }
+}
+
+"snta_belt_we_slag_inactive" inherit "BELT_BASE"
+{
+  lightEmission = 3.2
+  name = "Slag Conveyer (L->R)"
+  viewId = { "snta_belt_we_slag" }
+  tickType = Effect PlaceFurniture "snta_belt_we_slag"
+}
+
+"snta_belt_we_slag" inherit "BELT_BASE"
+{
+  lightEmission = 3.2
+  name = "Slag Conveyer (L->R)"
+  viewId = { "snta_belt_we_slag" }
+}
+
+# Guarantees that each available direction is chosen randomly without altering throughput when there's fewer than 4 available directions
+Def Permutate(A, B, C, D)
+  ChooseRandom {
+    { A B C D }
+    { B C D A }
+    { C D A B }
+    { D A B C }
+  }
+End
+
+Def OverLiquid() 
+  Or { FurnitureType "WATER" FurnitureType "SHALLOW_WATER1" FurnitureType "SHALLOW_WATER2" FurnitureType "MAGMA" }
+End
+
+"snta_drill"
+{
+  name = "Drill"
+  viewId = { "snta_drill" }
+  builtOver = { "WATER" "SHALLOW_WATER1" "SHALLOW_WATER2" "MAGMA" }
+  blockMovement = true
+  canBuildOutsideOfTerritory = true
+  strength = 100
+  tickType = Effect Chain {
+    Write0("_EXT")
+    if(OverLiquid()) {
+      Chance 0.20 Chain {
+        Permutate(
+          NthNeighbor(0x8(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_we_empty" } Chain { Write1("_EXT") PlaceFurniture "snta_belt_we_slag" }),
+          NthNeighbor(0x2(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_ew_empty" } Chain { Write1("_EXT") PlaceFurniture "snta_belt_ew_slag" }),
+          NthNeighbor(0x6(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_ns_empty" } Chain { Write1("_EXT") PlaceFurniture "snta_belt_ns_slag" }),
+          NthNeighbor(0x4(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_sn_empty" } Chain { Write1("_EXT") PlaceFurniture "snta_belt_sn_slag" })
+        )
+        if(Is1("_EXT")) {
+          Chance 0.2500 EmitGas "FOG" 1
+          Area 1 Chance 0.0625 EmitGas "BLACK_SMOKE" 1
+        }
+        endif()
+      }
+    }
+    endif()
+  }
+}
+
+"snta_resource_chest"
+{
+  name = "Resource Chest"
+  viewId = { "snta_resource_chest" }
+  canBuildOutsideOfTerritory = true
+  strength = 100
+  tickType = Effect Chain {
+    0x0() Copy("_SWP2", "_CNT2") Copy("_SWP1", "_CNT1")
+    NthNeighbor(0x2(), FirstSuccessful {
+        Filter FurnitureType "snta_belt_we_slag" Chain {
+            IncBits("_CNT1", "_CNT2", {})
+            PlaceFurniture "snta_belt_we_empty"
+        }
+    })
+    NthNeighbor(0x4(), FirstSuccessful {
+        Filter FurnitureType "snta_belt_ns_slag" Chain {
+            IncBits("_CNT1", "_CNT2", {})
+            PlaceFurniture "snta_belt_ns_empty"
+        }
+    })
+    NthNeighbor(0x6(), FirstSuccessful {
+        Filter FurnitureType "snta_belt_sn_slag" Chain {
+            IncBits("_CNT1", "_CNT2", {})
+            RemoveFurniture "snta_belt_sn_slag"
+            PlaceFurniture "snta_belt_sn_empty"
+        }
+    })
+    NthNeighbor(0x8(), FirstSuccessful {
+        Filter FurnitureType "snta_belt_ew_slag" Chain {
+            IncBits("_CNT1", "_CNT2", {})
+            RemoveFurniture "snta_belt_ew_slag"
+            PlaceFurniture "snta_belt_ew_empty"
+        }
+    })
+    0x0() Copy("_CNT2", "_SWP2") Copy("_CNT1", "_SWP1")
+    while(DropItems {"GoldPiece"} {1}) endwhile()
+  }
+}
+

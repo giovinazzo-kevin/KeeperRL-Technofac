@@ -1,0 +1,46 @@
+# Guarantees that each available direction is chosen randomly without altering throughput when there's fewer than 4 available directions
+Def Permutate(A, B, C, D)
+  ChooseRandom {
+    { A B C D }
+    { B C D A }
+    { C D A B }
+    { D A B C }
+  }
+End
+
+Def OverLiquid() 
+  Or { FurnitureType "WATER" FurnitureType "SHALLOW_WATER1" FurnitureType "SHALLOW_WATER2" FurnitureType "MAGMA" }
+End
+
+"snta_drill"
+{
+  name = "Drill"
+  viewId = { "snta_drill" }
+  builtOver = { "WATER" "SHALLOW_WATER1" "SHALLOW_WATER2" "MAGMA" }
+  blockMovement = true
+  canBuildOutsideOfTerritory = true
+  strength = 100
+  tickType = Effect Chain {
+    Write0("_EXT")
+    if(OverLiquid()) {
+      Chance 0.20 Chain {
+        Permutate(
+          NthNeighbor(0x8(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_we_empty" } Chain { Write1("_EXT") PlaceFurniture "snta_belt_we_slag" }),
+          NthNeighbor(0x2(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_ew_empty" } Chain { Write1("_EXT") PlaceFurniture "snta_belt_ew_slag" }),
+          NthNeighbor(0x6(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_ns_empty" } Chain { Write1("_EXT") PlaceFurniture "snta_belt_ns_slag" }),
+          NthNeighbor(0x4(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_sn_empty" } Chain { Write1("_EXT") PlaceFurniture "snta_belt_sn_slag" })
+        )
+        if(Is1("_EXT")) {
+          Chance 0.2500 EmitGas "FOG" 1
+          Area 1 Chance 0.0625 EmitGas "BLACK_SMOKE" 1
+        }
+        endif()
+      }
+    }
+    endif()
+  }
+}

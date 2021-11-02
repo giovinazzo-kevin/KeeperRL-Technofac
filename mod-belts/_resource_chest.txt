@@ -1,0 +1,38 @@
+"snta_resource_chest"
+{
+  name = "Resource Chest"
+  viewId = { "snta_resource_chest" }
+  canBuildOutsideOfTerritory = true
+  strength = 100
+  tickType = Effect Chain {
+    0x0() Copy("_SWP2", "_CNT2") Copy("_SWP1", "_CNT1")
+    NthNeighbor(0x2(), FirstSuccessful {
+        Filter FurnitureType "snta_belt_we_slag" Chain {
+            IncBits("_CNT1", "_CNT2", {})
+            PlaceFurniture "snta_belt_we_empty"
+        }
+    })
+    NthNeighbor(0x4(), FirstSuccessful {
+        Filter FurnitureType "snta_belt_ns_slag" Chain {
+            IncBits("_CNT1", "_CNT2", {})
+            PlaceFurniture "snta_belt_ns_empty"
+        }
+    })
+    NthNeighbor(0x6(), FirstSuccessful {
+        Filter FurnitureType "snta_belt_sn_slag" Chain {
+            IncBits("_CNT1", "_CNT2", {})
+            RemoveFurniture "snta_belt_sn_slag"
+            PlaceFurniture "snta_belt_sn_empty"
+        }
+    })
+    NthNeighbor(0x8(), FirstSuccessful {
+        Filter FurnitureType "snta_belt_ew_slag" Chain {
+            IncBits("_CNT1", "_CNT2", {})
+            RemoveFurniture "snta_belt_ew_slag"
+            PlaceFurniture "snta_belt_ew_empty"
+        }
+    })
+    0x0() Copy("_CNT2", "_SWP2") Copy("_CNT1", "_SWP1")
+    while(DropItems {"GoldPiece"} {1}) endwhile()
+  }
+}

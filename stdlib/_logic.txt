@@ -1,0 +1,77 @@
+Def if(Cond)
+	FirstSuccessful {
+        Filter Cond Chain # <Body>
+End
+
+Def elseif(Cond) 
+        Filter Cond Chain # <Body>
+End
+
+Def else() 
+        Chain # <Body>
+End
+
+Def endif()
+    }
+End
+
+Def any(Iterator, Predicate) 
+	Write0("_TMP1")
+	Iterator if(And { Is0("_TMP1") Predicate }) {
+		Write1("_TMP1")
+	}
+	endif()
+End
+
+Def ifany(Iterator, Predicate)
+	any(Iterator, Predicate) if(Is1("_TMP1"))
+End
+
+Def elseifany(Iterator, Predicate)
+	any(Iterator, Predicate) elseif(Is1("_TMP1"))
+End
+
+Def all(Iterator, Predicate) 
+	Write1("_TMP1")
+	Iterator if(And { Is1("_TMP1") Not Predicate }) {
+		Write0("_TMP1")
+	}
+	endif()
+End
+
+Def ifall(Iterator, Predicate)
+	all(Iterator, Predicate) if(Is1("_TMP1"))
+End
+
+Def elseifall(Iterator, Predicate)
+	all(Iterator, Predicate) elseif(Is1("_TMP1"))
+End
+
+Def count(Iterator, Predicate) 
+	0x0()
+	Iterator if(Predicate) {
+		inc()
+	}
+	endif()
+End
+
+Def ifcount(Iterator, Cond, Match)
+	Match cmp()
+	count(Iterator, Predicate) if(eq())
+End
+
+Def elseifcount(Iterator, Cond, Match)
+	Match cmp()
+	count(Iterator, Predicate) elseif(eq())
+End
+
+Def while(Body)
+	CustomArea Filter Not eq() Chain {
+		Body
+		dec()
+End
+
+Def endwhile()
+	} { { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } }
+End
+
