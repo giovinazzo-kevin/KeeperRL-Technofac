@@ -2,7 +2,6 @@
 {
   name = "Base Conveyer"
   canBuildOutsideOfTerritory = true
-  canSilentlyReplace = true
   strength = 100
   viewLayer = FLOOR
 }
