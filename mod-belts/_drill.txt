@@ -36,7 +36,7 @@ End
         )
         if(Is1("_EXT")) {
           Chance 0.2500 EmitGas "FOG" 1
-          Area 1 Chance 0.0625 EmitGas "BLACK_SMOKE" 1
+          Area 2 Chance 0.0625 EmitGas "BLACK_SMOKE" 1
         }
         endif()
       }
