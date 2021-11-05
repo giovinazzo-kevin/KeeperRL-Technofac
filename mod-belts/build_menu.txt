@@ -1,6 +1,7 @@
 "crafting" modify append {
     { Furniture {{ "technofac_generator_wood_off" }     "WOOD" 0 }                    "Wood Generator"         "Design" }
     { Furniture {{ "technofac_generator_wood_input" }     "WOOD" 0 }                    "Firewood Block"         "Design" }
+    { Furniture {{ "technofac_generator_solar" }     "WOOD" 0 }                    "Solar Panel"         "Design" }
 
     { Furniture {{ "snta_belt_we_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
     { Furniture {{ "snta_belt_ns_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }

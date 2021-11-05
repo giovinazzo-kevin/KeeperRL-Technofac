@@ -1,3 +1,4 @@
+{ viewId = "solarpanel" symbol = "F" color = ColorId GRAY }
 { viewId = "snta_capsule_maker" symbol = "F" color = ColorId GRAY animated = true }
 
 { viewId = "snta_resource_chest" symbol = "F" color = ColorId GRAY }

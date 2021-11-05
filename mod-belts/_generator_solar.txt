@@ -1,0 +1,12 @@
+"technofac_generator_solar"
+{
+  name = "Solar Panel (Off)"
+  viewId = { "solarpanel" }
+  blockMovement = true
+  canBuildOutsideOfTerritory = true
+  lightEmission = 0.0
+  strength = 100
+  tickType = Effect Filter And { Not Indoors Not Night } Chain {
+    GeneratePower(0x1())
+  }
+}
