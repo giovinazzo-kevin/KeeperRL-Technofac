@@ -1,6 +1,6 @@
 "crafting" modify append {
-    { Furniture {{ "snta_capsule_maker" }     "WOOD" 0 }                    "Capsule Maker"         "Design" }
-    { Furniture {{ "snta_resource_chest" }     "WOOD" 0 }                    "Resource Chest"         "Design" }
+    { Furniture {{ "technofac_generator_wood_off" }     "WOOD" 0 }                    "Wood Generator"         "Design" }
+    { Furniture {{ "technofac_generator_wood_input" }     "WOOD" 0 }                    "Firewood Block"         "Design" }
 
     { Furniture {{ "snta_belt_we_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
     { Furniture {{ "snta_belt_ns_empty" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
@@ -30,6 +30,7 @@
     # { Furniture {{ "snta_belt_ne_slag" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
     # { Furniture {{ "snta_belt_nw_slag" }     "WOOD" 0 }                    "Conveyer Empty"         "Design" }
     { Furniture {{ "snta_conveyer_compressor" }     "WOOD" 0 }                    "Conveyer Compressor"         "Design" }
-    { Furniture {{ "snta_drill" }     "WOOD" 0 }                    "Drill"         "Design" }
+    { Furniture {{ "snta_liquid_pump" }     "WOOD" 0 }                    "Screw Pump"         "Design" }
+    { Furniture {{ "snta_metal_drill" }     "WOOD" 0 }                    "Drill"         "Design" }
     { Furniture {{ "snta_furnace" }     "WOOD" 0 }                    "Furnace"         "Design" }
 }

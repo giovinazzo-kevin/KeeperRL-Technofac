@@ -1,0 +1,41 @@
+"technofac_generator_wood_input"
+{
+  name = "Firewood Block"
+  viewId = { "wood_plank" }
+  canBuildOutsideOfTerritory = true
+  lightEmission = 0.0
+  strength = 100
+}
+
+"technofac_generator_wood_off"
+{
+  name = "Wood Generator (Off)"
+  viewId = { "furnace" }
+  blockMovement = true
+  canBuildOutsideOfTerritory = true
+  lightEmission = 0.0
+  strength = 100
+  tickType = Effect Filter Not FurnitureType "technofac_generator_wood_on" Chain {
+    Write0("_PWR_SRC")
+    Area 1 Filter And { Is0("_PWR_SRC") FurnitureType "technofac_generator_wood_input" } {
+      Write1("_PWR_SRC")
+      RemoveFurniture "technofac_generator_wood_input"
+    }
+    Filter Is1("_PWR_SRC") PlaceFurniture "technofac_generator_wood_on"
+  }
+}
+
+"technofac_generator_wood_on"
+{
+  name = "Wood Generator (On)"
+  viewId = { "furnace" }
+  layer = CEILING
+  blockMovement = true
+  canBuildOutsideOfTerritory = true
+  lightEmission = 5.0
+  strength = 100
+  tickType = Effect Chain {
+    GeneratePower(0xF())
+    Chance 0.001 PlaceFurniture "technofac_generator_wood_off"
+  }
+}

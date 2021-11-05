@@ -3,22 +3,26 @@
   name = "Empty Conveyer (L->R)"
   viewId = { "snta_belt_we_empty" }
   tickType = Effect Chain {
-    Write0("_FOUND")
-    NthNeighbor(0x2(), Chain {
-        Filter And { Is0("_FOUND") FurnitureType "snta_belt_we_slag" } Chain {
-            Write1("_FOUND")
-            PlaceFurniture "snta_belt_we_empty"
-        }
-    })
-    NthNeighbor(0x4(), Chain {
-        Filter And { Is0("_FOUND") FurnitureType "snta_belt_ns_slag" } Chain {
-            Write1("_FOUND")
-            PlaceFurniture "snta_belt_ns_empty"
-        }
-    })
-    if(Is1("_FOUND")) {
-      PlaceFurniture "snta_belt_we_slag_inactive"
-    } 
+    if(Not NoPower()) {
+      Write0("_FOUND")
+      NthNeighbor(0x2(), Chain {
+          Filter And { Is0("_FOUND") FurnitureType "snta_belt_we_slag" } Chain {
+              Write1("_FOUND")
+              PlaceFurniture "snta_belt_we_empty"
+          }
+      })
+      NthNeighbor(0x4(), Chain {
+          Filter And { Is0("_FOUND") FurnitureType "snta_belt_ns_slag" } Chain {
+              Write1("_FOUND")
+              PlaceFurniture "snta_belt_ns_empty"
+          }
+      })
+      if(Is1("_FOUND")) {
+        DrainPower(0x1())
+        PlaceFurniture "snta_belt_we_slag_inactive"
+      } 
+      endif()
+    }
     endif()
   }
 }

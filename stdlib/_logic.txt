@@ -65,13 +65,13 @@ Def elseifcount(Iterator, Cond, Match)
 	count(Iterator, Predicate) elseif(eq())
 End
 
-Def while(Body)
+Def for(Init)
+	Init
 	CustomArea Filter Not eq() Chain {
-		Body
 		dec()
 End
 
-Def endwhile()
+Def endfor()
 	} { { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } }
 End
 

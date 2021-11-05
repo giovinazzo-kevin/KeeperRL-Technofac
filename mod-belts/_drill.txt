@@ -8,21 +8,18 @@ Def Permutate(A, B, C, D)
   }
 End
 
-Def OverLiquid() 
-  Or { FurnitureType "WATER" FurnitureType "SHALLOW_WATER1" FurnitureType "SHALLOW_WATER2" FurnitureType "MAGMA" }
-End
-
-"snta_drill"
+"snta_liquid_pump"
 {
-  name = "Drill"
+  name = "Screw Pump"
   viewId = { "snta_drill" }
   builtOver = { "WATER" "SHALLOW_WATER1" "SHALLOW_WATER2" "MAGMA" }
   blockMovement = true
   canBuildOutsideOfTerritory = true
+  lightEmission = 5.0
   strength = 100
   tickType = Effect Chain {
     Write0("_EXT")
-    if(OverLiquid()) {
+    if(Or { FurnitureType "WATER" FurnitureType "SHALLOW_WATER1" FurnitureType "SHALLOW_WATER2" FurnitureType "MAGMA" }) {
       Chance 0.20 Chain {
         Permutate(
           NthNeighbor(0x8(), 
@@ -35,11 +32,96 @@ End
             Filter And { Is0("_EXT") FurnitureType "snta_belt_sn_empty" } Chain { Write1("_EXT") PlaceFurniture "snta_belt_sn_slag" })
         )
         if(Is1("_EXT")) {
-          Chance 0.2500 EmitGas "FOG" 1
-          Area 2 Chance 0.0625 EmitGas "BLACK_SMOKE" 1
+          Chance 0.80 EmitGas "BLACK_SMOKE" 5
+          NthNeighbor(0x1(), Chance 0.25 Chain { PlaceFurniture "PIT" EmitGas "FOG" 1 })
+          NthNeighbor(0x3(), Chance 0.25 Chain { PlaceFurniture "PIT" EmitGas "FOG" 1 })
+          NthNeighbor(0x7(), Chance 0.25 Chain { PlaceFurniture "PIT" EmitGas "FOG" 1 })
+          NthNeighbor(0x9(), Chance 0.25 Chain { PlaceFurniture "PIT" EmitGas "FOG" 1 })
+          NthNeighbor(0x2(), Chance 0.25 Chain { EmitGas "BLACK_SMOKE" 1 })
+          NthNeighbor(0x4(), Chance 0.25 Chain { EmitGas "BLACK_SMOKE" 1 })
+          NthNeighbor(0x6(), Chance 0.25 Chain { EmitGas "BLACK_SMOKE" 1 })
+          NthNeighbor(0x8(), Chance 0.25 Chain { EmitGas "BLACK_SMOKE" 1 })
+        }
+        else() {
+          Chance 0.40 EmitGas "FOG" 3
         }
         endif()
       }
+    }
+    endif()
+  }
+}
+
+Def IsMetal()
+  Or { 
+    FurnitureType "IRON_ORE" 
+    FurnitureType "STONE" 
+    FurnitureType "GOLD_ORE"
+    FurnitureType "ADAMANTIUM_ORE" 
+    FurnitureType "ADOXIUM_ORE" 
+    FurnitureType "INFERNITE_ORE" 
+  }
+End
+
+Def IsRock()
+  Or { 
+    FurnitureType "MOUNTAIN" 
+    FurnitureType "MOUNTAIN2" 
+    FurnitureType "SANDSTONE" 
+    FurnitureType "RED_SANDSTONE" 
+    FurnitureType "GLACIER" 
+  }
+End
+
+Def PerformDig()
+    Chain {
+      Area 1 Filter And { Is0("_EXT") Or { IsRock() IsMetal() } } { Write1("_EXT") DestroyWalls DIG }
+      Area 2 Filter And { Is0("_EXT") Or { IsRock() IsMetal() } } { Write1("_EXT") DestroyWalls DIG }
+      Area 3 Filter And { Is0("_EXT") Or { IsRock() IsMetal() } } { Write1("_EXT") DestroyWalls DIG }
+      Area 4 Filter And { Is0("_EXT") Or { IsRock() IsMetal() } } { Write1("_EXT") DestroyWalls DIG }
+      Area 5 Filter And { Is0("_EXT") Or { IsRock() IsMetal() } } { Write1("_EXT") DestroyWalls DIG }
+    }
+    Filter Flag "_EXT" # <Body>
+End
+
+"snta_metal_drill"
+{
+  name = "Drill"
+  viewId = { "snta_drill" }
+  blockMovement = true
+  canBuildOutsideOfTerritory = true
+  lightEmission = 5.0
+  strength = 100
+  tickType = Effect Chain {
+    Write0("_EXT")
+    ifany(Area 5, Or { IsRock() IsMetal() }) {
+      Chance 0.05 Chain {
+        Permutate(
+          NthNeighbor(0x8(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_we_empty" } Chain { PerformDig() PlaceFurniture "snta_belt_we_slag" }),
+          NthNeighbor(0x2(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_ew_empty" } Chain { PerformDig() PlaceFurniture "snta_belt_ew_slag" }),
+          NthNeighbor(0x6(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_ns_empty" } Chain { PerformDig() PlaceFurniture "snta_belt_ns_slag" }),
+          NthNeighbor(0x4(), 
+            Filter And { Is0("_EXT") FurnitureType "snta_belt_sn_empty" } Chain { PerformDig() PlaceFurniture "snta_belt_sn_slag" })
+        )
+        if(Is1("_EXT")) {
+          EmitGas "BLACK_SMOKE" 5
+          NthNeighbor(0x1(), Chance 0.25 Chain { PlaceFurniture "PIT" EmitGas "FOG" 1 })
+          NthNeighbor(0x3(), Chance 0.25 Chain { PlaceFurniture "PIT" EmitGas "FOG" 1 })
+          NthNeighbor(0x7(), Chance 0.25 Chain { PlaceFurniture "PIT" EmitGas "FOG" 1 })
+          NthNeighbor(0x9(), Chance 0.25 Chain { PlaceFurniture "PIT" EmitGas "FOG" 1 })
+          NthNeighbor(0x2(), Chance 0.25 Chain { EmitGas "BLACK_SMOKE" 1 })
+          NthNeighbor(0x4(), Chance 0.25 Chain { EmitGas "BLACK_SMOKE" 1 })
+          NthNeighbor(0x6(), Chance 0.25 Chain { EmitGas "BLACK_SMOKE" 1 })
+          NthNeighbor(0x8(), Chance 0.25 Chain { EmitGas "BLACK_SMOKE" 1 })
+        }
+        endif()
+      }
+    }
+    else() {
+      EmitGas "FOG" 1
     }
     endif()
   }

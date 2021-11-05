@@ -32,7 +32,9 @@
             PlaceFurniture "snta_belt_ew_empty"
         }
     })
-    0x0() Copy("_CNT2", "_SWP2") Copy("_CNT1", "_SWP1")
-    while(DropItems {"GoldPiece"} {1}) endwhile()
+    for({0x0() Copy("_CNT2", "_SWP2") Copy("_CNT1", "_SWP1")}) {
+        DropItems {"GoldPiece"} {1}
+    }
+    endfor()
   }
 }
