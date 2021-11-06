@@ -1,0 +1,13 @@
+"summon_2x2_test"
+{
+  symbol = "🤖"
+  range = 4
+  cooldown = 15
+  endOnly = true
+  effect = Chain {
+    PlaceFurniture "TEST_MULTITILE_2X2_00"
+    NthNeighbor(0x8(), PlaceFurniture "TEST_MULTITILE_2X2_01")
+    NthNeighbor(0x6(), PlaceFurniture "TEST_MULTITILE_2X2_10")
+    NthNeighbor(0x9(), PlaceFurniture "TEST_MULTITILE_2X2_11")
+  }
+}

@@ -1,3 +1,9 @@
+{ viewId = "gkr00" symbol = "F" color = ColorId GRAY }
+{ viewId = "gkr01" symbol = "F" color = ColorId GRAY }
+{ viewId = "gkr10" symbol = "F" color = ColorId GRAY }
+{ viewId = "gkr11" symbol = "F" color = ColorId GRAY }
+
+
 { viewId = "solarpanel" symbol = "F" color = ColorId GRAY }
 { viewId = "snta_capsule_maker" symbol = "F" color = ColorId GRAY animated = true }
 

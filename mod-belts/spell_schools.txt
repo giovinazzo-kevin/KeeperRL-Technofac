@@ -1,0 +1,4 @@
+"technomancer" SPELL
+{
+  "summon_2x2_test" 0
+}

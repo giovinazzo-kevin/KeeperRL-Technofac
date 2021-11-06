@@ -1,0 +1,24 @@
+"77_technomancer"
+{
+  creatureId = { "TECHNOMANCER" "TECHNOMANCER_F" }
+  tribeAlignment = EVIL
+  immigrantGroups = {"technomancer"}
+  technology = {
+      "alchemy" "advanced alchemy" "alchemical conversion" "humanoid mutation" "beast mutation"
+      "pig breeding" "iron working" "jewellery" "two-handed weapons" "traps" "archery" "sorcery"
+      "advanced sorcery" "magical weapons" "master sorcery" "demonology" "distillation"
+  }
+  zLevelGroups = { "basic" "evil" }
+  initialTech = { "sorcery" }
+  buildingGroups = {
+      "structure" "doors" "floors" "storage" "zones" "library" "throne" "beds" "beast_cage"
+      "pigsty" "dining table" "coffins"
+      "training" "crafting" "laboratory" "jeweller" "poetry" "distillery" "furnace" "demon_shrine"
+      "prison" "orders" "installations" "minion_statues" "magical_installations" "healing_totem"
+      "traps"
+  }
+  workshopGroups = { "basic" "bows" }
+  description = "if you play this keeper you're probably a huge nerd"
+  maxPopulation = 1
+  prisoners = false
+}
