@@ -1,0 +1,118 @@
+Def PlaceMaterialOrItem(Material, Item)
+  if(IsBelt()) {
+    PlaceFurniture Material
+  }
+  else() {
+    DropItems { Item } 1
+  }
+  endif()
+End
+
+Def SlagUpdate(MaterialInactive, MaterialActive, Item)
+    Chain {
+        if(Not NoPower()) {
+            Write1("_MOVED")
+            FirstSuccessful {
+                Filter FurnitureType "snta_belt_we_empty" Chain { NthNeighbor(0x2(), PlaceMaterialOrItem(MaterialActive, Item)) }
+                Filter FurnitureType "snta_belt_sn_empty" Chain { NthNeighbor(0x4(), PlaceMaterialOrItem(MaterialActive, Item)) }
+                Filter FurnitureType "snta_belt_ns_empty" Chain { NthNeighbor(0x6(), PlaceMaterialOrItem(MaterialInactive, Item)) }
+                Filter FurnitureType "snta_belt_ew_empty" Chain { NthNeighbor(0x8(), PlaceMaterialOrItem(MaterialInactive, Item)) }
+            }
+            Filter Is1("_MOVED") {
+                DrainPower(0x1())
+                RemoveFurniture MaterialActive
+            }
+        }
+        endif()
+    }
+End
+
+Def IsBelt()
+    Or { 
+        FurnitureType "snta_belt_ns_empty" 
+        FurnitureType "snta_belt_ew_empty" 
+        FurnitureType "snta_belt_we_empty" 
+        FurnitureType "snta_belt_sn_empty" 
+    }
+End
+
+Def ForEachInputBelt(Body)
+  Chain {
+    NthNeighbor(0x2(), Filter FurnitureType "snta_belt_we_empty" Body)
+    NthNeighbor(0x4(), Filter FurnitureType "snta_belt_ns_empty" Body)
+    NthNeighbor(0x6(), Filter FurnitureType "snta_belt_sn_empty" Body)
+    NthNeighbor(0x8(), Filter FurnitureType "snta_belt_ew_empty" Body)
+  }
+End
+
+Def ForEachOutputBelt(Body)
+  Chain {
+    NthNeighbor(0x2(), Filter FurnitureType "snta_belt_ew_empty" Body)
+    NthNeighbor(0x4(), Filter FurnitureType "snta_belt_sn_empty" Body)
+    NthNeighbor(0x6(), Filter FurnitureType "snta_belt_ns_empty" Body)
+    NthNeighbor(0x8(), Filter FurnitureType "snta_belt_we_empty" Body)
+  }
+End
+
+Def IsSlag()
+    Or { 
+        FurnitureType "technofac_slag_iron" 
+    }
+End
+
+"BELT_BASE" 
+{
+  name = "Base Conveyer"
+  canBuildOutsideOfTerritory = true
+  viewLayer = FLOOR
+}
+
+"SLAG_BASE"
+{
+  name = "Base Slag"
+  canBuildOutsideOfTerritory = true
+  layer = CEILING
+  viewLayer = TORCH1
+}
+
+"snta_belt_ew_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (R->L)"
+  attachmentDir = E
+  viewId = { "snta_belt_ew_empty" }
+}
+
+"snta_belt_ns_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (U->D)"
+  attachmentDir = N
+  viewId = { "snta_belt_ns_empty" }
+}
+
+"snta_belt_sn_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (D->U)"
+  attachmentDir = S
+  viewId = { "snta_belt_sn_empty" }
+}
+
+"snta_belt_we_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (L->R)"
+  attachmentDir = W
+  viewId = { "snta_belt_we_empty" }
+}
+
+
+
+"technofac_slag_iron_inactive" inherit "SLAG_BASE"
+{
+    name = "iron slag"
+    viewId = { "iron_ore" }
+    tickType = Effect PlaceFurniture "technofac_slag_iron"
+}
+
+"technofac_slag_iron" inherit "technofac_slag_iron_inactive"
+{
+    tickType = Effect SlagUpdate("technofac_slag_iron_inactive", "technofac_slag_iron", "IronOre")
+}

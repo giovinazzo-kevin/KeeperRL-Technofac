@@ -9,6 +9,7 @@
     NthNeighbor(0x9(), RemoveFurniture "TEST_MULTITILE_2X2_11")
   }
 }
+
 "TEST_MULTITILE_2X2_01" 
 {
   name = "Test"
@@ -20,6 +21,7 @@
     NthNeighbor(0x6(), RemoveFurniture "TEST_MULTITILE_2X2_11")
   }
 }
+
 "TEST_MULTITILE_2X2_10" 
 {
   name = "Test"
@@ -31,6 +33,7 @@
     NthNeighbor(0x8(), RemoveFurniture "TEST_MULTITILE_2X2_11")
   }
 }
+
 "TEST_MULTITILE_2X2_11" 
 {
   name = "Test"

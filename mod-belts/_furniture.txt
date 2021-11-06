@@ -1,11 +1,4 @@
-"BELT_BASE" 
-{
-  name = "Base Conveyer"
-  canBuildOutsideOfTerritory = true
-  strength = 100
-  viewLayer = FLOOR
-}
-
+"snta_conveyer_compressor"
 "snta_conveyer_compressor"
 {
   name = "Conveyer Compressor"
