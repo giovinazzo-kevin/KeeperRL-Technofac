@@ -1,5 +1,4 @@
 "snta_conveyer_compressor"
-"snta_conveyer_compressor"
 {
   name = "Conveyer Compressor"
   viewId = { "snta_conveyer_compressor" }

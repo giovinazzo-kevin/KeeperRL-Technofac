@@ -58,7 +58,7 @@ End
   tickType = Effect Chain {
     if(Not NoPower()) {
         Chance 0.5 Chain {
-          LoadOutputOntoBelt("technofac_slag_iron", DrainPower(0x1()))
+          LoadOutputOntoBelt("technofac_slag_iron_inactive", DrainPower(0x1()))
           EmitGas "BLACK_SMOKE" 1
         }
     }

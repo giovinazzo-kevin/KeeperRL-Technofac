@@ -1,3 +1,5 @@
+{ viewId = "iron_slag" symbol = "F" color = ColorId GRAY }
+
 { viewId = "machine" symbol = "F" color = ColorId GRAY }
 
 { viewId = "gkr00" symbol = "F" color = ColorId GRAY }
