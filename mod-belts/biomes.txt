@@ -14,7 +14,7 @@
     hillRatio = 0.20
     hill = "SAND"
     grass = "MUD"
-    mountain = "MOUNTAIN"
+    mountain = "IRON_ORE"
     mountainDeep = "MOUNTAIN2"
     mountainFloor = "RED_SAND"
   }

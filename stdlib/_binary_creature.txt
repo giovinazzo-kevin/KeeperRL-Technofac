@@ -1,40 +1,40 @@
-Def Is0(X)
-  Not Flag X
+Def Is0_C(X)
+  Not CreatureFlag X
 End
 
-Def Is1(X)
-  Flag X
+Def Is1_C(X)
+  CreatureFlag X
 End
 
-Def Write0(X)
-  SetFlag X false
+Def Write0_C(X)
+  SetCreatureFlag X false
 End
 
-Def Write1(X)
-  SetFlag X true
+Def Write1_C(X)
+  SetCreatureFlag X true
 End
 
-Def GteBit(A, B)
+Def GteBit_C(A, B)
   Is1(A)
 End
 
-Def GtBit(A, B)
+Def GtBit_C(A, B)
   And { Is1(A) Is0(B) }
 End
 
-Def EqBit(A, B)
+Def EqBit_C(A, B)
   Or { And { Is0(A) Is0(B) } And { Is1(A) Is1(B) } }
 End
 
-Def LteBit(A, B)
+Def LteBit_C(A, B)
   Is0(A)
 End
 
-Def LtBit(A, B)
+Def LtBit_C(A, B)
   And { Is0(A) Is1(B) }
 End
 
-Def Copy(A, B)
+Def Copy_C(A, B)
   if(Is1(A)){
     Write1(B)
   }
@@ -44,7 +44,7 @@ Def Copy(A, B)
   endif()
 End
 
-Def IncBits(A, B, Cont)
+Def IncBits_C(A, B, Cont)
   if(Is0(A)) {
     Write1(A)
   }
@@ -63,7 +63,7 @@ Def IncBits(A, B, Cont)
   endif()
 End
 
-Def DecBits(A, B, Cont)
+Def DecBits_C(A, B, Cont)
   if(Is1(A)) {
     Write0(A)
   }

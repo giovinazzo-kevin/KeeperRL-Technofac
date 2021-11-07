@@ -1,17 +1,7 @@
-# Guarantees that each available direction is chosen randomly without altering throughput when there's fewer than 4 available directions
-Def Permutate(A, B, C, D)
-  ChooseRandom {
-    { A B C D }
-    { B C D A }
-    { C D A B }
-    { D A B C }
-  }
-End
-
 Def GrabInputFromBelt(Material, Then) 
     Write0("_INPUT")
     # Look for a loaded belt that's directed towards this machine
-    ForEachInputBelt(Filter And { Is0("_INPUT") FurnitureType Material } {
+    ForEachInputBelt(Filter And { Is0("_INPUT") FurnitureType Material } Chain {
         Write1("_INPUT")
         RemoveFurniture Material
     })
@@ -21,47 +11,63 @@ End
 Def LoadOutputOntoBelt(Material, Then) 
     Write0("_OUTPUT")
     # Look for an empty belt that's directed away from this machine
-    ForEachOutputBelt(Filter Is0("_OUTPUT") {
+    ForEachOutputBelt(Filter Is0("_OUTPUT") Chain {
         Write1("_OUTPUT")
         PlaceFurniture Material
     })
     Filter Is1("_OUTPUT") Chain { Then }
 End
 
-
-"MACHINE_BASE" 
-{
-  name = "Base Machine"
-  canBuildOutsideOfTerritory = true
-  strength = 100
-  viewId = { "machine" }
-}
-
-# "technofac_machine_simple" inherit "MACHINE_BASE"
-# {
-#     tickType = Effect Chain {
-#         if(Not NoPower()) {
-#             GrabInputFromBelt(
-#                 
-#             )
-#         }
-#         endif()
-#     }
-# }
-
-"snta_metal_drill" inherit "MACHINE_BASE"
-{
-  name = "Drill"
-  viewId = { "snta_drill" }
-  blockMovement = true
-  lightEmission = 5.0
-  tickType = Effect Chain {
-    if(Not NoPower()) {
-        Chance 0.5 Chain {
-          LoadOutputOntoBelt("technofac_slag_iron_inactive", DrainPower(0x1()))
-          EmitGas "BLACK_SMOKE" 1
-        }
-    }
-    endif()
+Def IsMachine()
+  Or {
+    FurnitureType "snta_metal_drill"
+    FurnitureType "snta_metal_drill_inactive"
   }
+End
+
+Def IsOreWall()
+  Or {
+    FurnitureType "STONE"
+    FurnitureType "IRON_ORE"
+    FurnitureType "GOLD_ORE"
+    FurnitureType "ADAMANTIUM_ORE"
+    FurnitureType "ADOXIUM_ORE"
+    FurnitureType "INFERNITE_ORE"
+  }
+End
+
+Def IsMountainWall()
+  Or {
+    FurnitureType "MOUNTAIN"
+    FurnitureType "MOUNTAIN2"
+    FurnitureType "MOUNTAIN_SKULLS"
+    FurnitureType "SANDSTONE"
+    FurnitureType "RED_SANDSTONE"
+  }
+End
+
+Def MakeAssembler(Name, Input1, Input2, Output)
+Name inherit "technofac_assembler_inactive"
+{
+    tickType = Effect Chain {
+        # Goal: grab two different input materials and combine them into a new output material
+        if(Not NoPower()) {
+            OutputAvailable(Chain {
+              # Make sure we have the necessary inputs at the ready
+              Write0("_GOT_MAT1")
+              Write0("_GOT_MAT2")
+              ForEachInputBelt(Chain {
+                Filter FurnitureType Input1 Chain { Write1("_GOT_MAT1") }
+                Filter FurnitureType Input2 Chain { Write1("_GOT_MAT2") }
+              })
+              Filter And { Is1("_GOT_MAT1") Is1("_GOT_MAT2") } Chain {
+                GrabInputFromBelt(Input1,
+                  GrabInputFromBelt(Input2, 
+                    LoadOutputOntoBelt(Output, DrainPower(0x1()))))
+              }
+            })
+        }
+        endif()
+    }
 }
+End

@@ -25,3 +25,26 @@
     }
     viewIdUpgrades = { { "necromancer_f2" } { "necromancer_f3" } { "necromancer_f4" }}
   }
+"TECHNOFAC_DIGBOT" 
+{
+  viewId = { "automaton_heavy" Rgb 180 140 55 255 }
+  attr = {
+    DEFENSE 1
+  }
+  body = {
+    type = NonHumanoid SMALL
+    material = IRON
+    xCanPickUpItems = true
+    bodyParts = {
+      BACK 1
+      TORSO 1
+      LEG 2
+    }
+  }
+  permanentEffects = {
+    SPEED 1
+  }
+  name = {
+    name = "drill bot"
+  }
+}

@@ -1,4 +1,4 @@
-Def NthNeighbor(Index, Body)
+Def NthNeighbor(Index, Body) Chain {
 	0x0() cmp()
 	Index
 	Area 1 if(Not eq()) {
@@ -9,5 +9,22 @@ Def NthNeighbor(Index, Body)
     	endif()
 	}
   	endif()
-End
+} End
 
+Def NthNeighbor(Index, Cond, BodyOuter) Chain {
+	0x0() cmp()
+	Index
+	Write0("_INNER")
+	Area 1 if(Not eq()) {
+		dec()
+		if(And { Cond eq() }) {
+			Write1("_INNER")
+		}
+    	endif()
+	}
+  	endif()
+	if(Is1("_INNER")) {
+		BodyOuter
+	}
+	endif()
+} End

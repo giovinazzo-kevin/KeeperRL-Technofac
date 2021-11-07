@@ -1,0 +1,289 @@
+"MACHINE_BASE" 
+{
+  name = "Base Machine"
+  viewId = { "machine" }
+  canBuildOutsideOfTerritory = true
+  viewLayer = FLOOR
+}
+
+"BELT_BASE" 
+{
+  name = "Base Conveyer"
+  canBuildOutsideOfTerritory = true
+  viewLayer = FLOOR
+}
+
+"SLAG_BASE"
+{
+  name = "Base Slag"
+  canBuildOutsideOfTerritory = true
+  layer = CEILING
+  viewLayer = TORCH2
+}
+
+"snta_belt_ew_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (R->L)"
+  attachmentDir = E
+  viewId = { "snta_belt_ew_empty" }
+}
+
+"snta_belt_ns_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (U->D)"
+  attachmentDir = N
+  viewId = { "snta_belt_ns_empty" }
+}
+
+"snta_belt_sn_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (D->U)"
+  attachmentDir = S
+  viewId = { "snta_belt_sn_empty" }
+}
+
+"snta_belt_we_empty" inherit "BELT_BASE"
+{
+  name = "Empty Conveyer (L->R)"
+  attachmentDir = W
+  viewId = { "snta_belt_we_empty" }
+}
+
+"technofac_slag_iron_inactive" inherit "SLAG_BASE"
+{
+    name = "iron slag"
+    viewId = { "iron_slag" }
+    tickType = Effect PlaceFurniture "technofac_slag_iron"
+}
+
+"technofac_slag_iron" inherit "technofac_slag_iron_inactive"
+{
+    tickType = Effect SlagUpdate("technofac_slag_iron_inactive", "technofac_slag_iron", "IronOre")
+}
+
+"technofac_slag_gold_inactive" inherit "SLAG_BASE"
+{
+    name = "gold slag"
+    viewId = { "gold_slag" }
+    tickType = Effect PlaceFurniture "technofac_slag_gold"
+}
+
+"technofac_slag_gold" inherit "technofac_slag_gold_inactive"
+{
+    tickType = Effect SlagUpdate("technofac_slag_gold_inactive", "technofac_slag_gold", "GoldPiece")
+}
+
+"technofac_slag_stone_inactive" inherit "SLAG_BASE"
+{
+    name = "rock slag"
+    viewId = { "stone_slag" }
+    tickType = Effect PlaceFurniture "technofac_slag_stone"
+}
+
+"technofac_slag_stone" inherit "technofac_slag_stone_inactive"
+{
+    tickType = Effect SlagUpdate("technofac_slag_stone_inactive", "technofac_slag_stone", "Rock")
+}
+
+"technofac_assembler_inactive" inherit "MACHINE_BASE" 
+{
+  name = "Assembler"
+  viewId = { "machine" }
+  lightEmission = 5.0
+}
+
+MakeAssembler(
+    "technofac_assembler_iron_stone_gold",
+    "technofac_slag_iron",
+    "technofac_slag_stone",
+    "technofac_slag_gold_inactive"
+)
+
+"snta_metal_drill_inactive" inherit "MACHINE_BASE" 
+{
+  name = "Drill"
+  viewId = { "machine" }
+  lightEmission = 5.0
+}
+
+"snta_metal_drill" inherit "snta_metal_drill_inactive"
+{
+  viewId = { "snta_drill" }
+  builtOver = { "IRON_ORE" "STONE" "GOLD_ORE" }
+  tickType = Effect Chain {
+    # Goal: dig the current 5x5 area and move any slag to an output belt.
+    # Then, do the following for each cardinal direction:
+    #   - See if you can find a metal tile in a straight line of length 5
+    #       - Place a new drill on top of that tile
+    #       - Place an output belt on all previous tiles
+    if(Not NoPower()) {
+        Chance 0.05 OutputAvailable(Chain {
+            EmitGas "BLACK_SMOKE" 1
+            Write0("_DUG_ANY")
+            Write0("_DUG_IRON")
+            Write0("_DUG_GOLD")
+            Write0("_DUG_STONE")
+            Write0("_DUG_ADA")
+            Write0("_DUG_ADOXIUM")
+            Write0("_DUG_INFERNITE")
+            Area 2 Filter And { IsOreWall() Is0("_DUG_ANY") } Chain {
+                Filter FurnitureType "STONE" Chain { Write1("_DUG_ANY") Write1("_DUG_STONE") Chance 0.01 RemoveFurniture "STONE" }
+                Filter FurnitureType "IRON_ORE" Chain { Write1("_DUG_ANY") Write1("_DUG_IRON") Chance 0.01 RemoveFurniture "IRON_ORE" }
+                Filter FurnitureType "GOLD_ORE" Chain { Write1("_DUG_ANY") Write1("_DUG_GOLD") Chance 0.01 RemoveFurniture "GOLD_ORE" }
+                Filter Is0("_DUG_ANY") { DestroyWalls DIG }
+            }
+            if(Is1("_DUG_IRON")) {
+                PlaceFurniture "technofac_slag_iron_inactive"
+            }
+            elseif(Is1("_DUG_GOLD")) {
+                PlaceFurniture "technofac_slag_gold_inactive"
+            }
+            elseif(Is1("_DUG_STONE")) {
+                PlaceFurniture "technofac_slag_stone_inactive"
+            }
+            endif()
+        })
+
+        ifall(Area 2, Not IsOreWall()) {
+            NthNeighbor(0x2(), Chain {
+                Write0("_DRL")
+                NthNeighbor(0x2(), Chain {
+                    NthNeighbor(0x2(), ifany(Area 1, IsOreWall()) {
+                        Write1("_DRL")
+                        PlaceFurniture "snta_metal_drill"
+                    } endif())
+                    Filter And { Is1("_DRL") Not IsBelt() } PlaceFurniture "snta_belt_we_empty"
+                })
+                Filter And { Is1("_DRL") Not IsBelt() } PlaceFurniture "snta_belt_we_empty"
+            })
+
+            NthNeighbor(0x4(), Chain {
+                Write0("_DRL")
+                NthNeighbor(0x4(), Chain {
+                    NthNeighbor(0x4(), ifany(Area 1, IsOreWall()) {
+                        Write1("_DRL")
+                        PlaceFurniture "snta_metal_drill"
+                    } endif())
+                    Filter And { Is1("_DRL") Not IsBelt() } PlaceFurniture "snta_belt_ns_empty"
+                })
+                Filter And { Is1("_DRL") Not IsBelt() } PlaceFurniture "snta_belt_ns_empty"
+            })
+
+            NthNeighbor(0x6(), Chain {
+                Write0("_DRL")
+                NthNeighbor(0x6(), Chain {
+                    NthNeighbor(0x6(), ifany(Area 1, IsOreWall()) {
+                        Write1("_DRL")
+                        PlaceFurniture "snta_metal_drill"
+                    } endif())
+                    Filter And { Is1("_DRL") Not IsBelt() } PlaceFurniture "snta_belt_sn_empty"
+                })
+                Filter And { Is1("_DRL") Not IsBelt() } PlaceFurniture "snta_belt_sn_empty"
+            })
+
+            NthNeighbor(0x8(), Chain {
+                Write0("_DRL")
+                NthNeighbor(0x8(), Chain {
+                    NthNeighbor(0x8(), ifany(Area 1, IsOreWall()) {
+                        Write1("_DRL")
+                        PlaceFurniture "snta_metal_drill"
+                    } endif())
+                    Filter And { Is1("_DRL") Not IsBelt() } PlaceFurniture "snta_belt_ew_empty"
+                })
+                Filter And { Is1("_DRL") Not IsBelt() } PlaceFurniture "snta_belt_ew_empty"
+            })
+
+            PlaceFurniture "snta_metal_drill_inactive"
+        }
+        endif()
+    }
+    endif()
+  }
+}
+
+"technofac_generator_wood_input"
+{
+  name = "Firewood Block"
+  viewId = { "wood_plank" }
+  canBuildOutsideOfTerritory = true
+  lightEmission = 0.0
+  strength = 100
+}
+
+"technofac_generator_wood_off"
+{
+  name = "Wood Generator (Off)"
+  viewId = { "furnace" }
+  blockMovement = true
+  canBuildOutsideOfTerritory = true
+  viewLayer = FLOOR
+  lightEmission = 0.0
+  strength = 100
+  tickType = Effect Filter Not FurnitureType "technofac_generator_wood_on" Chain {
+    Write0("_PWR_SRC")
+    Area 1 Filter And { Is0("_PWR_SRC") FurnitureType "technofac_generator_wood_input" } {
+      Write1("_PWR_SRC")
+      RemoveFurniture "technofac_generator_wood_input"
+    }
+    Filter Is1("_PWR_SRC") PlaceFurniture "technofac_generator_wood_on"
+  }
+}
+
+"technofac_generator_wood_on"
+{
+  name = "Wood Generator (On)"
+  viewId = { "furnace" }
+  layer = CEILING
+  viewLayer = FLOOR
+  blockMovement = true
+  canBuildOutsideOfTerritory = true
+  lightEmission = 5.0
+  strength = 100
+  tickType = Effect Chain {
+    GeneratePower(0xF())
+    Chance 0.01 RemoveFurniture "technofac_generator_wood_on"
+  }
+}
+
+"technofac_generator_solar"
+{
+  name = "Solar Panel (Off)"
+  viewId = { "solarpanel" }
+  blockMovement = true
+  canBuildOutsideOfTerritory = true
+  lightEmission = 0.0
+  strength = 100
+  tickType = Effect Filter And { Not Indoors Not Night } Chain {
+    GeneratePower(0x1())
+  }
+}
+
+"snta_conveyer_compressor"
+{
+  name = "Conveyer Compressor"
+  viewId = { "snta_conveyer_compressor" }
+  blockMovement = true
+  usageTime = 5
+  canBuildOutsideOfTerritory = true
+  strength = 100
+}
+
+"snta_furnace"
+{
+  name = "Furnace"
+  viewId = { "snta_furnace" }
+  blockMovement = true
+  usageTime = 5
+  canBuildOutsideOfTerritory = true
+  strength = 100
+}
+
+"snta_capsule_maker"
+{
+  name = "Capsule maker"
+  viewId = { "snta_capsule_maker" }
+  blockMovement = true
+  usageTime = 5
+  canBuildOutsideOfTerritory = true
+  strength = 100
+}
