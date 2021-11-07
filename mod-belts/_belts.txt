@@ -82,39 +82,39 @@ Def OutputAvailable(Body)
 End
 
 Def ForEachInputBelt(Body)
-  Chain {
-    NthNeighbor(0x2(), Filter And { IsSlag() FurnitureType "snta_belt_we_empty" } Body)
-    NthNeighbor(0x4(), Filter And { IsSlag() FurnitureType "snta_belt_ns_empty" } Body)
-    NthNeighbor(0x6(), Filter And { IsSlag() FurnitureType "snta_belt_sn_empty" } Body)
+  Permutate(
+    NthNeighbor(0x2(), Filter And { IsSlag() FurnitureType "snta_belt_we_empty" } Body),
+    NthNeighbor(0x4(), Filter And { IsSlag() FurnitureType "snta_belt_ns_empty" } Body),
+    NthNeighbor(0x6(), Filter And { IsSlag() FurnitureType "snta_belt_sn_empty" } Body),
     NthNeighbor(0x8(), Filter And { IsSlag() FurnitureType "snta_belt_ew_empty" } Body)
-  }
+  )
 End
 
 Def ForEachOutputBelt(Body)
-  Chain {
-    NthNeighbor(0x2(), Filter And { Not IsSlag() FurnitureType "snta_belt_ew_empty" } Body)
-    NthNeighbor(0x4(), Filter And { Not IsSlag() FurnitureType "snta_belt_sn_empty" } Body)
-    NthNeighbor(0x6(), Filter And { Not IsSlag() FurnitureType "snta_belt_ns_empty" } Body)
+  Permutate(
+    NthNeighbor(0x2(), Filter And { Not IsSlag() FurnitureType "snta_belt_ew_empty" } Body),
+    NthNeighbor(0x4(), Filter And { Not IsSlag() FurnitureType "snta_belt_sn_empty" } Body),
+    NthNeighbor(0x6(), Filter And { Not IsSlag() FurnitureType "snta_belt_ns_empty" } Body),
     NthNeighbor(0x8(), Filter And { Not IsSlag() FurnitureType "snta_belt_we_empty" } Body)
-  }
+  )
 End
 
 Def ForEachInputBelt(BodyBefore, BodyAfter)
-  Chain {
-    NthNeighbor(0x2(), Filter And { IsSlag() FurnitureType "snta_belt_we_empty" } BodyBefore)
-    NthNeighbor(0x4(), Filter And { IsSlag() FurnitureType "snta_belt_ns_empty" } BodyBefore)
-    NthNeighbor(0x6(), Filter And { IsSlag() FurnitureType "snta_belt_sn_empty" } BodyAfter)
+  Permutate(
+    NthNeighbor(0x2(), Filter And { IsSlag() FurnitureType "snta_belt_we_empty" } BodyBefore),
+    NthNeighbor(0x4(), Filter And { IsSlag() FurnitureType "snta_belt_ns_empty" } BodyBefore),
+    NthNeighbor(0x6(), Filter And { IsSlag() FurnitureType "snta_belt_sn_empty" } BodyAfter),
     NthNeighbor(0x8(), Filter And { IsSlag() FurnitureType "snta_belt_ew_empty" } BodyAfter)
-  }
+  )
 End
 
 Def ForEachOutputBelt(BodyBefore, BodyAfter)
-  Chain {
-    NthNeighbor(0x2(), Filter And { Not IsSlag() FurnitureType "snta_belt_ew_empty" } BodyBefore)
-    NthNeighbor(0x4(), Filter And { Not IsSlag() FurnitureType "snta_belt_sn_empty" } BodyBefore)
-    NthNeighbor(0x6(), Filter And { Not IsSlag() FurnitureType "snta_belt_ns_empty" } BodyAfter)
+  Permutate(
+    NthNeighbor(0x2(), Filter And { Not IsSlag() FurnitureType "snta_belt_ew_empty" } BodyBefore),
+    NthNeighbor(0x4(), Filter And { Not IsSlag() FurnitureType "snta_belt_sn_empty" } BodyBefore),
+    NthNeighbor(0x6(), Filter And { Not IsSlag() FurnitureType "snta_belt_ns_empty" } BodyAfter),
     NthNeighbor(0x8(), Filter And { Not IsSlag() FurnitureType "snta_belt_we_empty" } BodyAfter)
-  }
+  )
 End
 
 Def IsWoodSlag()

@@ -22,6 +22,8 @@ Def IsMachine()
   Or {
     FurnitureType "snta_metal_drill"
     FurnitureType "snta_metal_drill_inactive"
+    FurnitureType "technofac_lumber_mill"
+    FurnitureType "technofac_belt_splitter"
   }
 End
 

@@ -148,12 +148,17 @@ MakeAssembler(
     "technofac_slag_gold_inactive"
 )
 
+"technofac_belt_splitter" inherit "MACHINE_BASE" 
+{
+  name = "Splitter"
+  viewId = { "machine" }
+}
+
 "technofac_lumber_mill_inactive" inherit "MACHINE_BASE" 
 {
   name = "Lumber mill"
   viewId = { "machine" }
 }
-
 
 "technofac_lumber_mill" inherit "technofac_lumber_mill_inactive" 
 {
