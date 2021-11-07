@@ -7,9 +7,9 @@
     { Furniture {{ "snta_metal_drill" }     "WOOD" 0 }                    "Drill"         "Design" }
     { Furniture {{ "technofac_lumber_mill" }     "WOOD" 0 }                    "Lumber Mill"         "Design" }
     { Furniture {{ "technofac_assembler_iron_stone_gold" }     "WOOD" 0 }                    "Assembler (Iron+Stone=Gold)"         "Design" }
-    { Furniture {{ "technofac_belt_splitter" }     "WOOD" 0 }                    "Splitter"         "Belts" }
     { Furniture {{ "snta_belt_ns_empty" "snta_belt_ew_empty" "snta_belt_sn_empty" "snta_belt_we_empty" }     "WOOD" 0 }                    "Conveyer Empty NS"         "Belts" }
     { Furniture {{ "snta_belt_ew_empty" "snta_belt_sn_empty" "snta_belt_we_empty" "snta_belt_ns_empty" }     "WOOD" 0 }                    "Conveyer Empty EW"         "Belts" }
     { Furniture {{ "snta_belt_sn_empty" "snta_belt_we_empty" "snta_belt_ns_empty" "snta_belt_ew_empty" }     "WOOD" 0 }                    "Conveyer Empty SN"         "Belts" }
     { Furniture {{ "snta_belt_we_empty" "snta_belt_ns_empty" "snta_belt_ew_empty" "snta_belt_sn_empty" }     "WOOD" 0 }                    "Conveyer Empty WE"         "Belts" }
+    { Furniture {{ "technofac_belt_splitter" }     "WOOD" 0 }                    "Splitter"         "Belts" }
 }

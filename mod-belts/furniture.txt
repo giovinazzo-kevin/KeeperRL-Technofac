@@ -163,12 +163,12 @@ MakeAssembler(
 "technofac_lumber_mill" inherit "technofac_lumber_mill_inactive" 
 {
     tickType = Effect Chain {
-        if(Not NoPower()) {
-            Chance 0.05 OutputAvailable(Chain {
+        Chance 0.15 if(Not NoPower()) {
+            OutputAvailable(Chain {
                 Write0("_CUT")
-                Area 5 Filter And { Is0("_CUT") IsTree() } Chain {
+                Area 3 Filter And { Is0("_CUT") IsTree() } Chain {
                     Write1("_CUT")
-                    Chance 0.15 RemoveTree()
+                    Chance 0.25 RemoveTree()
                 }
                 Filter Is1("_CUT") Chain {
                     LoadOutputOntoBelt("technofac_slag_wood_inactive", Chain {
@@ -200,8 +200,8 @@ MakeAssembler(
     #   - See if you can find a metal tile in a straight line of length 5
     #       - Place a new drill on top of that tile
     #       - Place an output belt on all previous tiles
-    if(Not NoPower()) {
-        Chance 0.05 OutputAvailable(Chain {
+    Chance 0.05 if(Not NoPower()) {
+        OutputAvailable(Chain {
             EmitGas "BLACK_SMOKE" 1
             Write0("_DUG_ANY")
             Write0("_DUG_IRON")

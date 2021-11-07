@@ -4,17 +4,12 @@
     # ViewId upgrades of Keepers are applied every 5 tech level increases
     viewIdUpgrades = { { "necromancer2" } { "necromancer3" } { "necromancer4" } }
     name = append {
-      name = "necromancer"
+      name = "technomancer"
     }
     spellSchools = { "technomancer" }
     maxLevelIncrease = {
       SPELL 12
     }
-    skills = {
-      "MORGUE" 1.0
-      "LABORATORY" 1.0
-    }
-    permanentEffects = { SUNLIGHT_VULNERABLE 1 }
   }
 "TECHNOMANCER_F" inherit "TECHNOMANCER"
   {

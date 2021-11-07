@@ -1,31 +1,27 @@
 Def NoPower()
-    And { 
-        Is0("_PWR0") Is0("_PWR1") Is0("_PWR2") Is0("_PWR3") Is0("_PWR4") Is0("_PWR5") Is0("_PWR6") Is0("_PWR7") 
-        Is0("_PWR8") Is0("_PWR9") Is0("_PWRA") Is0("_PWRB") Is0("_PWRC") Is0("_PWRD") Is0("_PWRE") Is0("_PWRF")
-    }
+    Is0("_NOPWR")
 End
 
 Def FullPower()
-    And { 
-        Is1("_PWR0") Is1("_PWR1") Is1("_PWR2") Is1("_PWR3") Is1("_PWR4") Is1("_PWR5") Is1("_PWR6") Is1("_PWR7") 
-        Is1("_PWR8") Is1("_PWR9") Is1("_PWRA") Is1("_PWRB") Is1("_PWRC") Is1("_PWRD") Is1("_PWRE") Is1("_PWRF")
-    }
+    Is1("_FULLPWR")
 End
 
 Def GeneratePower()
-    if(Not FullPower()) {
+    Filter Not FullPower() Chain {
         IncBits("_PWR0", "_PWR1", IncBits("_PWR2", "_PWR3", IncBits("_PWR4", "_PWR5", IncBits("_PWR6", "_PWR7", 
-            IncBits("_PWR8", "_PWR9", IncBits("_PWRA", "_PWRB", IncBits("_PWRC", "_PWRD", IncBits("_PWRE", "_PWRF", {}))))))))
+            IncBits("_PWR8", "_PWR9", IncBits("_PWRA", "_PWRB", IncBits("_PWRC", "_PWRD", IncBits("_PWRE", "_PWRF", 
+                Write1("_FULLPWR")))))))))
+        Write1("_NOPWR")
     }
-    endif()
 End
 
 Def DrainPower()
-    if(Not NoPower()) {
+    Filter Not NoPower() Chain {
         DecBits("_PWR0", "_PWR1", DecBits("_PWR2", "_PWR3", DecBits("_PWR4", "_PWR5", DecBits("_PWR6", "_PWR7", 
-            DecBits("_PWR8", "_PWR9", DecBits("_PWRA", "_PWRB", DecBits("_PWRC", "_PWRD", DecBits("_PWRE", "_PWRF", {}))))))))
+            DecBits("_PWR8", "_PWR9", DecBits("_PWRA", "_PWRB", DecBits("_PWRC", "_PWRD", DecBits("_PWRE", "_PWRF", 
+                Write0("_NOPWR")))))))))
+        Write0("_FULLPWR")
     }
-    endif()
 End
 
 Def GeneratePower(Amount)

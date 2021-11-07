@@ -23,20 +23,12 @@ Def swp()
   Chain { Copy("_CMP4", "_SWP4") Copy("_CMP3", "_SWP3") Copy("_CMP2", "_SWP2") Copy("_CMP1", "_SWP1") }
 End
 
-Def cpy(F1, F2, F3, F4)
+Def cpyfrom(F1, F2, F3, F4)
   Chain { Copy(F4, "_SWP4") Copy(F3, "_SWP3") Copy(F2, "_SWP2") Copy(F1, "_SWP1") }
 End
 
-Def rcpy(F1, F2, F3, F4)
+Def cpyto(F1, F2, F3, F4)
   Chain { Copy("_SWP4", F4) Copy("_SWP3", F3) Copy("_SWP2", F2) Copy("_SWP1", F1) }
-End
-
-Def ccpy(F1, F2, F3, F4)
-  Chain { CreatureCopyToGlobal(F4, "_SWP4") CreatureCopyToGlobal(F3, "_SWP3") CreatureCopyToGlobal(F2, "_SWP2") CreatureCopyToGlobal(F1, "_SWP1") }
-End
-
-Def rccpy(F1, F2, F3, F4)
-  Chain { CreatureCopyToGlobal("_SWP4", F4) CreatureCopyToGlobal("_SWP3", F3) CreatureCopyToGlobal("_SWP2", F2) CreatureCopyToGlobal("_SWP1", F1) }
 End
 
 Def gt()
@@ -45,6 +37,10 @@ End
 
 Def gte()
   Or { GteBit("_SWP4", "_CMP4") GteBit("_SWP3", "_CMP3") GteBit("_SWP2", "_CMP2") GteBit("_SWP1", "_CMP1") }
+End
+
+Def zero()
+  And { Is0("_SWP4") Is0("_SWP3") Is0("_SWP2") Is0("_SWP1") }
 End
 
 Def eq()
