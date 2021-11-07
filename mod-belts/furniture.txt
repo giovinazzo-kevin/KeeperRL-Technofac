@@ -85,6 +85,43 @@
     tickType = Effect SlagUpdate("technofac_slag_stone_inactive", "technofac_slag_stone", "Rock")
 }
 
+"technofac_slag_adamantium_inactive" inherit "SLAG_BASE"
+{
+    name = "adamantium slag"
+    viewId = { "adamantium_slag" }
+    tickType = Effect PlaceFurniture "technofac_slag_adamantium"
+}
+
+"technofac_slag_adamantium" inherit "technofac_slag_adamantium_inactive"
+{
+    tickType = Effect SlagUpdate("technofac_slag_adamantium_inactive", "technofac_slag_adamantium", "AdaOre")
+}
+
+"technofac_slag_adoxium_inactive" inherit "SLAG_BASE"
+{
+    name = "adoxium slag"
+    viewId = { "adoxium_slag" }
+    tickType = Effect PlaceFurniture "technofac_slag_adoxium"
+}
+
+"technofac_slag_adoxium" inherit "technofac_slag_adoxium_inactive"
+{
+    tickType = Effect SlagUpdate("technofac_slag_adoxium_inactive", "technofac_slag_adoxium", "AdoxiumOre")
+}
+
+"technofac_slag_infernite_inactive" inherit "SLAG_BASE"
+{
+    name = "infernite slag"
+    viewId = { "infernite_slag" }
+    tickType = Effect PlaceFurniture "technofac_slag_infernite"
+}
+
+"technofac_slag_infernite" inherit "technofac_slag_infernite_inactive"
+{
+    tickType = Effect SlagUpdate("technofac_slag_infernite_inactive", "technofac_slag_infernite", "InferniteOre")
+}
+
+
 "technofac_assembler_inactive" inherit "MACHINE_BASE" 
 {
   name = "Assembler"
@@ -130,6 +167,9 @@ MakeAssembler(
                 Filter FurnitureType "STONE" Chain { Write1("_DUG_ANY") Write1("_DUG_STONE") Chance 0.01 RemoveFurniture "STONE" }
                 Filter FurnitureType "IRON_ORE" Chain { Write1("_DUG_ANY") Write1("_DUG_IRON") Chance 0.01 RemoveFurniture "IRON_ORE" }
                 Filter FurnitureType "GOLD_ORE" Chain { Write1("_DUG_ANY") Write1("_DUG_GOLD") Chance 0.01 RemoveFurniture "GOLD_ORE" }
+                Filter FurnitureType "ADAMANTIUM_ORE" Chain { Write1("_DUG_ANY") Write1("_DUG_ADA") Chance 0.01 RemoveFurniture "ADAMANTIUM_ORE" }
+                Filter FurnitureType "ADOXIUM_ORE" Chain { Write1("_DUG_ANY") Write1("_DUG_ADOXIUM") Chance 0.01 RemoveFurniture "ADOXIUM_ORE" }
+                Filter FurnitureType "INFERNITE_ORE" Chain { Write1("_DUG_ANY") Write1("_DUG_INFERNITE") Chance 0.01 RemoveFurniture "INFERNITE_ORE" }
                 Filter Is0("_DUG_ANY") { DestroyWalls DIG }
             }
             if(Is1("_DUG_IRON")) {
@@ -140,6 +180,15 @@ MakeAssembler(
             }
             elseif(Is1("_DUG_STONE")) {
                 PlaceFurniture "technofac_slag_stone_inactive"
+            }
+            elseif(Is1("_DUG_ADA")) {
+                PlaceFurniture "technofac_slag_adamantium_inactive"
+            }
+            elseif(Is1("_DUG_ADOXIUM")) {
+                PlaceFurniture "technofac_slag_adoxium_inactive"
+            }
+            elseif(Is1("_DUG_INFERNITE")) {
+                PlaceFurniture "technofac_slag_infernite_inactive"
             }
             endif()
         })

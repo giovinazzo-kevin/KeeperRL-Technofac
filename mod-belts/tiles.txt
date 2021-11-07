@@ -1,6 +1,9 @@
 { viewId = "iron_slag" symbol = "F" color = ColorId GRAY }
 { viewId = "gold_slag" symbol = "F" color = ColorId GRAY }
 { viewId = "stone_slag" symbol = "F" color = ColorId GRAY }
+{ viewId = "adamantium_slag" symbol = "F" color = ColorId GRAY }
+{ viewId = "adoxium_slag" symbol = "F" color = ColorId GRAY }
+{ viewId = "infernite_slag" symbol = "F" color = ColorId GRAY }
 
 { viewId = "machine" symbol = "F" color = ColorId GRAY }
 

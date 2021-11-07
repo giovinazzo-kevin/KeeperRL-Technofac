@@ -138,10 +138,34 @@ Def IsStoneSlag()
   }
 End
 
+Def IsAdamantiumSlag()
+  Or {
+      FurnitureType "technofac_slag_adamantium" 
+      FurnitureType "technofac_slag_adamantium_inactive" 
+  }
+End
+
+Def IsAdoxiumSlag()
+  Or {
+      FurnitureType "technofac_slag_adoxium" 
+      FurnitureType "technofac_slag_adoxium_inactive" 
+  }
+End
+
+Def IsInferniteSlag()
+  Or {
+      FurnitureType "technofac_slag_infernite" 
+      FurnitureType "technofac_slag_infernite_inactive" 
+  }
+End
+
 Def IsSlag()
     Or { 
       IsIronSlag()
       IsGoldSlag()
       IsStoneSlag()
+      IsAdamantiumSlag()
+      IsAdoxiumSlag()
+      IsInferniteSlag()
     }
 End
