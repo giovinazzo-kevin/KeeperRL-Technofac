@@ -117,6 +117,13 @@ Def ForEachOutputBelt(BodyBefore, BodyAfter)
   }
 End
 
+Def IsWoodSlag()
+  Or {
+      FurnitureType "technofac_slag_wood" 
+      FurnitureType "technofac_slag_wood_inactive" 
+  }
+End
+
 Def IsIronSlag()
   Or {
       FurnitureType "technofac_slag_iron" 
@@ -161,6 +168,7 @@ End
 
 Def IsSlag()
     Or { 
+      IsWoodSlag()
       IsIronSlag()
       IsGoldSlag()
       IsStoneSlag()

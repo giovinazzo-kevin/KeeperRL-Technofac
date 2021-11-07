@@ -49,6 +49,18 @@
   viewId = { "snta_belt_we_empty" }
 }
 
+"technofac_slag_wood_inactive" inherit "SLAG_BASE"
+{
+    name = "log"
+    viewId = { "wood_slag" }
+    tickType = Effect PlaceFurniture "technofac_slag_wood"
+}
+
+"technofac_slag_wood" inherit "technofac_slag_wood_inactive"
+{
+    tickType = Effect SlagUpdate("technofac_slag_wood_inactive", "technofac_slag_wood", "WoodPlank")
+}
+
 "technofac_slag_iron_inactive" inherit "SLAG_BASE"
 {
     name = "iron slag"
@@ -135,6 +147,30 @@ MakeAssembler(
     "technofac_slag_stone",
     "technofac_slag_gold_inactive"
 )
+
+"technofac_lumber_mill_inactive" inherit "MACHINE_BASE" 
+{
+  name = "Lumber mill"
+  viewId = { "machine" }
+}
+
+
+"technofac_lumber_mill" inherit "technofac_lumber_mill_inactive" 
+{
+    tickType = Effect Chain {
+        if(Not NoPower()) {
+            Write0("_CUT")
+            OutputAvailable(Area 5 Filter And { Is0("_CUT") IsTree() } Chain {
+                Write1("_CUT")
+                RemoveTree()
+                LoadOutputOntoBelt("technofac_slag_wood", DrainPower(0x1()))
+                EmitGas "FOG" 1
+            })
+        }
+        endif()
+    }
+}
+
 
 "snta_metal_drill_inactive" inherit "MACHINE_BASE" 
 {

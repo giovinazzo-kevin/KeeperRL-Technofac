@@ -1,3 +1,4 @@
+{ viewId = "wood_slag" symbol = "F" color = ColorId GRAY }
 { viewId = "iron_slag" symbol = "F" color = ColorId GRAY }
 { viewId = "gold_slag" symbol = "F" color = ColorId GRAY }
 { viewId = "stone_slag" symbol = "F" color = ColorId GRAY }
