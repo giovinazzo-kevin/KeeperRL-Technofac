@@ -77,7 +77,7 @@ Def OutputAvailable(Body)
   }
 End
 
-Def ForEachInputBelt(Body)d
+Def ForEachInputBelt(Body)
   Permutate(
     NthNeighbor(0x2(), Filter And { IsSlag() FurnitureType "snta_belt_we_empty" } Body),
     NthNeighbor(0x4(), Filter And { IsSlag() FurnitureType "snta_belt_ns_empty" } Body),
