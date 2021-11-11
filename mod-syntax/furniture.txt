@@ -1,5 +1,141 @@
+Def Summon(Name, Min, Max)
+	SummonEnemy "KEEPERTD_Name" { Min Max } none
+End
+Def Summon(Name, Amount)
+	Summon(Amount, Amount)
+End
 Def Summon(Name)
-	SummonEnemy "KEEPERTD_Name" {1} none
+	Summon(Name, 1)
+End
+
+Def SummonWaveEnemy()
+	Switch(Nexus.WaveTheme, 
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) },
+		ChooseRandom { Summon(Horse, 1, 3) }
+	)
+End
+
+Def ItemReward()
+	# Choose from a random pool of random pools
+	ChooseRandom {
+		# Drop some pieces from a random armor set
+		ChooseRandom {
+			Chain {
+				Chance 0.80 DropItems { Simple "LeatherHelm"   } { 1 5 }
+				Chance 0.80 DropItems { Simple "LeatherArmor"  } { 1 5 }
+				Chance 0.80 DropItems { Simple "LeatherGloves" } { 1 5 }
+				Chance 0.80 DropItems { Simple "LeatherBoots"  } { 1 5 }
+				Chance 0.80 DropItems { Simple "WoodenShield"  } { 1 5 }
+			}
+			Chain {
+				Chance 0.60 DropItems { Simple "IronHelm"   } { 1 3 }
+				Chance 0.60 DropItems { Simple "ChainArmor"  } { 1 3 }
+				Chance 0.60 DropItems { Simple "IronGloves" } { 1 3 }
+				Chance 0.60 DropItems { Simple "IronBoots"  } { 1 3 }
+				Chance 0.60 DropItems { Simple "IronShield" } { 1 3 }
+			}
+			Chain {
+				Chance 0.40 DropItems { Simple "AdaHelm"   } { 1 2 }
+				Chance 0.40 DropItems { Simple "AdaArmor"  } { 1 2 }
+				Chance 0.40 DropItems { Simple "AdaGloves" } { 1 2 }
+				Chance 0.40 DropItems { Simple "AdaBoots"  } { 1 2 }
+				Chance 0.40 DropItems { Simple "AdaShield" } { 1 2 }
+			}
+			Chain {
+				Chance 0.20 DropItems { Simple "AdoxiumHelm"   } { 1 }
+				Chance 0.20 DropItems { Simple "AdoxiumArmor"  } { 1 }
+				Chance 0.20 DropItems { Simple "AdoxiumGloves" } { 1 }
+				Chance 0.20 DropItems { Simple "AdoxiumBoots"  } { 1 }
+			}
+		}
+		# Drop some assorted weapons
+		Repeat(3, Chain {
+			ChooseRandom {
+				FirstSuccessful {
+					Chance 0.10 DropItems { Simple "ArchwoodBow" } { 1 }
+					Chance 0.30 DropItems { Simple "Crossbow" } { 1 }
+					Chance 0.50 DropItems { Simple "ElvenBow" } { 1 2 }
+					DropItems { Simple "Bow" } { 1 3 }
+				}
+				FirstSuccessful {
+					Chance 0.10 DropItems { Simple "InferniteWarHammer" } { 1 }
+					Chance 0.30 DropItems { Simple "AdaWarHammer" } { 1 2 }
+					DropItems { Simple "WarHammer" } { 1 3 }
+				}
+				FirstSuccessful {
+					Chance 0.10 DropItems { Simple "InferniteBattleAxe" } { 1 }
+					Chance 0.30 DropItems { Simple "AdaBattleAxe" } { 1 2 }
+					DropItems { Simple "BattleAxe" } { 1 3 }
+				}
+				FirstSuccessful {
+					Chance 0.10 DropItems { Simple "InferniteSword" } { 1 }
+					Chance 0.20 DropItems { Simple "AdaSword" } { 1 2 }
+					Chance 0.40 DropItems { Simple "ElvenSword" } { 1 3 }
+					Chance 0.60 DropItems { Simple "Sword" } { 1 4 }
+					Chance 0.80 DropItems { Simple "Spear" } { 1 5 }
+					DropItems { Simple "Knife" } { 1 10 }
+				}
+			}
+		})
+		# Drop some miscellaneous themed consumables
+		ChooseRandom {
+			Chain {
+				Chance 0.20 DropItems { Potion Heal {FLESH}  } { 5 10 }
+				Chance 0.20 DropItems { Potion Heal {SPIRIT} } { 5 10 }
+				ChooseRandom {
+					DropItems { Potion Heal {FLESH}  } { 3 6 }
+					DropItems { Potion Heal {SPIRIT} } { 3 6 }
+				}
+			}
+			ChooseRandom {
+				DropItems { Potion Lasting SLEEP     } { 2 8 }
+				DropItems { Potion Lasting SLOWED    } { 2 8 }
+				DropItems { Potion Lasting BLIND     } { 2 8 }
+				DropItems { Potion Lasting POISON    } { 2 8 }
+				DropItems { Potion Lasting INSANITY  } { 2 8 }
+				DropItems { Potion Lasting INVISIBLE } { 2 8 }
+			}
+		}
+	}
+End
+
+Def GoldReward()
+	DropItems { Simple "GoldPiece" } { 25 50 }
+End
+
+Def BossReward()
+	Switch(Nexus._bossWavesCleared,
+		ChooseRandom { AddTechnology "tier 1 recruits" },
+		ChooseRandom { AddTechnology "tier 2 recruits" },
+		ChooseRandom { AddTechnology "tier 3 recruits" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" }
+	)
 End
 
 MakeGeneralPurposeVirtualMachine(Nexus, { "altar" },
@@ -25,8 +161,8 @@ MakeGeneralPurposeVirtualMachine(Nexus, { "altar" },
 	# The current wave goes from 1 to 100.
 	DWORD(Nexus.CurrentWave, 0, 0)
 	# Day = 1500 ticks; Night = 1500 ticks
-	# The cooldown starts off at 40500 and goes down by 375 after each wave, to a minimum of 3000 on wave 100.
-	QWORD(Nexus.WaveCooldown, 9, E, 3, 4)	
+	# The cooldown starts off at 3000 and increases by 270 after each wave, to a maximum of 30000 on wave 100.
+	QWORD(Nexus.WaveCooldown, 0, B, B, 8)	
 	# The theme of the current wave. There's 16 themes.
 	WORD(Nexus.WaveTheme, 0)
 	# The amount of enemies that are still alive during the current wave. Max 255 enemies per wave.
@@ -40,17 +176,13 @@ MakeGeneralPurposeVirtualMachine(Nexus, { "altar" },
 	DWORD(Nexus._enemiesToSpawn, 0, 0)
 	# Modifier that scales the rewards at the end of a wave
 	DWORD(Nexus._rewardModifier, 0, 0)
-	DWORD(_tmp, 0, 1)
-
-	# TODO: Remove this when the intro UI is implemented
-	VMJumpConst(Nexus, 1)
+	QWORD(a, 0, F, 0, 0)
 },
 # OnTick
 {
 	# KeeperTD: A tower defense mod for KeeperRL by G3Kappa.
 	# Goal: defend this Nexus and your keeper from increasingly powerful monster waves.
-	DWORDDebugPrint(Nexus._enemiesToSpawn)
-	DWORDDebugPrint(Nexus.EnemiesLeft)
+	QWORDDebugPrint(Nexus._waveCooldown)
 },
 # OnHalt
 {
@@ -65,15 +197,17 @@ MakeGeneralPurposeVirtualMachine(Nexus, { "altar" },
 	}
 	fi()
 },
-Op1(), Op2(), Op3(), Op4(), Op5(), Op6(), Op7(), Op8(), Op9(), OpA(), OpB(), OpC(), OpD(), OpE(), OpF()
+Op1(), Op2(), Op3(), Op4(), Op5(), Op6(), Op7(), Op8(), Op9(), OpA(), OpB(), OpC(), OpD(), OpE(), OpF(),
+canBuildOutsideOfTerritory = true
+xForgetAfterBuilding = true
 )
 # These are all the OpCodes for the virtual machine. The "Halt" OpCode (0) is built-in and triggers OnHalt.
 Def Op1() Message NORMAL "Welcome to KeeperTD!"
 End
 Def Op2() Message NORMAL "Waiting for the the next wave..."
 	# Sleep until the wave cooldown is equal to 0
-	Filter Not DWORDEqConst(Nexus._waveCooldown, 0, 0) Chain {
-		DWORDDec(Nexus._waveCooldown)
+	Filter Not QWORDEqConst(Nexus._waveCooldown, 0, 0, 0, 0) Chain {
+		QWORDDec(Nexus._waveCooldown)
 		WORDDec(Nexus*PC)
 	}
 End
@@ -110,26 +244,9 @@ End
 Def Op4() Message NORMAL "The wave is progressing..." 
 	# Wait 50 ticks before spawning each monster
 	Filter Not DWORDEqConst(Nexus._enemiesToSpawn, 0, 0) Chain {
-		VMSleepConst(Nexus, 3, 2, {
+		VMSleepConst(Nexus, 0, 2, {
+			SummonWaveEnemy()
 			DWORDDec(Nexus._enemiesToSpawn)
-			Switch(Nexus.WaveTheme, 
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) },
-				ChooseRandom { Summon(Horse) }
-			)
 			WORDDec(Nexus*PC)
 		})
 	}
@@ -143,125 +260,28 @@ Def Op6() Message NORMAL "Wave completed! Generating gold rewards..."
 	# Gold reward = wave * rand(25,50)
 	Filter Not DWORDEqConst(Nexus._rewardModifier, 0, 0) Chain {
 		DWORDDec(Nexus._rewardModifier)
-		DropItems { Simple "GoldPiece" } { 25 50 }
+		GoldReward()
 	}
 End
 Def Op7() Message NORMAL "Wave completed! Generating item rewards..."
 	# Item reward: 50% chance to happen per wave, doesn't scale with wave
 	Chance 0.50 Chain {
-		# Choose from a random pool of random pools
-		ChooseRandom {
-			# Drop some pieces from a random armor set
-			ChooseRandom {
-				Chain {
-					Chance 0.80 DropItems { Simple "LeatherHelm"   } { 1 5 }
-					Chance 0.80 DropItems { Simple "LeatherArmor"  } { 1 5 }
-					Chance 0.80 DropItems { Simple "LeatherGloves" } { 1 5 }
-					Chance 0.80 DropItems { Simple "LeatherBoots"  } { 1 5 }
-					Chance 0.80 DropItems { Simple "WoodenShield"  } { 1 5 }
-				}
-				Chain {
-					Chance 0.60 DropItems { Simple "IronHelm"   } { 1 3 }
-					Chance 0.60 DropItems { Simple "ChainArmor"  } { 1 3 }
-					Chance 0.60 DropItems { Simple "IronGloves" } { 1 3 }
-					Chance 0.60 DropItems { Simple "IronBoots"  } { 1 3 }
-					Chance 0.60 DropItems { Simple "IronShield" } { 1 3 }
-				}
-				Chain {
-					Chance 0.40 DropItems { Simple "AdaHelm"   } { 1 2 }
-					Chance 0.40 DropItems { Simple "AdaArmor"  } { 1 2 }
-					Chance 0.40 DropItems { Simple "AdaGloves" } { 1 2 }
-					Chance 0.40 DropItems { Simple "AdaBoots"  } { 1 2 }
-					Chance 0.40 DropItems { Simple "AdaShield" } { 1 2 }
-				}
-				Chain {
-					Chance 0.20 DropItems { Simple "AdoxiumHelm"   } { 1 }
-					Chance 0.20 DropItems { Simple "AdoxiumArmor"  } { 1 }
-					Chance 0.20 DropItems { Simple "AdoxiumGloves" } { 1 }
-					Chance 0.20 DropItems { Simple "AdoxiumBoots"  } { 1 }
-				}
-			}
-			# Drop some assorted weapons
-			Repeat(3, Chain {
-				ChooseRandom {
-					FirstSuccessful {
-						Chance 0.10 DropItems { Simple "ArchwoodBow" } { 1 }
-						Chance 0.30 DropItems { Simple "Crossbow" } { 1 }
-						Chance 0.50 DropItems { Simple "ElvenBow" } { 1 2 }
-						DropItems { Simple "Bow" } { 1 3 }
-					}
-					FirstSuccessful {
-						Chance 0.10 DropItems { Simple "InferniteWarHammer" } { 1 }
-						Chance 0.30 DropItems { Simple "AdaWarHammer" } { 1 2 }
-						DropItems { Simple "WarHammer" } { 1 3 }
-					}
-					FirstSuccessful {
-						Chance 0.10 DropItems { Simple "InferniteBattleAxe" } { 1 }
-						Chance 0.30 DropItems { Simple "AdaBattleAxe" } { 1 2 }
-						DropItems { Simple "BattleAxe" } { 1 3 }
-					}
-					FirstSuccessful {
-						Chance 0.10 DropItems { Simple "InferniteSword" } { 1 }
-						Chance 0.20 DropItems { Simple "AdaSword" } { 1 2 }
-						Chance 0.40 DropItems { Simple "ElvenSword" } { 1 3 }
-						Chance 0.60 DropItems { Simple "Sword" } { 1 4 }
-						Chance 0.80 DropItems { Simple "Spear" } { 1 5 }
-						DropItems { Simple "Knife" } { 1 10 }
-					}
-				}
-			})
-			# Drop some miscellaneous themed consumables
-			ChooseRandom {
-				Chain {
-					Chance 0.20 DropItems { Potion Heal {FLESH}  } { 5 10 }
-					Chance 0.20 DropItems { Potion Heal {SPIRIT} } { 5 10 }
-					ChooseRandom {
-						DropItems { Potion Heal {FLESH}  } { 3 6 }
-						DropItems { Potion Heal {SPIRIT} } { 3 6 }
-					}
-				}
-				ChooseRandom {
-					DropItems { Potion Lasting SLEEP     } { 2 8 }
-					DropItems { Potion Lasting SLOWED    } { 2 8 }
-					DropItems { Potion Lasting BLIND     } { 2 8 }
-					DropItems { Potion Lasting POISON    } { 2 8 }
-					DropItems { Potion Lasting INSANITY  } { 2 8 }
-					DropItems { Potion Lasting INVISIBLE } { 2 8 }
-				}
-			}
-		}
+		ItemReward()
 	}
 	# If this was a boss wave, spawn the appropriate victory reward, scales with boss wave
 	Filter Flag "Nexus.IsBossWave" Chain {
+		BossReward()
 		WORDInc(Nexus._bossWavesCleared)
-		Switch(Nexus._bossWavesCleared,
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
-			ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" }
-		)
 	}
-	# Update the wave cooldown by subtracting 375 to it unless it's <= 3000
-	Filter Not QWORDEqConst(Nexus.WaveCooldown, 0, B, B, 8) Chain {
-		QWORD(_tmp, 0, 1, 7, 7)
-		QWORDSub(Nexus.WaveCooldown, _tmp)
+	# Update the wave cooldown by adding 270 to it unless it's 30000
+	Filter Not QWORDEqConst(Nexus.WaveCooldown, 9, E, 3, 4) Chain {
+		QWORD(_tmp, 0, 1, 0, E)
+		QWORDAdd(Nexus.WaveCooldown, _tmp)
 		QWORDCpy(Nexus.WaveCooldown, Nexus._waveCooldown)
 	}
 	# If this ISN'T the last wave, jump back to the start of the program
 	Filter Not DWORDEqConst(Nexus.CurrentWave, 6, 4) Chain {
-		VMJumpConst(Nexus, 1)
+		VMJumpConst(Nexus, 0)
 	}
 End
 Def Op8() Message NORMAL "You won!"
@@ -281,8 +301,11 @@ Def OpD() Message NORMAL "Instruction D"
 End
 Def OpE() Message NORMAL "Instruction E"
 End
-Def OpF()
-	DWORDRShift(_tmp)
-	DWORDDebugPrint(_tmp)
+Def OpF() Message NORMAL "Debugging..."
+	QWORD(b, 0, 0, 0, 1)
+	QWORDDebugPrint(a)
+	QWORDDebugPrint(b)
+	QWORDSub(a, b)
+	QWORDDebugPrint(a)
 	WORDDec(Nexus*PC)
 End

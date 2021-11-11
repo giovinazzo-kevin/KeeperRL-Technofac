@@ -1,3 +1,27 @@
+"KEEPERTD" inherit "KEEPER_MAGE"
+{
+  viewId = { "necromancer1" }
+  # ViewId upgrades of Keepers are applied every 5 tech level increases
+  viewIdUpgrades = { { "necromancer2" } { "necromancer3" } { "necromancer4" } }
+  name = append {
+    name = "Keeper"
+  }
+  spellSchools = { }
+  maxLevelIncrease = {
+    SPELL 12
+  }
+}
+"KEEPERTD_F" inherit "KEEPERTD"
+{
+  viewId = { "necromancer_f1" }
+  gender = FEMALE
+  name = append {
+    firstNameGen = "FIRST_FEMALE"
+  }
+  viewIdUpgrades = { { "necromancer_f2" } { "necromancer_f3" } { "necromancer_f4" }}
+}
+
+
 Def MakeKeeperTDCreature(Name, ViewId, Damage, RangedDamage, Defense, AiType, Body, PermanentEffects)
 "KEEPERTD_Name"
 {

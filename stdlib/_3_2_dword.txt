@@ -20,10 +20,12 @@ Def DWORDDec(Var)
 End
 
 Def DWORDAdd(A, B)
+    SetFlag "_carry" false
     WAdd(A, B, 1, WAdd(A, B, 2, {}))
 End
 
 Def DWORDSub(A, B)
+    SetFlag "_borrow" false
     WSub(A, B, 1, WSub(A, B, 2, {}))
 End
 

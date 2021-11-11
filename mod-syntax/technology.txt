@@ -1,0 +1,3 @@
+"tier 1 recruits"       { "Recruit weak creatures to help you defend the Nexus." }
+"tier 2 recruits"       { "Recruit stronger creatures to help you defend the Nexus." { "tier 1 recruits"} }
+"tier 3 recruits"       { "Recruit the strongest creatures to help you defend the Nexus." { "tier 2 recruits"} }

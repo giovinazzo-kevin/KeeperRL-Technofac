@@ -1,8 +1,8 @@
 Def QWORD(Var, HexDigit1, HexDigit2, HexDigit3, HexDigit4)
-    HexDigit1(Var, 1)
-    HexDigit2(Var, 2)
-    HexDigit3(Var, 3)
-    HexDigit4(Var, 4)
+    HexDigit1(Var, 4)
+    HexDigit2(Var, 3)
+    HexDigit3(Var, 2)
+    HexDigit4(Var, 1)
 End
 Def QWORD(Var) QWORD(Var, 0, 0, 0, 0) End
 
@@ -23,10 +23,12 @@ Def QWORDDec(Var)
 End
 
 Def QWORDAdd(A, B)
+    SetFlag "_carry" false
     WAdd(A, B, 1, WAdd(A, B, 2, WAdd(A, B, 3, WAdd(A, B, 4, {}))))
 End
 
 Def QWORDSub(A, B)
+    SetFlag "_borrow" false
     WSub(A, B, 1, WSub(A, B, 2, WSub(A, B, 3, WSub(A, B, 4, {}))))
 End
 

@@ -1,0 +1,61 @@
+"FLATLAND"
+{
+  lakes = {
+    size = {1 2}
+    count = {0}
+  }
+  items = "wildernessItems"
+  itemCount = {0}
+  mountains = {
+    lowlandRatio = 1.00
+    hillRatio = 0.00
+    hill = "HILL"
+    grass = "GRASS"
+    mountain = "MOUNTAIN"
+    mountainDeep = "MOUNTAIN2"
+    mountainFloor = "FLOOR"
+  }
+  forests = {
+  }
+  wildlife = {
+    count = { 0 }
+    all = {
+      4 "DEER"
+      2 "FOX"
+      2 "BOAR"
+    }
+  }
+  darkKeeperEnemies = {
+    { id = "GUARD_POST" probability = 0.5 }
+    { id = "HUMAN_COTTAGE" count = { 3 5 } }
+    { id = "COTTAGE_BANDITS" probability = 0.5 }
+    { id = "CORPSES" probability = 0.2 }
+    { id = "BLACKSMITH" probability = 0.2 }
+    { id = "WIZARD_TOWER" probability = 0.1 }
+    { id = "RUINS" probability = 0.5 }
+  }
+  whiteKeeperEnemies = {
+    { id = "ADOXIE_FEET" probability = 0.5 }
+    { id = "COTTAGE_BANDITS" count = { 3 5 } }
+    { id = "CORPSES" probability = 0.2 }
+    { id = "WIZARD_TOWER" probability = 0.1 }
+    { id = "RUINS" probability = 0.5 }
+  }
+  darkKeeperBaseEnemies = {
+    { id = "TUTORIAL_VILLAGE" }
+    { id = "DWARF_CAVE" }
+    { id = "BANDITS" }
+    { id = "ANTS_CLOSED_SMALL" }
+    { id = "ADOXIE_VAULT" }
+    { id = "KRAKEN" probability = 0.3 }
+  }
+  whiteKeeperBaseEnemies = {
+    { id = "DARK_ELF_CAVE" }
+    { id = "COTTAGE_BANDITS" }
+    { id = "ANTS_CLOSED_SMALL" }
+    { id = "ADOXIE_VAULT" }
+    { id = "WOLF_DEN" }
+    { id = "KRAKEN" probability = 0.3 }
+  }
+  keeperBiome = { "grass" } "flatlands" 0
+}

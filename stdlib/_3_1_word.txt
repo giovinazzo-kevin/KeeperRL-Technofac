@@ -26,10 +26,12 @@ Def WORDDec(Var)
 End
 
 Def WORDAdd(A, B)
+    SetFlag "_carry" false
     WAdd(A, B, 1, {})
 End
 
 Def WORDSub(A, B)
+    SetFlag "_borrow" false
     WSub(A, B, 1, {})
 End
 

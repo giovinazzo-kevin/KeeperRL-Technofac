@@ -27,7 +27,6 @@ End
 
 Def WAdd(A, B, Word, Cont)
 Chain {
-    SetFlag "_carry" false
     BAdd(WNthBit(A, Word, 1), WNthBit(B, Word, 1), 
         BAdd(WNthBit(A, Word, 2), WNthBit(B, Word, 2), 
             BAdd(WNthBit(A, Word, 3), WNthBit(B, Word, 3), 
@@ -38,7 +37,6 @@ End
 
 Def WSub(A, B, Word, Cont)
 Chain {
-    SetFlag "_borrow" false
     BSub(WNthBit(A, Word, 1), WNthBit(B, Word, 1), 
         BSub(WNthBit(A, Word, 2), WNthBit(B, Word, 2), 
             BSub(WNthBit(A, Word, 3), WNthBit(B, Word, 3), 

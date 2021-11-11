@@ -49,7 +49,8 @@ Def MakeGeneralPurposeVirtualMachine(
     OnTick, 
     OnHalt, 
     OnDestroyed, 
-    Op1, Op2, Op3, Op4, Op5, Op6, Op7, Op8, Op9, OpA, OpB, OpC, OpD, OpE, OpF
+    Op1, Op2, Op3, Op4, Op5, Op6, Op7, Op8, Op9, OpA, OpB, OpC, OpD, OpE, OpF,
+    Extra
 )
 # Creates a lock for this VM so that only one instance may execute at a given time
 MakeLock(LOCK_VM_Name, CEILING, TORCH1, Rgb 0 0 0 0)
@@ -93,5 +94,6 @@ MakeLock(LOCK_VM_Name, CEILING, TORCH1, Rgb 0 0 0 0)
         ReleaseLock(LOCK_VM_Name)
         OnDestroyed
     }
+    Extra
 }
 End
