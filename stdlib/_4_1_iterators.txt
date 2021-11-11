@@ -1,0 +1,57 @@
+# These macros are defined purely so that the correct number of closing items for the 'Repeat' macro can be generated.
+Def 0(_, _, _, _, _, _, _, _, _, _) End
+Def 1(_, _, _, _, _, _, _, _, _, _) { 0 0 } End
+Def 2(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } End
+Def 3(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } End
+Def 4(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def 5(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def 6(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def 7(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def 8(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def 9(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def A(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def B(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def C(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def D(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def E(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def F(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+
+Def Repeat(Times, Body)
+  CustomArea Chain {
+    Body
+  } { Times(_, _, _, _, _, _, _, _, _, _) }
+End
+
+Def NthNeighbor(Index, Then)
+  WORD(i, Index)
+  Area 1 Chain {
+      Filter WORDEqConst(i, 0) Chain { Then }
+      WORDDec(i)
+  }
+End
+
+Def ForEachNeighbor(Then)
+  WORD(i, 8)
+  Area 1 Chain {
+      Then
+      WORDDec(i)
+  }
+End
+
+Def ForEachCardinalNeighbor(Then)
+    ForEachNeighbor(FirstSuccessful {
+        Filter WORDEqConst(i, 1) Chain { Then }
+        Filter WORDEqConst(i, 3) Chain { Then }
+        Filter WORDEqConst(i, 5) Chain { Then }
+        Filter WORDEqConst(i, 7) Chain { Then }
+    })
+End
+
+Def ForEachDiagonalNeighbor(Then)
+    ForEachNeighbor(FirstSuccessful {
+        Filter WORDEqConst(i, 0) Chain { Then }
+        Filter WORDEqConst(i, 2) Chain { Then }
+        Filter WORDEqConst(i, 6) Chain { Then }
+        Filter WORDEqConst(i, 8) Chain { Then }
+    })
+End

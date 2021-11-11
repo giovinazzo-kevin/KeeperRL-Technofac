@@ -222,19 +222,19 @@ MakeAssembler(
             if(Is1("_DUG_IRON")) {
                 PlaceFurniture "technofac_slag_iron_inactive"
             }
-            elseif(Is1("_DUG_GOLD")) {
+            elif(Is1("_DUG_GOLD")) {
                 PlaceFurniture "technofac_slag_gold_inactive"
             }
-            elseif(Is1("_DUG_STONE")) {
+            elif(Is1("_DUG_STONE")) {
                 PlaceFurniture "technofac_slag_stone_inactive"
             }
-            elseif(Is1("_DUG_ADA")) {
+            elif(Is1("_DUG_ADA")) {
                 PlaceFurniture "technofac_slag_adamantium_inactive"
             }
-            elseif(Is1("_DUG_ADOXIUM")) {
+            elif(Is1("_DUG_ADOXIUM")) {
                 PlaceFurniture "technofac_slag_adoxium_inactive"
             }
-            elseif(Is1("_DUG_INFERNITE")) {
+            elif(Is1("_DUG_INFERNITE")) {
                 PlaceFurniture "technofac_slag_infernite_inactive"
             }
             endif()

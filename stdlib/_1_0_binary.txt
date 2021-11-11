@@ -1,0 +1,58 @@
+Def 0(Var) SetFlag Var false End
+Def 1(Var) SetFlag Var true  End
+
+Def Get(Var) Flag Var End 
+Def Set(Var, Value) Value(Var) End 
+
+Def NthBit(Var, Bit) "Var@Bit" End
+Def GetBit(Var, Bit) Get(NthBit(Var, Bit)) End
+Def SetBit(Var, Bit, Value) Set(NthBit(Var, Bit), Value) End
+
+Def BInc(A, Carry)
+  FirstSuccessful {
+    Filter Not Get(A) Set(A, 1)
+    Chain { Set(A, 0) Carry }
+  }
+End
+
+Def BDec(A, Carry)
+  FirstSuccessful {
+    Filter Get(A) Set(A, 0)
+    Chain { Set(A, 1) Carry }
+  }
+End
+
+Def BAdd(A, B, Carry)
+  if(xor(Get(A), Get(B))) {
+    Set(A, 1)
+  }
+  elif(and(Get(A), Get(B))) {
+    Set(A, 0)
+    Carry
+  } 
+  fi()
+End
+
+Def BSub(A, B, Borrow)
+  if(and(Not Get(A), Get(B))) {
+    Set(A, 1)
+    Borrow
+  }
+  elif(and(Get(A), Get(B))) {
+    Set(A, 0)
+  } 
+  fi()
+End
+
+Def BCpy(A, B)
+  FirstSuccessful {
+    Filter And { Get(A) Not Get(B) } Set(B, 1)
+    Filter And { Not Get(A) Get(B) } Set(B, 0)
+  }
+End
+
+Def BEq(A, B) Not xor(Get(A), Get(B)) End
+Def BGt(A, B) And { Get(A) Not Get(B) } End
+Def BLt(A, B) And { Not Get(A) Get(B) } End
+Def BGte(A, B) Get(A) End
+Def BLte(A, B) Not Get(A) End

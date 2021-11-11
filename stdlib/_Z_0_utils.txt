@@ -1,0 +1,32 @@
+Def DebugPrint(Var, Word, Bit)
+	FirstSuccessful {
+		Filter Get(WNthBit(Var, Word, Bit)) Message HIGH "1"
+		Message HIGH "0"
+	}
+End
+
+Def WDebugPrint(Var, Word)
+  DebugPrint(Var, Word, 4)
+  DebugPrint(Var, Word, 3)
+  DebugPrint(Var, Word, 2)
+  DebugPrint(Var, Word, 1)
+End
+
+Def WORDDebugPrint(Var)
+	Message NORMAL "Var = "
+  WDebugPrint(Var, 1)
+End
+
+Def DWORDDebugPrint(Var)
+	Message NORMAL "Var = "
+  WDebugPrint(Var, 1)
+  WDebugPrint(Var, 2)
+End
+
+Def QWORDDebugPrint(Var)
+	Message NORMAL "Var = "
+  WDebugPrint(Var, 1)
+  WDebugPrint(Var, 2)
+  WDebugPrint(Var, 3)
+  WDebugPrint(Var, 4)
+End

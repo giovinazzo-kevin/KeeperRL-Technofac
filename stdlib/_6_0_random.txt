@@ -1,0 +1,29 @@
+Def BRandom(Bit)
+    FirstSuccessful {
+        Chance 0.5 Set(Bit, 1)
+        Set(Bit, 0)
+    }
+End
+
+Def WRandom(Var, Word)
+    BRandom(WNthBit(Var, Word, 1))
+    BRandom(WNthBit(Var, Word, 2))
+    BRandom(WNthBit(Var, Word, 3))
+    BRandom(WNthBit(Var, Word, 4))
+End
+
+Def WORDRandom(Var)
+    WRandom(Var, 1)
+End
+
+Def DWORDRandom(Var)
+    WRandom(Var, 1)
+    WRandom(Var, 2)
+End
+
+Def QWORDRandom(Var)
+    WRandom(Var, 1)
+    WRandom(Var, 2)
+    WRandom(Var, 3)
+    WRandom(Var, 4)
+End

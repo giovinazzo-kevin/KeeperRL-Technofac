@@ -1,0 +1,24 @@
+Def MakeFurnitureFlag(Name, Layer, ViewLayer, Color)
+    "EFFECTS#_FLAG_Name"
+    {
+        name = "Furniture flag (Name)"
+        viewId = { "tile_gas" Color }
+        layer = Layer
+        viewLayer = ViewLayer
+        xForgetAfterBuilding = true
+    }
+End
+
+Def FurnitureFlag(Name)
+    FurnitureType "EFFECTS#_FLAG_Name"
+End
+
+Def SetFurnitureFlag(Name, Value)
+    Chain {
+        SetFlag "_tmp" Value
+        FirstSuccessful {
+            Filter Flag "_tmp" PlaceFurniture "EFFECTS#_FLAG_Name"
+            RemoveFurniture "EFFECTS#_FLAG_Name"
+        }
+    }
+End

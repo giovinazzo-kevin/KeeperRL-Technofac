@@ -3,7 +3,7 @@ Def if(Cond)
         Filter Cond Chain # <Body>
 End
 
-Def elseif(Cond) 
+Def elif(Cond) 
         Filter Cond Chain # <Body>
 End
 
@@ -27,8 +27,8 @@ Def ifany(Iterator, Predicate)
 	any(Iterator, Predicate) if(Is1("_TMP1"))
 End
 
-Def elseifany(Iterator, Predicate)
-	any(Iterator, Predicate) elseif(Is1("_TMP1"))
+Def elifany(Iterator, Predicate)
+	any(Iterator, Predicate) elif(Is1("_TMP1"))
 End
 
 Def all(Iterator, Predicate) 
@@ -43,8 +43,8 @@ Def ifall(Iterator, Predicate)
 	all(Iterator, Predicate) if(Is1("_TMP1"))
 End
 
-Def elseifall(Iterator, Predicate)
-	all(Iterator, Predicate) elseif(Is1("_TMP1"))
+Def elifall(Iterator, Predicate)
+	all(Iterator, Predicate) elif(Is1("_TMP1"))
 End
 
 Def count(Iterator, Predicate) 
@@ -60,9 +60,9 @@ Def ifcount(Iterator, Cond, Match)
 	count(Iterator, Predicate) if(eq())
 End
 
-Def elseifcount(Iterator, Cond, Match)
+Def elifcount(Iterator, Cond, Match)
 	Match cmp()
-	count(Iterator, Predicate) elseif(eq())
+	count(Iterator, Predicate) elif(eq())
 End
 
 Def for(Init)

@@ -1,0 +1,20 @@
+Def Switch(Var, Case0, Case1, Case2, Case3, Case4, Case5, Case6, Case7, Case8, Case9, CaseA, CaseB, CaseC, CaseD, CaseE, CaseF)
+  FirstSuccessful {
+    Filter WORDEqConst(Var, 0) Chain { Case0 }
+    Filter WORDEqConst(Var, 1) Chain { Case1 }
+    Filter WORDEqConst(Var, 2) Chain { Case2 }
+    Filter WORDEqConst(Var, 3) Chain { Case3 }
+    Filter WORDEqConst(Var, 4) Chain { Case4 }
+    Filter WORDEqConst(Var, 5) Chain { Case5 }
+    Filter WORDEqConst(Var, 6) Chain { Case6 }
+    Filter WORDEqConst(Var, 7) Chain { Case7 }
+    Filter WORDEqConst(Var, 8) Chain { Case8 }
+    Filter WORDEqConst(Var, 9) Chain { Case9 }
+    Filter WORDEqConst(Var, A) Chain { CaseA }
+    Filter WORDEqConst(Var, B) Chain { CaseB }
+    Filter WORDEqConst(Var, C) Chain { CaseC }
+    Filter WORDEqConst(Var, D) Chain { CaseD }
+    Filter WORDEqConst(Var, E) Chain { CaseE }
+    Chain { CaseF }
+  }
+End

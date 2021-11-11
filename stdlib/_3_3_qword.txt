@@ -1,0 +1,77 @@
+Def QWORD(Var, HexDigit1, HexDigit2, HexDigit3, HexDigit4)
+    HexDigit1(Var, 1)
+    HexDigit2(Var, 2)
+    HexDigit3(Var, 3)
+    HexDigit4(Var, 4)
+End
+Def QWORD(Var) QWORD(Var, 0, 0, 0, 0) End
+
+Def QWORDCpy(A, B)
+    QWORD(B)
+    WCpy(A, B, 1)
+    WCpy(A, B, 2)
+    WCpy(A, B, 3)
+    WCpy(A, B, 4)
+End
+
+Def QWORDInc(Var)
+    WInc(Var, 1, WInc(Var, 2, WInc(Var, 3, WInc(Var, 4, {}))))
+End
+
+Def QWORDDec(Var)
+    WDec(Var, 1, WDec(Var, 2, WDec(Var, 3, WDec(Var, 4, {}))))
+End
+
+Def QWORDAdd(A, B)
+    WAdd(A, B, 1, WAdd(A, B, 2, WAdd(A, B, 3, WAdd(A, B, 4, {}))))
+End
+
+Def QWORDSub(A, B)
+    WSub(A, B, 1, WSub(A, B, 2, WSub(A, B, 3, WSub(A, B, 4, {}))))
+End
+
+Def QWORDEq(A, B)
+    And { WEq(A, B, 1) WEq(A, B, 2) WEq(A, B, 3) WEq(A, B, 4) }
+End
+
+Def QWORDEqConst(A, K1, K2, K3, K4)
+    And { WEqConst(A, K1, 1) WEqConst(A, K2, 2) WEqConst(A, K3, 3) WEqConst(A, K4, 4) }
+End
+
+Def QWORDGt(A, B)
+    Or { WGt(A, B, 1) WGt(A, B, 2) WGt(A, B, 3) WGt(A, B, 4) }
+End
+
+Def QWORDGte(A, B)
+    Or { WGte(A, B, 1) WGte(A, B, 2) WGte(A, B, 3) WGte(A, B, 4) }
+End
+
+Def QWORDLt(A, B)
+    Or { WLt(A, B, 1) WLt(A, B, 2) WLt(A, B, 3) WLt(A, B, 4) }
+End
+
+Def QWORDLte(A, B)
+    Or { WLte(A, B, 1) WLte(A, B, 2) WLte(A, B, 3)  WLte(A, B, 4) }
+End
+
+Def QWORDLShift(A)
+    WLShift(A, 1, "_tmp1")
+    WLShift(A, 2, "_tmp2")
+    WLShift(A, 3, "_tmp3")
+    WLShift(A, 4, "_tmp4")
+    BCpy("_tmp1", WNthBit(A, 4, 4))
+    BCpy("_tmp2", WNthBit(A, 3, 4))
+    BCpy("_tmp3", WNthBit(A, 2, 4))
+    BCpy("_tmp4", WNthBit(A, 1, 4))
+End
+
+Def QWORDRShift(A)
+    WRShift(A, 1, "_tmp1")
+    WRShift(A, 2, "_tmp2")
+    WRShift(A, 3, "_tmp3")
+    WRShift(A, 4, "_tmp4")
+    BCpy("_tmp4", WNthBit(A, 1, 1))
+    BCpy("_tmp3", WNthBit(A, 2, 1))
+    BCpy("_tmp2", WNthBit(A, 3, 1))
+    BCpy("_tmp1", WNthBit(A, 4, 1))
+End

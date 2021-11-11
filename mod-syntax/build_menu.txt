@@ -1,0 +1,3 @@
+"crafting" modify append {
+    { Furniture {{ "EFFECTS#Nexus" }     "WOOD" 0 }                    "Literally a virtual machine"         "Kappa" }
+}

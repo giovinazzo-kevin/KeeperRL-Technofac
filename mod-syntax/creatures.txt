@@ -1,0 +1,25 @@
+Def MakeKeeperTDCreature(Name, ViewId, Damage, RangedDamage, Defense, AiType, Body, PermanentEffects)
+"KEEPERTD_Name"
+{
+    viewId = ViewId
+    attr = {
+      DAMAGE Damage
+      DEFENSE Defense
+      RANGED_DAMAGE RangedDamage
+    }
+    aiType = AiType
+    body = Body
+    permanentEffects = PermanentEffects
+    name = {
+      name = "Name"
+    }
+    deathEffect = Chain {
+        DWORDDec(Nexus.EnemiesLeft)
+    }
+}
+End
+
+MakeKeeperTDCreature(Horse, { "horse" }, 1, 0, 12, MELEE, {
+    type = FourLegged LARGE
+    weight = 500
+}, {})

@@ -1,0 +1,66 @@
+Def DWORD(Var, HexDigit1, HexDigit2)
+    HexDigit1(Var, 2)
+    HexDigit2(Var, 1)
+End
+
+Def DWORD(Var) DWORD(Var, 0, 0) End
+
+Def DWORDCpy(A, B)
+    DWORD(B)
+    WCpy(A, B, 1)
+    WCpy(A, B, 2)
+End
+
+Def DWORDInc(Var)
+    WInc(Var, 1, WInc(Var, 2, {}))
+End
+
+Def DWORDDec(Var)
+    WDec(Var, 1, WDec(Var, 2, {}))
+End
+
+Def DWORDAdd(A, B)
+    WAdd(A, B, 1, WAdd(A, B, 2, {}))
+End
+
+Def DWORDSub(A, B)
+    WSub(A, B, 1, WSub(A, B, 2, {}))
+End
+
+Def DWORDEq(A, B)
+    And { WEq(A, B, 1) WEq(A, B, 2) }
+End
+
+Def DWORDEqConst(A, K1, K2)
+    And { WEqConst(A, K1, 1) WEqConst(A, K2, 2) }
+End
+
+Def DWORDGt(A, B)
+    Or { WGt(A, B, 1) WGt(A, B, 2) }
+End
+
+Def DWORDGte(A, B)
+    Or { WGte(A, B, 1) WGte(A, B, 2) }
+End
+
+Def DWORDLt(A, B)
+    Or { WLt(A, B, 1) WLt(A, B, 2) }
+End
+
+Def DWORDLte(A, B)
+    Or { WLte(A, B, 1) WLte(A, B, 2) }
+End
+
+Def DWORDLShift(A)
+    WLShift(A, 1, "_tmp1")
+    WLShift(A, 2, "_tmp2")
+    BCpy("_tmp1", WNthBit(A, 2, 4))
+    BCpy("_tmp2", WNthBit(A, 1, 4))
+End
+
+Def DWORDRShift(A)
+    WRShift(A, 1, "_tmp1")
+    WRShift(A, 2, "_tmp2")
+    BCpy("_tmp2", WNthBit(A, 1, 1))
+    BCpy("_tmp1", WNthBit(A, 2, 1))
+End

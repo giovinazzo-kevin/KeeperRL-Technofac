@@ -1,0 +1,20 @@
+Def and(A, B) And { A B } End
+Def  or(A, B)  Or { A B } End
+Def xor(A, B) Or { And { Not A B } And { A Not B } } End
+
+Def if(Cond)
+  FirstSuccessful {
+    Filter Cond Chain # <Body>
+End
+
+Def elif(Cond) 
+    Filter Cond Chain # <Body>
+End
+
+Def else() 
+    Chain # <Body>
+End
+
+Def fi()
+  }
+End
