@@ -57,12 +57,20 @@ Def WORDLte(A, B)
     WLte(A, B, 1)
 End
 
-Def WORDLShift(A)
+Def WORDLShift(A, Cont)
     WLShift(A, 1, "_tmp")
-    BCpy("_tmp", WNthBit(A, 1, 4))
+    Cont
+End
+
+Def WORDRShift(A, Cont)
+    WRShift(A, 1, "_tmp")
+    Cont
+End
+
+Def WORDLShift(A)
+    WORDLShift(A, BCpy("_tmp", WNthBit(A, 1, 1)))
 End
 
 Def WORDRShift(A)
-    WRShift(A, 1, "_tmp")
-    BCpy("_tmp", WNthBit(A, 1, 1))
+    WORDRShift(A, BCpy("_tmp", WNthBit(A, 1, 4)))
 End

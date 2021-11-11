@@ -26,19 +26,25 @@ Def WDec(Var, Word, Cont)
 End
 
 Def WAdd(A, B, Word, Cont)
+Chain {
+    SetFlag "_carry" false
     BAdd(WNthBit(A, Word, 1), WNthBit(B, Word, 1), 
         BAdd(WNthBit(A, Word, 2), WNthBit(B, Word, 2), 
             BAdd(WNthBit(A, Word, 3), WNthBit(B, Word, 3), 
-                BAdd(WNthBit(A, Word, 4), WNthBit(B, Word, 4), 
+                BAdd(WNthBit(A, Word, 4), WNthBit(B, Word, 4),
                     Cont ))))
+}
 End
 
 Def WSub(A, B, Word, Cont)
+Chain {
+    SetFlag "_borrow" false
     BSub(WNthBit(A, Word, 1), WNthBit(B, Word, 1), 
         BSub(WNthBit(A, Word, 2), WNthBit(B, Word, 2), 
             BSub(WNthBit(A, Word, 3), WNthBit(B, Word, 3), 
-                BSub(WNthBit(A, Word, 4), WNthBit(B, Word, 4), 
+                BSub(WNthBit(A, Word, 4), WNthBit(B, Word, 4),
                     Cont ))))
+}
 End
 
 Def WCpy(A, B, Word)
@@ -107,15 +113,15 @@ Def WLte(A, B, Word)
 End
 
 Def WLShift(A, Word, Tmp)
-    BCpy(WNthBit(A, Word, 1), Tmp)
-    BCpy(WNthBit(A, Word, 2), WNthBit(A, Word, 1))
-    BCpy(WNthBit(A, Word, 3), WNthBit(A, Word, 2))
-    BCpy(WNthBit(A, Word, 4), WNthBit(A, Word, 3))
-End
-
-Def WRShift(A, Word, Tmp)
     BCpy(WNthBit(A, Word, 4), Tmp)
     BCpy(WNthBit(A, Word, 3), WNthBit(A, Word, 4))
     BCpy(WNthBit(A, Word, 2), WNthBit(A, Word, 3))
     BCpy(WNthBit(A, Word, 1), WNthBit(A, Word, 2))
+End
+
+Def WRShift(A, Word, Tmp)
+    BCpy(WNthBit(A, Word, 1), Tmp)
+    BCpy(WNthBit(A, Word, 2), WNthBit(A, Word, 1))
+    BCpy(WNthBit(A, Word, 3), WNthBit(A, Word, 2))
+    BCpy(WNthBit(A, Word, 4), WNthBit(A, Word, 3))
 End

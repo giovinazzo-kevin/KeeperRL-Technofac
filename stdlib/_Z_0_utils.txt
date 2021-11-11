@@ -19,14 +19,14 @@ End
 
 Def DWORDDebugPrint(Var)
 	Message NORMAL "Var = "
-  WDebugPrint(Var, 1)
   WDebugPrint(Var, 2)
+  WDebugPrint(Var, 1)
 End
 
 Def QWORDDebugPrint(Var)
 	Message NORMAL "Var = "
-  WDebugPrint(Var, 1)
-  WDebugPrint(Var, 2)
-  WDebugPrint(Var, 3)
   WDebugPrint(Var, 4)
+  WDebugPrint(Var, 3)
+  WDebugPrint(Var, 2)
+  WDebugPrint(Var, 1)
 End

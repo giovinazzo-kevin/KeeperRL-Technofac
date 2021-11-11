@@ -8,10 +8,7 @@ Def VMJumpConst(Name, Addr)
     WORD(Name*PC, Addr) 
 End
 
-
-
 # Sleeps for a given amount of ticks, then increases the program counter.
-# TODO: Use DWORD once there's constants that go up to 256. 
 Def VMSleepImpl(Name, Method, Then)
 Chain {
     Filter DWORDEqConst(Name_Sleep, 0, 0) Chain {
@@ -68,7 +65,7 @@ MakeLock(LOCK_VM_Name, CEILING, TORCH1, Rgb 0 0 0 0)
         {
             VMInit(Name)
             # Invoke user code
-            OnCreated
+            Chain { OnCreated }
         },
         # Called as long as we have the lock
         {
@@ -88,7 +85,7 @@ MakeLock(LOCK_VM_Name, CEILING, TORCH1, Rgb 0 0 0 0)
             # Increase the program counter to move to the next instruction
             WORDInc(Name*PC)
             # Invoke user code
-            OnTick
+            Chain { OnTick }
         })
     }
     destroyedEffect = Chain {

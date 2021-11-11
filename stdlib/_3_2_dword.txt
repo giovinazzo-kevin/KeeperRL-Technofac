@@ -51,16 +51,24 @@ Def DWORDLte(A, B)
     Or { WLte(A, B, 1) WLte(A, B, 2) }
 End
 
+Def DWORDLShift(A, Cont)
+    WLShift(A, 2, "_tmp1")
+    WLShift(A, 1, "_tmp2")
+    BCpy("_tmp1", WNthBit(A, 2, 1))
+    Cont
+End
+
 Def DWORDLShift(A)
-    WLShift(A, 1, "_tmp1")
-    WLShift(A, 2, "_tmp2")
-    BCpy("_tmp1", WNthBit(A, 2, 4))
+    DWORDLShift(A, BCpy("_tmp2", WNthBit(A, 1, 1)))
+End
+
+Def DWORDRShift(A, Cont)
+    WRShift(A, 1, "_tmp1")
+    WRShift(A, 2, "_tmp2")
     BCpy("_tmp2", WNthBit(A, 1, 4))
+    Cont
 End
 
 Def DWORDRShift(A)
-    WRShift(A, 1, "_tmp1")
-    WRShift(A, 2, "_tmp2")
-    BCpy("_tmp2", WNthBit(A, 1, 1))
-    BCpy("_tmp1", WNthBit(A, 2, 1))
+    DWORDRShift(A, BCpy("_tmp1", WNthBit(A, 2, 4)))
 End

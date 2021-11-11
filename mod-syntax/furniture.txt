@@ -7,7 +7,7 @@ MakeGeneralPurposeVirtualMachine(Nexus, { "altar" },
 {
 	# This is the program array. Each line corresponds to an address and an instruction.
 	WORD(Nexus.Code[0] , 1)	# UI explaining the rules of the game and giving the player a chance to relocate before the Nexus placement is finalized
-	WORD(Nexus.Code[1] , F) # Timer that waits until the previous wave's cooldown has expired
+	WORD(Nexus.Code[1] , 2) # Timer that waits until the previous wave's cooldown has expired
 	WORD(Nexus.Code[2] , 3) # Method that increases the wave counter and calculates the amount and monster types of the next wave
 	WORD(Nexus.Code[3] , 4) # Method that spawns monsters over time as long as the wave is progressing
 	WORD(Nexus.Code[4] , 5) # Method that waits for the player to complete the current wave by killing all monsters (see their deathEffect)
@@ -40,6 +40,7 @@ MakeGeneralPurposeVirtualMachine(Nexus, { "altar" },
 	DWORD(Nexus._enemiesToSpawn, 0, 0)
 	# Modifier that scales the rewards at the end of a wave
 	DWORD(Nexus._rewardModifier, 0, 0)
+	DWORD(_tmp, 0, 1)
 
 	# TODO: Remove this when the intro UI is implemented
 	VMJumpConst(Nexus, 1)
@@ -48,6 +49,8 @@ MakeGeneralPurposeVirtualMachine(Nexus, { "altar" },
 {
 	# KeeperTD: A tower defense mod for KeeperRL by G3Kappa.
 	# Goal: defend this Nexus and your keeper from increasingly powerful monster waves.
+	DWORDDebugPrint(Nexus._enemiesToSpawn)
+	DWORDDebugPrint(Nexus.EnemiesLeft)
 },
 # OnHalt
 {
@@ -96,8 +99,8 @@ Def Op3() Message NORMAL "Launching the next wave!"
 	# Calculate the amount of monsters to send out during this wave as CurrentWave * 2.5 = CurrentWave * 2 + CurrentWave / 2
 	DWORDCpy(Nexus.CurrentWave, Nexus.EnemiesLeft)
 	DWORDCpy(Nexus.CurrentWave, _tmp)
-	DWORDLShift(Nexus.EnemiesLeft)
-	DWORDRShift(_tmp)
+	DWORDLShift(Nexus.EnemiesLeft, {})
+	DWORDRShift(_tmp, {})
 	DWORDAdd(Nexus.EnemiesLeft, _tmp)
 	# Store a copy of this number in a temporary variable so that the next instruction can decrease it separately
 	DWORDCpy(Nexus.EnemiesLeft, Nexus._enemiesToSpawn)
@@ -109,7 +112,6 @@ Def Op4() Message NORMAL "The wave is progressing..."
 	Filter Not DWORDEqConst(Nexus._enemiesToSpawn, 0, 0) Chain {
 		VMSleepConst(Nexus, 3, 2, {
 			DWORDDec(Nexus._enemiesToSpawn)
-			DWORDDebugPrint(Nexus._enemiesToSpawn)
 			Switch(Nexus.WaveTheme, 
 				ChooseRandom { Summon(Horse) },
 				ChooseRandom { Summon(Horse) },
@@ -280,8 +282,7 @@ End
 Def OpE() Message NORMAL "Instruction E"
 End
 Def OpF()
-	DWORDDebugPrint(Nexus.EnemiesLeft)
-	DWORDInc(Nexus.EnemiesLeft)
-	DWORDDebugPrint(Nexus.EnemiesLeft)
+	DWORDRShift(_tmp)
+	DWORDDebugPrint(_tmp)
 	WORDDec(Nexus*PC)
 End

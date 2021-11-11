@@ -54,7 +54,7 @@ Def QWORDLte(A, B)
     Or { WLte(A, B, 1) WLte(A, B, 2) WLte(A, B, 3)  WLte(A, B, 4) }
 End
 
-Def QWORDLShift(A)
+Def QWORDLShift(A, Cont)
     WLShift(A, 1, "_tmp1")
     WLShift(A, 2, "_tmp2")
     WLShift(A, 3, "_tmp3")
@@ -62,10 +62,12 @@ Def QWORDLShift(A)
     BCpy("_tmp1", WNthBit(A, 4, 4))
     BCpy("_tmp2", WNthBit(A, 3, 4))
     BCpy("_tmp3", WNthBit(A, 2, 4))
-    BCpy("_tmp4", WNthBit(A, 1, 4))
+    Cont
 End
-
-Def QWORDRShift(A)
+Def QWORDLShift(A)
+    QWORDLShift(A, BCpy("_tmp4", WNthBit(A, 1, 4)))
+End
+Def QWORDRShift(A, Cont)
     WRShift(A, 1, "_tmp1")
     WRShift(A, 2, "_tmp2")
     WRShift(A, 3, "_tmp3")
@@ -73,5 +75,8 @@ Def QWORDRShift(A)
     BCpy("_tmp4", WNthBit(A, 1, 1))
     BCpy("_tmp3", WNthBit(A, 2, 1))
     BCpy("_tmp2", WNthBit(A, 3, 1))
-    BCpy("_tmp1", WNthBit(A, 4, 1))
+    Cont    
+End
+Def QWORDRShift(A)
+    QWORDRShift(A, BCpy("_tmp1", WNthBit(A, 4, 1)))
 End

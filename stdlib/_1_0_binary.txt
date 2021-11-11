@@ -22,26 +22,24 @@ Def BDec(A, Carry)
   }
 End
 
-Def BAdd(A, B, Carry)
-  if(xor(Get(A), Get(B))) {
-    Set(A, 1)
+Def BAdd(A, B, Cont)
+  FirstSuccessful {
+    Filter And { Not Get(A) Not Get(B) Flag "_carry" } Chain { Set(A, 1) SetFlag "_carry" false }
+    Filter And { Not Get(A) Get(B) Not Flag "_carry" } Chain { Set(A, 1) }
+    Filter And { Get(A) Not Get(B) Flag "_carry" } Chain { Set(A, 0) }
+    Filter And { Get(A) Get(B) Not Flag "_carry" } Chain { Set(A, 0) SetFlag "_carry" true }
   }
-  elif(and(Get(A), Get(B))) {
-    Set(A, 0)
-    Carry
-  } 
-  fi()
+  Cont
 End
 
-Def BSub(A, B, Borrow)
-  if(and(Not Get(A), Get(B))) {
-    Set(A, 1)
-    Borrow
+Def BSub(A, B, Cont)
+  FirstSuccessful {
+    Filter And { Not Get(A) Not Get(B) Flag "_borrow" } Chain { Set(A, 1) }
+    Filter And { Not Get(A) Get(B) Not Flag "_borrow" } Chain { Set(A, 1) SetFlag "_borrow" true }
+    Filter And { Get(A) Not Get(B) Flag "_borrow" } Chain { Set(A, 0) SetFlag "_borrow" false }
+    Filter And { Get(A) Get(B) Not Flag "_borrow" } Chain { Set(A, 0) }
   }
-  elif(and(Get(A), Get(B))) {
-    Set(A, 0)
-  } 
-  fi()
+  Cont
 End
 
 Def BCpy(A, B)
