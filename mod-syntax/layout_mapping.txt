@@ -1,0 +1,7 @@
+
+"keepertd" inherit "default" append {
+  "nexus" { Place "KEEPERTD_Nexus" Flag EMPTY_ROOM }
+  "nexus_spawner" { Place "KEEPERTD_SpawnPoint" Flag EMPTY_ROOM }
+  "nexus_trap" { Place "KEEPERTD_Trap" }
+  "nexus_wall" { Place "KEEPERTD_DungeonWall" }
+}

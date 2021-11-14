@@ -1,4 +1,4 @@
-Def WNthBit(Var, Word, Bit) NthBit(Var, Word+Bit) End
+Def WNthBit(Var, Word, Bit) NthBit(Var, Word_Bit) End
 
 Def W(Var, Word, A, B, C, D)
 	Set(WNthBit(Var, Word, 1), D)

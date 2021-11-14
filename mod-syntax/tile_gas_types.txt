@@ -1,0 +1,7 @@
+"BLOOD_MIST" {
+  "blood mist"
+  ColorId RED
+  0.95
+  0.0
+  false
+}

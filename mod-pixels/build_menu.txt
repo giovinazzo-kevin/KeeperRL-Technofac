@@ -1,0 +1,3 @@
+"crafting" modify append {
+    { Furniture {{ "G3KAPPA_VM" }     "WOOD" 0 }                    "VM"         "G3Kappa" }
+}

@@ -7,6 +7,12 @@
     name = "Keeper"
   }
   spellSchools = { }
+  hatedByEffect = HATE_DRAGONS
+  permanentEffects = { 
+    NO_CARRY_LIMIT 1 
+    HATE_DRAGONS 1 
+  }
+  skills = { }
   maxLevelIncrease = {
     SPELL 12
   }
@@ -33,12 +39,17 @@ Def MakeKeeperTDCreature(Name, ViewId, Damage, RangedDamage, Defense, AiType, Bo
     }
     aiType = AiType
     body = Body
+    hatedByEffect = HATE_DRAGONS
     permanentEffects = PermanentEffects
     name = {
       name = "Name"
     }
     deathEffect = Chain {
-        DWORDDec(Nexus.EnemiesLeft)
+        Filter Not CreatureFlag "Dead" Chain {
+          EmitGas "BLOOD_MIST" 1
+          DWORDDec(Nexus.EnemiesLeft)
+          SetCreatureFlag "Dead" true
+        }
     }
 }
 End
@@ -46,4 +57,145 @@ End
 MakeKeeperTDCreature(Horse, { "horse" }, 1, 0, 12, MELEE, {
     type = FourLegged LARGE
     weight = 500
-}, {})
+}, {
+  NIGHT_VISION 1
+  ELF_VISION 1
+})
+
+MakeKeeperTDCreature(Fly, { "fly" }, 1, 0, 12, MELEE, {
+    type = NonHumanoid SMALL
+    bodyParts = {
+      HEAD 1
+      LEG 6
+      WING 2
+      TORSO 1
+    }
+    weight = 0.1
+    deathSound = none
+    intrinsicAttacks = {
+      HEAD {{{ Intrinsic { "bite_attack" } "fangs" 6 {
+          attackType = BITE
+          attackMsg = BITE
+          victimEffect = {0.0 Lasting POISON} } }}}
+    }
+}, {
+  NIGHT_VISION 1
+  ELF_VISION 1
+})
+
+MakeKeeperTDCreature(AntSoldier, { "ant_soldier" }, 1, 0, 12, MELEE, {
+    type = NonHumanoid MEDIUM
+    weight = 10
+    bodyParts = {
+      LEG 6
+      HEAD 1
+      TORSO 1
+    }
+    deathSound = none
+    intrinsicAttacks = {
+      HEAD {{{ Intrinsic { "bite_attack" } "fangs" 6 {
+          attackType = BITE
+          attackMsg = BITE
+          victimEffect = {0.0 Lasting POISON} } }}}
+    }
+}, {
+  NIGHT_VISION 1
+  ELF_VISION 1
+})
+
+MakeKeeperTDCreature(AntWorker, { "ant_worker" }, 1, 0, 12, MELEE, {
+    type = NonHumanoid MEDIUM
+    weight = 10
+    bodyParts = {
+      LEG 6
+      HEAD 1
+      TORSO 1
+    }
+    deathSound = none
+    intrinsicAttacks = {
+      HEAD {{{ Intrinsic { "bite_attack" } "fangs" 6 {
+          attackType = BITE
+          attackMsg = BITE
+          victimEffect = {0.0 Lasting POISON} } }}}
+    }
+}, {
+  NIGHT_VISION 1
+  ELF_VISION 1
+})
+
+MakeKeeperTDCreature(AntQueen, { "ant_queen" }, 1, 0, 12, MELEE, {
+    type = NonHumanoid MEDIUM
+    weight = 10
+    bodyParts = {
+      LEG 6
+      HEAD 1
+      TORSO 1
+    }
+    deathSound = none
+    intrinsicAttacks = {
+      HEAD {{{ Intrinsic { "bite_attack" } "fangs" 62 {
+          attackType = BITE
+          attackMsg = BITE
+          victimEffect = {0.0 Lasting POISON} } }}}
+    }
+}, {
+  NIGHT_VISION 1
+  ELF_VISION 1
+})
+
+MakeKeeperTDCreature(Spider, { "spider" }, 1, 0, 12, MELEE, {
+      type = NonHumanoid SMALL
+      bodyParts = {
+        LEG 8
+        TORSO 1
+      }
+      weight = 0.3
+      deathSound = none
+      intrinsicAttacks = {
+        TORSO {{{ Intrinsic { "bite_attack" } "fangs" 6 {
+            attackType = BITE
+            attackMsg = BITE
+            victimEffect = {0.0 Lasting POISON} } }}}
+      }
+}, {
+  NIGHT_VISION 1
+  ELF_VISION 1
+})
+
+MakeKeeperTDCreature(PurpleSpider, { "special_bmgn" }, 1, 0, 12, MELEE, {
+      type = NonHumanoid LARGE
+      bodyParts = {
+        LEG 8
+        TORSO 1
+      }
+      weight = 0.3
+      deathSound = none
+      intrinsicAttacks = {
+        TORSO {{{ Intrinsic { "bite_attack" } "fangs" 6 {
+            attackType = BITE
+            attackMsg = BITE
+            victimEffect = {0.0 Lasting POISON} } }}}
+      }
+}, {
+  NIGHT_VISION 1
+  ELF_VISION 1
+})
+
+MakeKeeperTDCreature(BossSpider, { "szelob" }, 1, 0, 12, MELEE, {
+      type = NonHumanoid LARGE
+      bodyParts = {
+        LEG 8
+        TORSO 1
+      }
+      weight = 0.3
+      deathSound = none
+      intrinsicAttacks = {
+        TORSO {{{ Intrinsic { "bite_attack" } "fangs" 6 {
+            attackType = BITE
+            attackMsg = BITE
+            victimEffect = {0.0 Lasting POISON} } }}}
+      }
+}, {
+  NIGHT_VISION 1
+  ELF_VISION 1
+})

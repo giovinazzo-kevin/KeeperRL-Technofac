@@ -1,0 +1,145 @@
+Def MakePixel(Id)
+"PIXEL_Id"
+{
+    name = "pixel"
+    viewId = { "pixel_Id" }
+    tickType = Effect Chain {
+        STACKPop(VM.Screen, state, { })
+        WORDDebugPrint(state)
+        Switch(state,
+            PlaceFurniture "PIXEL_0000",
+            PlaceFurniture "PIXEL_0001",
+            PlaceFurniture "PIXEL_0010",
+            PlaceFurniture "PIXEL_0011",
+            PlaceFurniture "PIXEL_0100",
+            PlaceFurniture "PIXEL_0101",
+            PlaceFurniture "PIXEL_0110",
+            PlaceFurniture "PIXEL_0111",
+            PlaceFurniture "PIXEL_1000",
+            PlaceFurniture "PIXEL_1001",
+            PlaceFurniture "PIXEL_1010",
+            PlaceFurniture "PIXEL_1011",
+            PlaceFurniture "PIXEL_1100",
+            PlaceFurniture "PIXEL_1101",
+            PlaceFurniture "PIXEL_1110",
+            PlaceFurniture "PIXEL_1111"
+        )
+    }
+    layer = CEILING
+    viewLayer = TORCH1
+    xForgetAfterBuilding = true
+}
+End
+
+MakePixel(0000)
+MakePixel(0001)
+MakePixel(0010)
+MakePixel(0011)
+MakePixel(0100)
+MakePixel(0101)
+MakePixel(0110)
+MakePixel(0111)
+MakePixel(1000)
+MakePixel(1001)
+MakePixel(1010)
+MakePixel(1011)
+MakePixel(1100)
+MakePixel(1101)
+MakePixel(1110)
+MakePixel(1111)
+
+Def Op0() SetUpScreen() End
+Def Op1() LoadFrame1() VMJumpConst(VM, 0) End
+Def Op2() End
+Def Op3() End
+Def Op4() End
+Def Op5() End
+Def Op6() End
+Def Op7() End
+Def Op8() End
+Def Op9() End
+Def OpA() End
+Def OpB() End
+Def OpC() End
+Def OpD() End
+Def OpE() End
+Def OpF() Debug() End
+Def X(V) STACKPushConst(VM.Screen, V, { }) End
+Def Y(V) STACKPush(VM.Screen, V, { }) End
+Def XR() WORDRandom(r) STACKPush(VM.Screen, r, { }) End
+
+Def OnCreated()
+    WORD(VM.Code[0], 0)
+    WORD(VM.Code[1], 1)
+    WORD(VM.Code[2], 2)
+    WORD(VM.Code[3], 3)
+    WORD(VM.Code[4], 4)
+    STACK(VM.Screen)
+End
+
+Def OnTick()
+End
+
+Def OnDestroyed()
+
+End
+
+Def Destroy()
+    OnDestroyed()
+    RemoveFurniture "G3KAPPA_VM"
+End
+
+MakeGeneralPurposeVirtualMachine(
+    G3KAPPA, VM, { "stun_ray" },
+    OnCreated(), OnDestroyed(), OnTick(), 
+    Op0(), Op1(), Op2(), Op3(), Op4(), Op5(), Op6(), Op7(),
+    Op8(), Op9(), OpA(), OpB(), OpC(), OpD(), OpE(), OpF(),
+    # Extra furniture properties go here
+    canBuildOutsideOfTerritory = true
+)
+
+Def SetUpScreen()
+    NthNeighbor(0, h, Chain { PlaceFurniture "PIXEL_0110"
+        NthNeighbor(1, i, Chain { PlaceFurniture "PIXEL_0110"
+            NthNeighbor(1, j, Chain { PlaceFurniture "PIXEL_0110"
+                NthNeighbor(1, k, PlaceFurniture "PIXEL_0110")
+            })
+        })
+        NthNeighbor(3, i, Chain { PlaceFurniture "PIXEL_0110"
+            NthNeighbor(1, j, Chain { PlaceFurniture "PIXEL_0110"
+                NthNeighbor(1, k, Chain { PlaceFurniture "PIXEL_0110"
+                    NthNeighbor(1, l, PlaceFurniture "PIXEL_0110")
+                })
+            })
+            NthNeighbor(3, j, Chain { PlaceFurniture "PIXEL_0110"
+                NthNeighbor(1, k, Chain { PlaceFurniture "PIXEL_0110"
+                    NthNeighbor(1, l, Chain { PlaceFurniture "PIXEL_0110"
+                        NthNeighbor(1, m, PlaceFurniture "PIXEL_0110")
+                    })
+                })
+                NthNeighbor(3, k, Chain { PlaceFurniture "PIXEL_0110"
+                    NthNeighbor(1, l, Chain { PlaceFurniture "PIXEL_0110"
+                        NthNeighbor(1, m, Chain { PlaceFurniture "PIXEL_0110"
+                            NthNeighbor(1, n, PlaceFurniture "PIXEL_0110")
+                        })
+                    })
+                })
+            })
+        })
+    })
+    WORD(h) WORD(i) WORD(j) WORD(k) WORD(l) WORD(m) WORD(n)
+End
+
+Def WhiteNoise()
+    XR() XR() XR() XR()
+    XR() XR() XR() XR()
+    XR() XR() XR() XR()
+    XR() XR() XR() XR()
+End
+
+Def LoadFrame1()
+    WhiteNoise()
+End
+Def Debug()
+    WORDDec(VM*PC)
+End

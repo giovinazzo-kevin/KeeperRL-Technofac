@@ -38,24 +38,24 @@ Def VMInit(Name)
     ARRAY(Name.Code)
 End
 
-Def VMDestroy()
-    DestroyWalls BASH
+Def VMHalt(Name)
+    WORD(Name*PC, F)
 End
 
 Def MakeGeneralPurposeVirtualMachine(
+    ModPrefix,
     Name, 
     ViewId, 
     OnCreated, 
-    OnTick, 
-    OnHalt, 
     OnDestroyed, 
-    Op1, Op2, Op3, Op4, Op5, Op6, Op7, Op8, Op9, OpA, OpB, OpC, OpD, OpE, OpF,
+    OnTick, 
+    Op0, Op1, Op2, Op3, Op4, Op5, Op6, Op7, Op8, Op9, OpA, OpB, OpC, OpD, OpE, OpF,
     Extra
 )
 # Creates a lock for this VM so that only one instance may execute at a given time
 MakeLock(LOCK_VM_Name, CEILING, TORCH1, Rgb 0 0 0 0)
 # Creates the actual VM furniture
-"EFFECTS#Name"
+"ModPrefix_Name"
 {
     name = "Name"
     viewId = ViewId
@@ -74,14 +74,8 @@ MakeLock(LOCK_VM_Name, CEILING, TORCH1, Rgb 0 0 0 0)
             ARRAYCpyTo(Name.Code, Name*PC, currentInstruction)
             # Execute the instruction
             Switch(currentInstruction, 
-                { 
-                    # The Halt instruction is a built-in that freezes the program counter in place
-                    WORDDec(Name*PC) 
-                    # The user may handle this halt event and reset the program counter to another value
-                    Chain { OnHalt }
-                },
-                # All other instructions are for the user to provide
-                Op1, Op2, Op3, Op4, Op5, Op6, Op7, Op8, Op9, OpA, OpB, OpC, OpD, OpE, OpF
+                Op0, Op1, Op2, Op3, Op4, Op5, Op6, Op7, 
+                Op8, Op9, OpA, OpB, OpC, OpD, OpE, OpF
             )
             # Increase the program counter to move to the next instruction
             WORDInc(Name*PC)

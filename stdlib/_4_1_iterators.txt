@@ -22,11 +22,11 @@ Def Repeat(Times, Body)
   } { Times(_, _, _, _, _, _, _, _, _, _) }
 End
 
-Def NthNeighbor(Index, Then)
-  WORD(i, Index)
+Def NthNeighbor(Index, Tmp, Then)
+  WORD(Tmp, Index)
   Area 1 Chain {
-      Filter WORDEqConst(i, 0) Chain { Then }
-      WORDDec(i)
+      Filter WORDEqConst(Tmp, 0) Chain { Then }
+      WORDDec(Tmp)
   }
 End
 

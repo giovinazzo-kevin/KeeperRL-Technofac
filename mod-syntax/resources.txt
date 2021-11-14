@@ -1,0 +1,12 @@
+{
+  counts = {
+      # First comes FurnitureType
+      # Then the range of length of the side of the rectangle in which a resource patch is placed
+      # The numbers represent patches close to and far from the starting position, respectively.
+      # If you add too many patches, level generation might fail.
+      "MOUNTAIN2" {5 10} 1 1
+  }
+  minDepth = 0
+  maxDepth = 0
+}
+

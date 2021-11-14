@@ -1,4 +1,4 @@
-"2808_keepertd"
+"_keepertd"
 {
   creatureId = { "KEEPERTD" "KEEPERTD_F" }
   tribeAlignment = EVIL
@@ -6,10 +6,10 @@
   technology = {
       "tier 1 recruits" "tier 2 recruits" "tier 3 recruits"
   }
-  zLevelGroups = { "basic" "evil" }
-  initialTech = { }
+  zLevelGroups = { "basic" }
+  initialTech = { "tier 1 recruits" }
   buildingGroups = {
-      "nexus" "structure" "doors" "floors" "storage" "zones" "beds" "orders" "installations"
+      "nexus" "storage" "zones" "beds" "orders" "installations"
   }
   workshopGroups = { "basic" "bows" }
   minionTraits = { LEADER WORKER FIGHTER }

@@ -1,31 +1,129 @@
-Def Summon(Name, Min, Max)
-	SummonEnemy "KEEPERTD_Name" { Min Max } none
+"KEEPERTD_SpawnPoint"
+{
+    name = "KeeperTD spawn point"
+    viewId = { "guard_zone" Rgb 255 0 0 255 }
+}
+
+"KEEPERTD_Trap"
+{
+  name = "suspicious door"
+  viewId = { "iron_door_ew" }
+  canHideHere = true
+  blockVision = { NORMAL }
+  strength = 30000
+  clickType = LOCK
+  requiredSupport = { { { E W } } { { N S } {"iron_door_ns"} } }
+  destroyFX = { DESTROY_FURNITURE Rgb 120 120 120 255 }
+}
+
+"KEEPERTD_DungeonWall"
+{
+	name = "wall"
+	viewId = { "wood_wall" }
+	blockMovement = true
+	blockAllVision = true
+	wall = true
+	buildingSupport = true
+	strength2 = {
+		100 BOULDER
+		100 DIG
+		300 HOSTILE_DIG
+		300 HOSTILE_DIG_NO_SKILL
+	}
+	canBuildOutsideOfTerritory = true
+	destroyFX = { DESTROY_FURNITURE Rgb 120 87 46 255 }
+}
+
+Def FindPlayer(Radius, Cont)
+	Area Radius Filter Or { CreatureId "KEEPERTD" CreatureId "KEEPERTD_F" } Chain { Cont }
+End
+Def TryFindEnemySpawn(Cont)
+Chain {
+	SetFlag "_tmp" false
+	# Gets executed once per ~50 ticks when a wave is active. Can fail a few times in order to distribute the spawn points and randomize the timings.
+	Area 16 Filter And { Not Flag "_tmp" Or { FurnitureType "KEEPERTD_SpawnPoint" } } Chance 0.10 Chain { 
+		SetFlag "_tmp" true
+		Cont
+	}
+}
 End
 Def Summon(Name, Amount)
-	Summon(Amount, Amount)
+	TryFindEnemySpawn({
+		SummonEnemy "KEEPERTD_Name" { Amount } none
+	})
 End
 Def Summon(Name)
 	Summon(Name, 1)
 End
+Def Summon(Name, Min, Max)
+	Summon(Name, Min Max)
+End
 
-Def SummonWaveEnemy()
+Def IsKTDCreature(Name)
+	CreatureId "KEEPERTD_Name"
+End
+
+Def WaveEnemies(Weak, Medium, Strong, Support, Boss)
+Chain {
+	Chance 0.5 Summon(Support, 1, 2)
+	FirstSuccessful {
+		Filter Or { Flag "Nexus.IsBossWave" DWORDEqConst(Nexus._enemiesToSpawn, 0, 0) } Summon(Boss, 1) 
+		ChooseRandom { 
+			Chain {
+				Summon(Weak, 5, 10) 
+			}
+			Chain {
+				Summon(Weak, 3, 5) 
+				Summon(Medium, 2, 3)
+			}
+			Chain {
+				Summon(Medium, 2, 4) 
+				Summon(Strong, 1, 2) 
+			}
+			Chain {
+				Summon(Weak, 3, 9) 
+				Summon(Strong, 1, 2) 
+			}
+			Chain {
+				Summon(Support, 1, 3)
+				ChooseRandom {
+					Summon(Weak, 3, 6) 
+					Summon(Medium, 2, 4) 
+					Summon(Strong, 1, 2) 
+				}
+			}
+		}
+	}
+	SetFlag "_trackedAny" false
+	Area 16 Filter And {
+		Or { IsKTDCreature(Weak) IsKTDCreature(Medium) IsKTDCreature(Strong) IsKTDCreature(Support) IsKTDCreature(Boss) }
+		Not CreatureFlag "Nexus.Tracked"
+	} Chain {
+		DWORDInc(Nexus.EnemiesLeft)
+		SetCreatureFlag "Nexus.Tracked" true
+		Filter Not Flag "_trackedAny" SetFlag "_trackedAny" true
+	}
+}
+End
+
+Def SummonWaveEnemies()
 	Switch(Nexus.WaveTheme, 
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) },
-		ChooseRandom { Summon(Horse, 1, 3) }
+		WaveEnemies(Fly, AntWorker, AntSoldier, Spider, AntQueen),
+		WaveEnemies(Fly, Spider, PurpleSpider, AntSoldier, BossSpider),
+		WaveEnemies(Fly, AntWorker, AntSoldier, Spider, AntQueen),
+		WaveEnemies(Fly, Spider, PurpleSpider, AntSoldier, BossSpider),
+		WaveEnemies(Fly, AntWorker, AntSoldier, Spider, AntQueen),
+		WaveEnemies(Fly, Spider, PurpleSpider, AntSoldier, BossSpider),
+		WaveEnemies(Fly, AntWorker, AntSoldier, Spider, AntQueen),
+		WaveEnemies(Fly, Spider, PurpleSpider, AntSoldier, BossSpider),
+		WaveEnemies(Fly, AntWorker, AntSoldier, Spider, AntQueen),
+		WaveEnemies(Fly, Spider, PurpleSpider, AntSoldier, BossSpider),
+		WaveEnemies(Fly, AntWorker, AntSoldier, Spider, AntQueen),
+		WaveEnemies(Fly, Spider, PurpleSpider, AntSoldier, BossSpider),
+		WaveEnemies(Fly, AntWorker, AntSoldier, Spider, AntQueen),
+		WaveEnemies(Fly, Spider, PurpleSpider, AntSoldier, BossSpider),
+		WaveEnemies(Fly, AntWorker, AntSoldier, Spider, AntQueen),
+		WaveEnemies(Fly, Spider, PurpleSpider, AntSoldier, BossSpider)
 	)
 End
 
@@ -72,20 +170,20 @@ Def ItemReward()
 					DropItems { Simple "Bow" } { 1 3 }
 				}
 				FirstSuccessful {
-					Chance 0.10 DropItems { Simple "InferniteWarHammer" } { 1 }
-					Chance 0.30 DropItems { Simple "AdaWarHammer" } { 1 2 }
+					Chance 0.02 DropItems { Simple "InferniteWarHammer" } { 1 }
+					Chance 0.10 DropItems { Simple "AdaWarHammer" } { 1 2 }
 					DropItems { Simple "WarHammer" } { 1 3 }
 				}
 				FirstSuccessful {
-					Chance 0.10 DropItems { Simple "InferniteBattleAxe" } { 1 }
-					Chance 0.30 DropItems { Simple "AdaBattleAxe" } { 1 2 }
+					Chance 0.02 DropItems { Simple "InferniteBattleAxe" } { 1 }
+					Chance 0.10 DropItems { Simple "AdaBattleAxe" } { 1 2 }
 					DropItems { Simple "BattleAxe" } { 1 3 }
 				}
 				FirstSuccessful {
-					Chance 0.10 DropItems { Simple "InferniteSword" } { 1 }
-					Chance 0.20 DropItems { Simple "AdaSword" } { 1 2 }
-					Chance 0.40 DropItems { Simple "ElvenSword" } { 1 3 }
-					Chance 0.60 DropItems { Simple "Sword" } { 1 4 }
+					Chance 0.02 DropItems { Simple "InferniteSword" } { 1 }
+					Chance 0.10 DropItems { Simple "AdaSword" } { 1 2 }
+					Chance 0.30 DropItems { Simple "ElvenSword" } { 1 3 }
+					Chance 0.50 DropItems { Simple "Sword" } { 1 4 }
 					Chance 0.80 DropItems { Simple "Spear" } { 1 5 }
 					DropItems { Simple "Knife" } { 1 10 }
 				}
@@ -93,6 +191,14 @@ Def ItemReward()
 		})
 		# Drop some miscellaneous themed consumables
 		ChooseRandom {
+			ChooseRandom {
+				DropItems { Ring POISON_RESISTANT } { 1 }
+				DropItems { Ring FIRE_RESISTANT } { 1 }
+				DropItems { Ring COLD_RESISTANT } { 1 }
+				DropItems { Ring MAGIC_RESISTANCE } { 1 }
+				DropItems { Ring RESTED } { 1 }
+				DropItems { Ring SATIATED } { 1 }
+			}
 			Chain {
 				Chance 0.20 DropItems { Potion Heal {FLESH}  } { 5 10 }
 				Chance 0.20 DropItems { Potion Heal {SPIRIT} } { 5 10 }
@@ -113,15 +219,18 @@ Def ItemReward()
 	}
 End
 
-Def GoldReward()
-	DropItems { Simple "GoldPiece" } { 25 50 }
+Def ResourceReward()
+	DropItems { Simple "GoldPiece"  } { 5 60 }
+	Chance 0.33 DropItems { Simple "WoodPlank"  } { 20 40 }
+	Chance 0.33 DropItems { Simple "Rock" 	   } { 10 20 }
+	Chance 0.33 DropItems { Simple "IronOre"    } {  5 10 }
 End
 
 Def BossReward()
 	Switch(Nexus._bossWavesCleared,
-		ChooseRandom { AddTechnology "tier 1 recruits" },
 		ChooseRandom { AddTechnology "tier 2 recruits" },
 		ChooseRandom { AddTechnology "tier 3 recruits" },
+		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
 		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
 		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
 		ChooseRandom { Message HIGH "Good job but I have to implement a reward for beating this wave" },
@@ -138,7 +247,7 @@ Def BossReward()
 	)
 End
 
-MakeGeneralPurposeVirtualMachine(Nexus, { "altar" },
+MakeGeneralPurposeVirtualMachine(KEEPERTD, Nexus, { "altar" },
 # OnCreated
 {
 	# This is the program array. Each line corresponds to an address and an instruction.
@@ -157,12 +266,12 @@ MakeGeneralPurposeVirtualMachine(Nexus, { "altar" },
 	WORD(Nexus.Code[12], D) # Unused
 	WORD(Nexus.Code[13], E) # Unused
 	WORD(Nexus.Code[14], F) # Unused
-	WORD(Nexus.Code[15], 0)	# Halt, also used as a fatal exception handler here
+	WORD(Nexus.Code[15], 0)	# Halt
 	# The current wave goes from 1 to 100.
 	DWORD(Nexus.CurrentWave, 0, 0)
 	# Day = 1500 ticks; Night = 1500 ticks
-	# The cooldown starts off at 3000 and increases by 270 after each wave, to a maximum of 30000 on wave 100.
-	QWORD(Nexus.WaveCooldown, 0, B, B, 8)	
+	# The cooldown starts off at 0 and increases by 300 after each wave, to a maximum of 30000 on wave 100.
+	QWORD(Nexus.WaveCooldown, 0, 0, 0, 0)	
 	# The theme of the current wave. There's 16 themes.
 	WORD(Nexus.WaveTheme, 0)
 	# The amount of enemies that are still alive during the current wave. Max 255 enemies per wave.
@@ -176,35 +285,42 @@ MakeGeneralPurposeVirtualMachine(Nexus, { "altar" },
 	DWORD(Nexus._enemiesToSpawn, 0, 0)
 	# Modifier that scales the rewards at the end of a wave
 	DWORD(Nexus._rewardModifier, 0, 0)
-	QWORD(a, 0, F, 0, 0)
-},
-# OnTick
-{
-	# KeeperTD: A tower defense mod for KeeperRL by G3Kappa.
-	# Goal: defend this Nexus and your keeper from increasingly powerful monster waves.
-	QWORDDebugPrint(Nexus._waveCooldown)
-},
-# OnHalt
-{
 },
 # OnDestroyed
 {
 	if(Flag "Nexus.Victory") {
-
+		DropItems { Simple "GoldPiece" } { 100000 }
 	}
 	else(){
 		# GAME OVER!
+		FindPlayer(1000, Suicide DIE)
 	}
 	fi()
 },
-Op1(), Op2(), Op3(), Op4(), Op5(), Op6(), Op7(), Op8(), Op9(), OpA(), OpB(), OpC(), OpD(), OpE(), OpF(),
-canBuildOutsideOfTerritory = true
-xForgetAfterBuilding = true
+# OnTick
+{
+	DWORDDebugPrint(Nexus._enemiesToSpawn)
+	DWORDDebugPrint(Nexus.EnemiesLeft)
+},
+Op0(), Op1(), Op2(), Op3(), Op4(), Op5(), Op6(), Op7(),
+Op8(), Op9(), OpA(), OpB(), OpC(), OpD(), OpE(), OpF(),
+strength = 30000
+lightEmission = 5.0
 )
-# These are all the OpCodes for the virtual machine. The "Halt" OpCode (0) is built-in and triggers OnHalt.
+# These are all the OpCodes for the virtual machine. 
+Def Op0() Message NORMAL "HALT"
+	WORDDec(Nexus*PC)
+End
 Def Op1() Message NORMAL "Welcome to KeeperTD!"
+	FindPlayer(1, {
+		WORDInc(Nexus*PC)
+		# Lock the player in as soon as the game starts
+		Area 16 Filter FurnitureType "KEEPERTD_Trap" PlaceFurniture "KEEPERTD_DungeonWall"
+	})
+	WORDDec(Nexus*PC)
 End
 Def Op2() Message NORMAL "Waiting for the the next wave..."
+	EmitGas "FOG" 1
 	# Sleep until the wave cooldown is equal to 0
 	Filter Not QWORDEqConst(Nexus._waveCooldown, 0, 0, 0, 0) Chain {
 		QWORDDec(Nexus._waveCooldown)
@@ -215,57 +331,54 @@ Def Op3() Message NORMAL "Launching the next wave!"
 	# Increase the wave number
 	DWORDInc(Nexus.CurrentWave)
 	WORDInc(Nexus._bossCounter)
-	# If this is a boss wave, set the boss theme, otherwise randomize one
 	if(WORDEqConst(Nexus._bossCounter, A)) {
 		WORD(Nexus._bossCounter, 0)
-		WORD(Nexus.WaveTheme, 0)
 		SetFlag "Nexus.IsBossWave" true
 	}
 	else() {
 		SetFlag "Nexus.IsBossWave" false
-		WORDRandom(Nexus.WaveTheme)
-		# Don't choose the boss theme
-		Filter WORDEqConst(Nexus.WaveTheme, 0) Chain {
-			WORD(Nexus.WaveTheme, 1) 
-		}
 	}
 	fi()
-	# Calculate the amount of monsters to send out during this wave as CurrentWave * 2.5 = CurrentWave * 2 + CurrentWave / 2
-	DWORDCpy(Nexus.CurrentWave, Nexus.EnemiesLeft)
+	WORDRandom(Nexus.WaveTheme)
+	# Calculate the amount of monster groups to send out during this wave as CurrentWave * 2.5 = CurrentWave * 2 + CurrentWave / 2 (max = 250)
+	DWORDCpy(Nexus.CurrentWave, Nexus._enemiesToSpawn)
 	DWORDCpy(Nexus.CurrentWave, _tmp)
-	DWORDLShift(Nexus.EnemiesLeft, {})
+	DWORDLShift(Nexus._enemiesToSpawn, {})
 	DWORDRShift(_tmp, {})
-	DWORDAdd(Nexus.EnemiesLeft, _tmp)
-	# Store a copy of this number in a temporary variable so that the next instruction can decrease it separately
-	DWORDCpy(Nexus.EnemiesLeft, Nexus._enemiesToSpawn)
+	DWORDAdd(Nexus._enemiesToSpawn, _tmp)
+	DWORD(Nexus.EnemiesLeft)
 	# Use the wave number as the reward modifier
 	DWORDCpy(Nexus.CurrentWave, Nexus._rewardModifier)
 End
 Def Op4() Message NORMAL "The wave is progressing..." 
-	# Wait 50 ticks before spawning each monster
+	EmitGas "BLACK_SMOKE" 1
+	# Wait 50 ticks before spawning each group
 	Filter Not DWORDEqConst(Nexus._enemiesToSpawn, 0, 0) Chain {
-		VMSleepConst(Nexus, 0, 2, {
-			SummonWaveEnemy()
-			DWORDDec(Nexus._enemiesToSpawn)
+		VMSleepConst(Nexus, 3, 2, {
+			SummonWaveEnemies()
+			Filter Flag "_trackedAny" Chain {
+				DWORDDec(Nexus._enemiesToSpawn)
+			}
 			WORDDec(Nexus*PC)
 		})
 	}
 End
-Def Op5() Message NORMAL "Waiting for the player to complete the wave..."
+Def Op5() Message NORMAL "Waiting for all enemies to die..."
 	Filter Not DWORDEqConst(Nexus.EnemiesLeft, 0, 0) Chain {
 		WORDDec(Nexus*PC)
 	}
 End
-Def Op6() Message NORMAL "Wave completed! Generating gold rewards..."
+Def Op6() Message NORMAL "Wave completed! Generating resource rewards..."
+	Area 16 EmitGas "BLOOD_MIST" 1
 	# Gold reward = wave * rand(25,50)
 	Filter Not DWORDEqConst(Nexus._rewardModifier, 0, 0) Chain {
 		DWORDDec(Nexus._rewardModifier)
-		GoldReward()
+		ResourceReward()
 	}
 End
 Def Op7() Message NORMAL "Wave completed! Generating item rewards..."
-	# Item reward: 50% chance to happen per wave, doesn't scale with wave
-	Chance 0.50 Chain {
+	# Item reward: 1/9 chance to happen per tile in 3x3 area, doesn't scale with wave
+	Area 1 Chance 0.11 Chain {
 		ItemReward()
 	}
 	# If this was a boss wave, spawn the appropriate victory reward, scales with boss wave
@@ -273,12 +386,10 @@ Def Op7() Message NORMAL "Wave completed! Generating item rewards..."
 		BossReward()
 		WORDInc(Nexus._bossWavesCleared)
 	}
-	# Update the wave cooldown by adding 270 to it unless it's 30000
-	Filter Not QWORDEqConst(Nexus.WaveCooldown, 9, E, 3, 4) Chain {
-		QWORD(_tmp, 0, 1, 0, E)
-		QWORDAdd(Nexus.WaveCooldown, _tmp)
-		QWORDCpy(Nexus.WaveCooldown, Nexus._waveCooldown)
-	}
+	# Update the wave cooldown by adding 30 to it
+	QWORD(_tmp, 0, 0, 1, E)
+	QWORDAdd(Nexus.WaveCooldown, _tmp)
+	QWORDCpy(Nexus.WaveCooldown, Nexus._waveCooldown)
 	# If this ISN'T the last wave, jump back to the start of the program
 	Filter Not DWORDEqConst(Nexus.CurrentWave, 6, 4) Chain {
 		VMJumpConst(Nexus, 0)
@@ -302,10 +413,5 @@ End
 Def OpE() Message NORMAL "Instruction E"
 End
 Def OpF() Message NORMAL "Debugging..."
-	QWORD(b, 0, 0, 0, 1)
-	QWORDDebugPrint(a)
-	QWORDDebugPrint(b)
-	QWORDSub(a, b)
-	QWORDDebugPrint(a)
 	WORDDec(Nexus*PC)
 End

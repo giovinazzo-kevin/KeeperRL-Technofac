@@ -4,7 +4,7 @@ Def 1(Var) SetFlag Var true  End
 Def Get(Var) Flag Var End 
 Def Set(Var, Value) Value(Var) End 
 
-Def NthBit(Var, Bit) "Var@Bit" End
+Def NthBit(Var, Bit) "Var_Bit" End
 Def GetBit(Var, Bit) Get(NthBit(Var, Bit)) End
 Def SetBit(Var, Bit, Value) Set(NthBit(Var, Bit), Value) End
 
@@ -44,8 +44,8 @@ End
 
 Def BCpy(A, B)
   FirstSuccessful {
-    Filter And { Get(A) Not Get(B) } Set(B, 1)
-    Filter And { Not Get(A) Get(B) } Set(B, 0)
+    Filter Get(A) Set(B, 1)
+    Set(B, 0)
   }
 End
 

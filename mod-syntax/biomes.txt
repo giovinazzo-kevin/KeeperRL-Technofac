@@ -33,8 +33,10 @@
   whiteKeeperEnemies = {
   }
   darkKeeperBaseEnemies = {
+    { id = "KEEPERTD_MAP01" }
   }
   whiteKeeperBaseEnemies = {
+    { id = "KEEPERTD_MAP01" }
   }
   keeperBiome = { "snowman" } "flatlands" -1
 }

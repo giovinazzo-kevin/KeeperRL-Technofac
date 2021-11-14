@@ -1,0 +1,49 @@
+Def KTDMakeRingBase(Y1, Y2, X)
+    Inside(TOP  , Y1, Border(TOP , 1, Position(MIDDLE, {X 1}, Set("nexus_wall"))))
+    Inside(TOP  , Y2, Border(TOP , 1, Position(MIDDLE, {X 1}, Set("nexus_wall"))))
+    Inside(LEFT , Y1, Border(LEFT, 1, Position(MIDDLE, {1 X}, Set("nexus_wall"))))
+    Inside(LEFT , Y2, Border(LEFT, 1, Position(MIDDLE, {1 X}, Set("nexus_wall"))))
+End
+
+Def KTDMakeRingHoleH(Y1, Y2)
+    Inside(TOP  , Y1, Border(TOP , 1, Position(MIDDLE, {1 1}, Reset("floor"))))
+    Inside(TOP  , Y2, Border(TOP , 1, Position(MIDDLE, {1 1}, Reset("floor"))))
+End
+
+Def KTDMakeRingHoleV(Y1, Y2)
+    Inside(LEFT , Y1, Border(LEFT, 1, Position(MIDDLE, {1 1}, Reset("floor"))))
+    Inside(LEFT , Y2, Border(LEFT, 1, Position(MIDDLE, {1 1}, Reset("floor"))))
+End
+
+Def KTDMakeSpawners(I)
+    Inside(I, Position(TOP_LEFT, {1 1}, Reset("floor", "nexus_spawner")))
+    Inside(I, Position(TOP_RIGHT, {1 1}, Reset("floor", "nexus_spawner")))
+    Inside(I, Position(BOTTOM_LEFT, {1 1}, Reset("floor", "nexus_spawner")))
+    Inside(I, Position(BOTTOM_RIGHT, {1 1}, Reset("floor", "nexus_spawner")))
+End
+
+Def KTDCastleEmpty() {
+  Inside(1, {
+    Building("nexus_wall", "floor")
+    Position(MIDDLE, {1 1}, FloodFill(And(AnyFloor(), Not On("nexus_trap")), Set("floor")))
+    Position(MIDDLE, {1 1}, Reset("floor", "nexus"))
+    Border(RIGHT, 1, Position(MIDDLE, {1 1}, Set("nexus_trap")))
+    
+    KTDMakeSpawners(1)
+
+    KTDMakeRingBase(2, 28, 27)
+    KTDMakeRingHoleH(2, 28)
+    KTDMakeRingHoleV(2, 28)
+
+    KTDMakeRingBase(6, 24, 19)
+    KTDMakeRingHoleH(6, 24)
+
+    KTDMakeRingBase(10, 20, 11)
+    KTDMakeRingHoleV(10, 20)
+
+  })
+}
+End
+
+
+"keepertd_castle" KTDCastleEmpty()

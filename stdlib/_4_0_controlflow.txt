@@ -15,6 +15,6 @@ Def Switch(Var, Case0, Case1, Case2, Case3, Case4, Case5, Case6, Case7, Case8, C
     Filter WORDEqConst(Var, C) Chain { CaseC }
     Filter WORDEqConst(Var, D) Chain { CaseD }
     Filter WORDEqConst(Var, E) Chain { CaseE }
-    Chain { CaseF }
+    Filter WORDEqConst(Var, F) Chain { CaseF }
   }
 End
