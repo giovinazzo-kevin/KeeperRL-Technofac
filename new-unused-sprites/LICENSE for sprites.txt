@@ -1,0 +1,1 @@
+Any sprite prefixed with "snta_" are free to use for KeeperRL mods only, and are not for other projects commericial or otherwise, redistribution or resale.
