@@ -65,15 +65,6 @@ Def WEqConst(A, K, Word)
     K(A, Word, _)
 End
 
-Def WEqZero(A, Word)
-    And {
-        Not Get(WNthBit(A, Word, 1))
-        Not Get(WNthBit(A, Word, 2))
-        Not Get(WNthBit(A, Word, 3))
-        Not Get(WNthBit(A, Word, 4))
-    }
-End
-
 Def WGt(A, B, Word)
     Or { 
         BGt(WNthBit(A, Word, 1), WNthBit(B, Word, 1))

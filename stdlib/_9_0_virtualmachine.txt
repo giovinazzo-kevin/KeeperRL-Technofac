@@ -42,7 +42,7 @@ Def VMHalt(Name)
     WORD(Name*PC, F)
 End
 
-Def MakeGeneralPurposeVirtualMachine(
+Def MakeVM(
     ModPrefix,
     Name, 
     ViewId, 

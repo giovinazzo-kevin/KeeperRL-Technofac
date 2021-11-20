@@ -23,35 +23,41 @@ Def Repeat(Times, Body)
 End
 
 Def NthNeighbor(Index, Tmp, Then)
+Chain{
   WORD(Tmp, Index)
   Area 1 Chain {
       Filter WORDEqConst(Tmp, 0) Chain { Then }
       WORDDec(Tmp)
   }
+}
 End
 
-Def ForEachNeighbor(Then)
-  WORD(i, 8)
+Def ForEachNeighbor(Tmp, Then)
+Chain{
+  WORD(Tmp, 0)
   Area 1 Chain {
       Then
-      WORDDec(i)
+      WORDInc(Tmp)
   }
+}
 End
 
-Def ForEachCardinalNeighbor(Then)
-    ForEachNeighbor(FirstSuccessful {
-        Filter WORDEqConst(i, 1) Chain { Then }
-        Filter WORDEqConst(i, 3) Chain { Then }
-        Filter WORDEqConst(i, 5) Chain { Then }
-        Filter WORDEqConst(i, 7) Chain { Then }
+Def ForEachCardinalNeighbor(Tmp, Then)
+    ForEachNeighbor(Tmp, FirstSuccessful {
+        Filter WORDEqConst(Tmp, 1) Chain { Then }
+        Filter WORDEqConst(Tmp, 3) Chain { Then }
+        Filter WORDEqConst(Tmp, 5) Chain { Then }
+        Filter WORDEqConst(Tmp, 7) Chain { Then }
     })
 End
 
-Def ForEachDiagonalNeighbor(Then)
-    ForEachNeighbor(FirstSuccessful {
-        Filter WORDEqConst(i, 0) Chain { Then }
-        Filter WORDEqConst(i, 2) Chain { Then }
-        Filter WORDEqConst(i, 6) Chain { Then }
-        Filter WORDEqConst(i, 8) Chain { Then }
+Def ForEachDiagonalNeighbor(Tmp, Then)
+    ForEachNeighbor(Tmp, FirstSuccessful {
+        Filter WORDEqConst(Tmp, 0) Chain { Then }
+        Filter WORDEqConst(Tmp, 2) Chain { Then }
+        Filter WORDEqConst(Tmp, 6) Chain { Then }
+        Filter WORDEqConst(Tmp, 8) Chain { Then }
     })
 End
+
+Def Count(Cond, Var) Filter Cond Chain { WORDInc(Var) } End

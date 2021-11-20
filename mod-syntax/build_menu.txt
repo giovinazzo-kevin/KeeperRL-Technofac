@@ -1,5 +1,0 @@
-"nexus" {
-    { Furniture {{ "KEEPERTD_Nexus" }     "WOOD" 0 }                    "Nexus"         "KeeperTD" }
-    { Furniture {{ "KEEPERTD_SpawnPoint" }     "WOOD" 0 }                    "Spawn point"         "KeeperTD" }
-    { Furniture {{ "KEEPERTD_DungeonWall" }     "WOOD" 0 }                    "Wall"         "KeeperTD" }
-}
