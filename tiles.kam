@@ -1,4 +1,5 @@
 @import "technofac/belts/main"
+@import "technofac/machines/main"
 
-# Creates all necessary view ids for the belts submodule to work correctly.
 BeltsModuleInitializeTiles()
+MachinesModuleInitializeTiles()

@@ -1,4 +1,4 @@
-@import "../utils/vanilla-effects-as-macros"
+@import "../utils/utils"
 
 # Guarantees that each available direction is chosen randomly without altering throughput when there's fewer than 4 available directions
 Def Permutate(A, B, C, D)
@@ -37,6 +37,7 @@ Def MakeBelt(Direction)
     {
         viewId = { BeltViewId(Direction) }
         name = "conveyor belt (Direction)"
+        canBuildOutsideOfTerritory = true
     }
 End
 

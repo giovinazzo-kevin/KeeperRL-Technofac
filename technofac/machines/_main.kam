@@ -1,0 +1,34 @@
+@import "machine"
+
+Def MachinesModuleInitializeFurniture()
+    "TECHNOFAC_WALL_PLACEHOLDER" { name = "placeholder" viewId = { "tile_gas" Rgb 0 0 0 0 } xForgetAfterBuilding = true }
+
+    Make3x3Machine(flatdrill, {}, {}, {}, {}, {
+        ForEachNeighbor(i, Filter Not WORDEqConst(i, 4) Chance 0.05 Chance 0.05 ChooseRandom {
+            ForAllExistingBeltItems(PlaceBeltItem)
+        })
+    }, {}, {}, {}, {}, {},
+        lightEmission = 5.0
+        canBuildOutsideOfTerritory = true
+    )
+
+    Make1x1Machine(lumberjack, {
+        Chance 0.15 OutputAvailable(
+            Set("_CUT", 0)
+            Area 3 Filter And { Not Get("_CUT") IsTree() } Chain {
+                Set("_CUT", 1)
+                EmitGas "FOG" 1
+                Chance 0.25 RemoveTree() 
+            }
+            Filter Get("_CUT") Chain { LoadOutputOntoBelt(wood, {}) EmitGas "BLACK_SMOKE" 1 }
+        )
+    }, {},
+        lightEmission = 5.0
+        canBuildOutsideOfTerritory = true
+    )
+End
+
+Def MachinesModuleInitializeTiles()
+    ForAllExistingMachines(MakeMachineViewId)
+End
+

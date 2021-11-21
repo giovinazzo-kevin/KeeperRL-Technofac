@@ -1,6 +1,7 @@
 @import "../../stdlib/control-flow/iterators"
 @import "../../stdlib/hacks/furniture-flags"
-@import "../utils/vanilla-effects-as-macros"
+@import "../utils/utils"
+@import "../machines/machine"
 @import "belt"
 
 Def BeltItem(Material) "TECHNOFAC_BELT_ITEM_Material" End
@@ -17,6 +18,7 @@ Def ForAllExistingBeltItems(Action)
 End
 
 Def BeltItemType(X) FurnitureType(BeltItem(X)) End
+Def PlaceBeltItem(X) PlaceFurniture(BeltItem(X)) End
 
 Def IsBeltItem()
   Or { 
@@ -25,8 +27,7 @@ Def IsBeltItem()
 End
 
 Def PlaceBeltItem(Material, Inactive, Then)
-  # TODO: Add IsMachine() to Or { IsBelt() }
-  Filter And { Not IsBeltItem() Or { IsBelt() } } Chain {
+  Filter And { Not IsBeltItem() Or { IsBelt() IsMachine() } } Chain {
     PlaceFurniture(BeltItem(Material))
     # Set the 'inactive' flag on all furniture pieces that will be updated after this one
     SetFurnitureFlag(BELT_ITEM_INACTIVE, Inactive)
@@ -52,7 +53,7 @@ Def MakeBeltItem(Material)
                 Filter Or { BeltType(ne) BeltType(e ) } Chain { NthNeighbor(7, i, PlaceBeltItem(Material, true, Set("_MOVED", 1))) }
                 Filter Or { BeltType(es) BeltType(s ) } Chain { NthNeighbor(5, i, PlaceBeltItem(Material, true, Set("_MOVED", 1))) }
                 Filter Or { BeltType(sw) BeltType(w ) } Chain { NthNeighbor(1, i, PlaceBeltItem(Material, false, Set("_MOVED", 1))) }
-                # Filter IsMachine() Chain { LoadOutputOntoBelt(MaterialInactive, Write1("_MOVED")) }
+                Filter IsMachine() Chain { LoadOutputOntoBelt(Material, Set("_MOVED", 1)) }
                 RemoveFurniture(BeltItem(Material))
             }
             Filter Get("_MOVED") Chain {

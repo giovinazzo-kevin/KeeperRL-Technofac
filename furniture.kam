@@ -1,4 +1,5 @@
 @import "technofac/belts/main"
+@import "technofac/machines/main"
 
-# Creates all necessary furniture for the belts submodule to work correctly.
 BeltsModuleInitializeFurniture()
+MachinesModuleInitializeFurniture()

@@ -1,0 +1,36 @@
+Def Identity(X) X End
+Def Quoted(X) "X" End
+
+Def FurnitureType(X) FurnitureType X End
+Def PlaceFurniture(X) PlaceFurniture X End
+Def RemoveFurniture(X) RemoveFurniture X End
+
+Def IsTree()
+Or {
+  FurnitureType "CANIF_TREE"
+  FurnitureType "DECID_TREE"
+  FurnitureType "TREE_SNOW"
+  FurnitureType "SWAMPTREE"
+  FurnitureType "CACTUS1"
+  FurnitureType "PALM_TREE"
+  FurnitureType "GUM_TREE"
+  FurnitureType "GIANT_MUSHROOM"
+  FurnitureType "BUSH"
+  FurnitureType "SWAMPPLANT"
+}
+End
+
+Def RemoveTree()
+Chain {
+  RemoveFurniture "CANIF_TREE"
+  RemoveFurniture "DECID_TREE"
+  RemoveFurniture "TREE_SNOW"
+  RemoveFurniture "SWAMPTREE"
+  RemoveFurniture "CACTUS1"
+  RemoveFurniture "PALM_TREE"
+  RemoveFurniture "GUM_TREE"
+  RemoveFurniture "GIANT_MUSHROOM"
+  RemoveFurniture "BUSH"
+  RemoveFurniture "SWAMPPLANT"
+}
+End

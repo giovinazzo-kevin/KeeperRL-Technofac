@@ -1,0 +1,177 @@
+@import "../../stdlib/control-flow/switch"
+@import "../belts/main"
+
+Def Machine(Name) "TECHNOFAC_MACHINE_Name" End
+Def MachineViewId(Name) "snta_Name" End
+
+Def 1x1(Name, Action)
+    Action(Name)
+End
+
+Def 3x3(Name, Action)
+    Action(Name_1)
+    Action(Name_2)
+    Action(Name_3)
+    Action(Name_4)
+    Action(Name_5)
+    Action(Name_6)
+    Action(Name_7)
+    Action(Name_8)
+    Action(Name_9)
+End
+
+Def ForAllExistingMachines(Action)
+    1x1(lumberjack, Action)
+    3x3(flatdrill, Action)
+End
+
+Def MachineType(X) FurnitureType(Machine(X)) End
+
+Def IsMachine() 
+Or {
+  ForAllExistingMachines(MachineType)
+}
+End
+
+Def MakeMachineViewId(Name)
+  { viewId = MachineViewId(Name) symbol = "F" color = ColorId GRAY animated = true }
+End
+
+Def DestroyNeighbors(Origin)
+    NthNeighbor(Origin, i, Area 1 Chain { PlaceFurniture "TECHNOFAC_WALL_PLACEHOLDER" RemoveFurniture "TECHNOFAC_WALL_PLACEHOLDER" })
+End
+
+Def Make1x1Machine(Name, Effect1, DestroyedEffect, Properties)
+Machine(Name) 
+{ 
+    viewId = { MachineViewId(Name) } 
+    name = "Name" 
+    wall = true 
+    blockMovement = true 
+    tickType = Effect Chain { Effect1 } 
+    destroyedEffect = Chain { DestroyedEffect } 
+    Properties 
+}
+End
+
+Def Make3x3Machine(Name, Effect1, Effect2, Effect3, Effect4, Effect5, Effect6, Effect7, Effect8, Effect9, DestroyedEffect, Properties)
+    Make1x1Machine(Name_1, Effect1, { DestroyedEffect DestroyNeighbors(8) }, Properties)
+    Make1x1Machine(Name_2, Effect2, { DestroyedEffect DestroyNeighbors(7) }, Properties)
+    Make1x1Machine(Name_3, Effect3, { DestroyedEffect DestroyNeighbors(6) }, Properties)
+    Make1x1Machine(Name_4, Effect4, { DestroyedEffect DestroyNeighbors(5) }, Properties)
+    Make1x1Machine(Name_5, Effect5, { DestroyedEffect DestroyNeighbors(4) }, Properties)
+    Make1x1Machine(Name_6, Effect6, { DestroyedEffect DestroyNeighbors(3) }, Properties)
+    Make1x1Machine(Name_7, Effect7, { DestroyedEffect DestroyNeighbors(2) }, Properties)
+    Make1x1Machine(Name_8, Effect8, { DestroyedEffect DestroyNeighbors(1) }, Properties)
+    Make1x1Machine(Name_9, Effect9, { DestroyedEffect DestroyNeighbors(0) }, Properties)
+    Machine(Name_Unpacker)
+    {
+        viewId = { MachineViewId(Name_5) } 
+        name = "Name" 
+        layer = CEILING
+        tickType = Effect Chain 
+        { 
+            WORD(unpackers, 0)
+            Area 1 Filter FurnitureType Machine(Name_Unpacker) Chain { WORDInc(unpackers) }
+            Filter And { WORDEqConst(unpackers, 9) Not Health 0 1 } Chain {
+                NthNeighbor(0, i, PlaceFurniture Machine(Name_1))
+                NthNeighbor(1, i, PlaceFurniture Machine(Name_2))
+                NthNeighbor(2, i, PlaceFurniture Machine(Name_3))
+                NthNeighbor(3, i, PlaceFurniture Machine(Name_4))
+                NthNeighbor(4, i, PlaceFurniture Machine(Name_5))
+                NthNeighbor(5, i, PlaceFurniture Machine(Name_6))
+                NthNeighbor(6, i, PlaceFurniture Machine(Name_7))
+                NthNeighbor(7, i, PlaceFurniture Machine(Name_8))
+                NthNeighbor(8, i, PlaceFurniture Machine(Name_9))
+                Area 1 RemoveFurniture Machine(Name_Unpacker)
+            }
+        }
+        canBuildOutsideOfTerritory = true
+        xForgetAfterBuilding = true
+    }
+End
+
+Def InputAvailable(Body)
+  Chain {
+    Set("_O", 0)
+    NthNeighbor(3, i, Filter And { IsBeltItem() BeltType(s) } Set("_O", 1))
+    NthNeighbor(7, i, Filter And { IsBeltItem() BeltType(w) } Set("_O", 1))
+    NthNeighbor(5, i, Filter And { IsBeltItem() BeltType(n) } Set("_O", 1))
+    NthNeighbor(1, i, Filter And { IsBeltItem() BeltType(e) } Set("_O", 1))
+    Filter Get("_O") Chain {
+      Body
+    }
+  }
+End
+
+Def OutputAvailable(Body)
+  Chain {
+    Set("_O", 0)
+    NthNeighbor(3, i, Filter And { Not IsBeltItem() Not FurnitureFlag(BELT_ITEM_INACTIVE) BeltType(n) } Set("_O", 1))
+    NthNeighbor(7, i, Filter And { Not IsBeltItem() Not FurnitureFlag(BELT_ITEM_INACTIVE) BeltType(e) } Set("_O", 1))
+    NthNeighbor(5, i, Filter And { Not IsBeltItem() Not FurnitureFlag(BELT_ITEM_INACTIVE) BeltType(s) } Set("_O", 1))
+    NthNeighbor(1, i, Filter And { Not IsBeltItem() Not FurnitureFlag(BELT_ITEM_INACTIVE) BeltType(w) } Set("_O", 1))
+    Filter Get("_O") Chain {
+      Body
+    }
+  }
+End
+
+Def ForEachInputBelt(Body)
+  Permutate(
+    NthNeighbor(3, i, Filter And { IsBeltItem() BeltType(s) } Body),
+    NthNeighbor(7, i, Filter And { IsBeltItem() BeltType(w) } Body),
+    NthNeighbor(5, i, Filter And { IsBeltItem() BeltType(n) } Body),
+    NthNeighbor(1, i, Filter And { IsBeltItem() BeltType(e) } Body)
+  )
+End
+
+Def ForEachOutputBelt(Body)
+  Permutate(
+    NthNeighbor(3, i, Filter And { Not IsBeltItem() BeltType(n) } Body),
+    NthNeighbor(7, i, Filter And { Not IsBeltItem() BeltType(e) } Body),
+    NthNeighbor(5, i, Filter And { Not IsBeltItem() BeltType(s) } Body),
+    NthNeighbor(1, i, Filter And { Not IsBeltItem() BeltType(w) } Body)
+  )
+End
+
+Def GrabInputFromBelt(Material, Then) 
+    Set("_INPUT", 0)
+    # Look for a loaded belt that's directed towards this machine
+    ForEachInputBelt(Filter And { Not Get("_INPUT") BeltItemType(Material) Not FurnitureFlag(BELT_ITEM_INACTIVE) } Chain {
+        Set("_INPUT", 1)
+        RemoveFurniture BeltItem(Material)
+    })
+    Filter Get("_INPUT") Chain { Then }
+End
+
+Def LoadOutputOntoBelt(Material, Then) 
+    Set("_OUTPUT", 0)
+    # Look for an empty belt that's directed away from this machine
+    ForEachOutputBelt(Filter Not Get("_OUTPUT") Chain {
+        Set("_OUTPUT", 1)
+        PlaceFurniture BeltItem(Material)
+        SetFurnitureFlag(BELT_ITEM_INACTIVE, true)
+    })
+    Filter Get("_OUTPUT") Chain { Then }
+End
+
+Def AssemblerEffect(Input1, Input2, Output)
+Chain {
+    # Goal: grab two different input materials and combine them into a new output material
+    OutputAvailable(Chain {
+        # Make sure we have the necessary inputs at the ready
+        Set("_GOT_MAT1", 0)
+        Set("_GOT_MAT2", 0)
+        ForEachInputBelt(Chain {
+            Filter BeltItemType(Input1) Chain { Set("_GOT_MAT1", 1) }
+            Filter BeltItemType(Input2) Chain { Set("_GOT_MAT2", 1) }
+        })
+        Filter And { Get("_GOT_MAT1") Get("_GOT_MAT2") } Chain {
+        GrabInputFromBelt(Input1,
+            GrabInputFromBelt(Input2, 
+            LoadOutputOntoBelt(Output, {})))
+        }
+    })
+}
+End

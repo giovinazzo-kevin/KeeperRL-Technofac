@@ -1,6 +1,6 @@
 @import "belt"
 @import "belt-item"
-@import "../utils/vanilla-effects-as-macros"
+@import "../utils/utils"
 
 Def BeltsModuleInitializeFurniture()
     MakeFurnitureFlag(BELT_ITEM_INACTIVE, FLOOR, FLOOR, Rgb 255 0 0 255)
