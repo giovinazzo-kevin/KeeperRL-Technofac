@@ -1,0 +1,66 @@
+@import "../types/word"
+
+Def NthNeighbor(Index, Tmp, Then)
+Chain{
+  WORD(Tmp, Index)
+  Area 1 Chain {
+      Filter WORDEqConst(Tmp, 0) Chain { Then }
+      WORDDec(Tmp)
+  }
+}
+End
+
+Def ForEachNeighbor(Tmp, Then)
+Chain{
+  WORD(Tmp, 0)
+  Area 1 Chain {
+      Then
+      WORDInc(Tmp)
+  }
+}
+End
+
+Def ForEachCardinalNeighbor(Tmp, Then)
+    ForEachNeighbor(Tmp, FirstSuccessful {
+        Filter WORDEqConst(Tmp, 1) Chain { Then }
+        Filter WORDEqConst(Tmp, 3) Chain { Then }
+        Filter WORDEqConst(Tmp, 5) Chain { Then }
+        Filter WORDEqConst(Tmp, 7) Chain { Then }
+    })
+End
+
+Def ForEachDiagonalNeighbor(Tmp, Then)
+    ForEachNeighbor(Tmp, FirstSuccessful {
+        Filter WORDEqConst(Tmp, 0) Chain { Then }
+        Filter WORDEqConst(Tmp, 2) Chain { Then }
+        Filter WORDEqConst(Tmp, 6) Chain { Then }
+        Filter WORDEqConst(Tmp, 8) Chain { Then }
+    })
+End
+
+Def Count(Cond, Var) Filter Cond Chain { WORDInc(Var) } End
+
+
+# These macros are defined purely so that the correct number of closing items for the 'Repeat' macro can be generated.
+Def 0(_, _, _, _, _, _, _, _, _, _) End
+Def 1(_, _, _, _, _, _, _, _, _, _) { 0 0 } End
+Def 2(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } End
+Def 3(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } End
+Def 4(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def 5(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def 6(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def 7(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def 8(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def 9(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def A(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def B(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def C(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def D(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def E(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+Def F(_, _, _, _, _, _, _, _, _, _) { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } { 0 0 } End
+
+Def Repeat(Times, Body)
+  CustomArea Chain {
+    Body
+  } { Times(_, _, _, _, _, _, _, _, _, _) }
+End

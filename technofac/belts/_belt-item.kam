@@ -1,0 +1,74 @@
+@import "../../stdlib/control-flow/iterators"
+@import "../../stdlib/hacks/furniture-flags"
+@import "../utils/vanilla-effects-as-macros"
+@import "belt"
+
+Def BeltItem(Material) "TECHNOFAC_BELT_ITEM_Material" End
+Def BeltItemViewId(Material) "belt_Material" End
+
+Def ForAllExistingBeltItems(Action)
+    Action(wood)
+    Action(iron)
+    Action(stone)
+    Action(gold)
+    Action(adamantium)
+    Action(adoxium)
+    Action(infernite)
+End
+
+Def BeltItemType(X) FurnitureType(BeltItem(X)) End
+
+Def IsBeltItem()
+  Or { 
+    ForAllExistingBeltItems(BeltItemType)
+  }
+End
+
+Def PlaceBeltItem(Material, Inactive, Then)
+  # TODO: Add IsMachine() to Or { IsBelt() }
+  Filter And { Not IsBeltItem() Or { IsBelt() } } Chain {
+    PlaceFurniture(BeltItem(Material))
+    # Set the 'inactive' flag on all furniture pieces that will be updated after this one
+    SetFurnitureFlag(BELT_ITEM_INACTIVE, Inactive)
+    Then
+  }
+End
+
+Def MakeBeltItem(Material)
+    BeltItem(Material)
+    {
+        viewId = { BeltItemViewId(Material) }
+        name = "Material"
+        layer = CEILING
+        viewLayer = TORCH2
+        tickType = Effect FirstSuccessful {
+          Filter FurnitureFlag(BELT_ITEM_INACTIVE) Chain {
+            SetFurnitureFlag(BELT_ITEM_INACTIVE, false)
+          }
+          Chain {
+            Set("_MOVED", 0)
+            FirstSuccessful {
+                Filter Or { BeltType(wn) BeltType(n ) } Chain { NthNeighbor(3, i, PlaceBeltItem(Material, false, Set("_MOVED", 1))) }
+                Filter Or { BeltType(ne) BeltType(e ) } Chain { NthNeighbor(7, i, PlaceBeltItem(Material, true, Set("_MOVED", 1))) }
+                Filter Or { BeltType(es) BeltType(s ) } Chain { NthNeighbor(5, i, PlaceBeltItem(Material, true, Set("_MOVED", 1))) }
+                Filter Or { BeltType(sw) BeltType(w ) } Chain { NthNeighbor(1, i, PlaceBeltItem(Material, false, Set("_MOVED", 1))) }
+                # Filter IsMachine() Chain { LoadOutputOntoBelt(MaterialInactive, Write1("_MOVED")) }
+                RemoveFurniture(BeltItem(Material))
+            }
+            Filter Get("_MOVED") Chain {
+              # DrainPower(0x1())
+              RemoveFurniture(BeltItem(Material))
+            }
+          }
+        }
+        destroyedEffect = Chain {
+          SetFurnitureFlag(BELT_ITEM_INACTIVE, false)
+        }
+        xForgetAfterBuilding = true # For debug purposes
+    }
+
+End
+
+Def MakeBeltItemViewId(Material)
+  { viewId = BeltItemViewId(Material) symbol = "*" color = ColorId RED }
+End

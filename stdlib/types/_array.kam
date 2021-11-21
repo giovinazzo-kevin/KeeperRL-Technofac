@@ -1,0 +1,100 @@
+@import "word"
+
+Def ARRAY(Var, DefaultValue)
+Chain {
+  WORD(Var[0], DefaultValue)
+  WORD(Var[1], DefaultValue)
+  WORD(Var[2], DefaultValue)
+  WORD(Var[3], DefaultValue)
+  WORD(Var[4], DefaultValue)
+  WORD(Var[5], DefaultValue)
+  WORD(Var[6], DefaultValue)
+  WORD(Var[7], DefaultValue)
+  WORD(Var[8], DefaultValue)
+  WORD(Var[9], DefaultValue)
+  WORD(Var[10], DefaultValue)
+  WORD(Var[11], DefaultValue)
+  WORD(Var[12], DefaultValue)
+  WORD(Var[13], DefaultValue)
+  WORD(Var[14], DefaultValue)
+  WORD(Var[15], DefaultValue)
+}
+End
+
+Def ARRAY(Var) ARRAY(Var, 0) End
+
+Def ARRAYSet(Var, Index, Value)
+  Switch(Index, 
+    WORD(Var[0], Value),
+    WORD(Var[1], Value),
+    WORD(Var[2], Value),
+    WORD(Var[3], Value),
+    WORD(Var[4], Value),
+    WORD(Var[5], Value),
+    WORD(Var[6], Value),
+    WORD(Var[7], Value),
+    WORD(Var[8], Value),
+    WORD(Var[9], Value),
+    WORD(Var[10], Value),
+    WORD(Var[11], Value),
+    WORD(Var[12], Value),
+    WORD(Var[13], Value),
+    WORD(Var[14], Value),
+    WORD(Var[15], Value)
+  )
+End
+
+Def ARRAYCpyFrom(Var, Index, Value)
+  Switch(Index, 
+    WORDCpy(Value, Var[0]),
+    WORDCpy(Value, Var[1]),
+    WORDCpy(Value, Var[2]),
+    WORDCpy(Value, Var[3]),
+    WORDCpy(Value, Var[4]),
+    WORDCpy(Value, Var[5]),
+    WORDCpy(Value, Var[6]),
+    WORDCpy(Value, Var[7]),
+    WORDCpy(Value, Var[8]),
+    WORDCpy(Value, Var[9]),
+    WORDCpy(Value, Var[10]),
+    WORDCpy(Value, Var[11]),
+    WORDCpy(Value, Var[12]),
+    WORDCpy(Value, Var[13]),
+    WORDCpy(Value, Var[14]),
+    WORDCpy(Value, Var[15])
+  )
+End
+
+
+Def ARRAYCpyTo(Var, Index, Value)
+  Switch(Index, 
+    WORDCpy(Var[0] , Value),
+    WORDCpy(Var[1] , Value),
+    WORDCpy(Var[2] , Value),
+    WORDCpy(Var[3] , Value),
+    WORDCpy(Var[4] , Value),
+    WORDCpy(Var[5] , Value),
+    WORDCpy(Var[6] , Value),
+    WORDCpy(Var[7] , Value),
+    WORDCpy(Var[8] , Value),
+    WORDCpy(Var[9] , Value),
+    WORDCpy(Var[10], Value),
+    WORDCpy(Var[11], Value),
+    WORDCpy(Var[12], Value),
+    WORDCpy(Var[13], Value),
+    WORDCpy(Var[14], Value),
+    WORDCpy(Var[15], Value)
+  )
+End
+
+Def ARRAYSetConst(Var, Index, Value)
+  WORD(Var[Index], Value)
+End
+
+Def ARRAYCpyFromConst(Var, Index, Value)
+  WORDCpy(Value, Var[Index])
+End
+
+Def ARRAYCpyToConst(Var, Index, Value)
+  WORDCpy(Var[Index], Value)
+End

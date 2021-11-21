@@ -1,0 +1,28 @@
+# { viewId = "wood_slag" symbol = "F" color = ColorId GRAY }
+# { viewId = "iron_slag" symbol = "F" color = ColorId GRAY }
+# { viewId = "gold_slag" symbol = "F" color = ColorId GRAY }
+# { viewId = "stone_slag" symbol = "F" color = ColorId GRAY }
+# { viewId = "adamantium_slag" symbol = "F" color = ColorId GRAY }
+# { viewId = "adoxium_slag" symbol = "F" color = ColorId GRAY }
+# { viewId = "infernite_slag" symbol = "F" color = ColorId GRAY }
+# 
+# { viewId = "machine" symbol = "F" color = ColorId GRAY }
+# 
+# { viewId = "gkr00" symbol = "F" color = ColorId GRAY }
+# { viewId = "gkr01" symbol = "F" color = ColorId GRAY }
+# { viewId = "gkr10" symbol = "F" color = ColorId GRAY }
+# { viewId = "gkr11" symbol = "F" color = ColorId GRAY }
+# 
+# 
+# { viewId = "solarpanel" symbol = "F" color = ColorId GRAY }
+# { viewId = "snta_capsule_maker" symbol = "F" color = ColorId GRAY animated = true }
+# 
+# 
+# { viewId = "snta_belt_we_empty" symbol = "F" color = ColorId GRAY }
+# { viewId = "snta_belt_ew_empty" symbol = "F" color = ColorId GRAY }
+# { viewId = "snta_belt_ns_empty" symbol = "F" color = ColorId GRAY }
+# { viewId = "snta_belt_sn_empty" symbol = "F" color = ColorId GRAY }
+# 
+# { viewId = "snta_conveyer_compressor" symbol = "F" color = ColorId GRAY animated = true }
+# { viewId = "snta_drill" symbol = "F" color = ColorId GRAY animated = true }
+# { viewId = "snta_furnace" symbol = "F" color = ColorId GRAY}

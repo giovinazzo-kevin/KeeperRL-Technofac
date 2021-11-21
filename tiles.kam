@@ -1,0 +1,4 @@
+@import "technofac/belts/main"
+
+# Creates all necessary view ids for the belts submodule to work correctly.
+BeltsModuleInitializeTiles()

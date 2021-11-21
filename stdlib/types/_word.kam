@@ -1,0 +1,84 @@
+@import "../binary/words"
+
+Def WORD(Var, HexDigit1)
+    HexDigit1(Var, 1)
+End
+
+Def WORD(Var) WORD(Var, 0) End
+
+Def WORDCpy(A, B)
+    WORD(B)
+    WCpy(A, B, 1)
+End
+
+Def WORDRandom(Var)
+    WRandom(Var, 1)
+End
+
+Def WORDInc(Var, Overflow)
+    WInc(Var, 1, Overflow)
+End
+
+Def WORDInc(Var)
+    WORDInc(Var, {})
+End
+
+Def WORDDec(Var, Underflow)
+    WDec(Var, 1, Underflow)
+End
+
+Def WORDDec(Var)
+    WORDDec(Var, {})
+End
+
+Def WORDAdd(A, B)
+    SetFlag "_carry" false
+    WAdd(A, B, 1, {})
+End
+
+Def WORDSub(A, B)
+    SetFlag "_borrow" false
+    WSub(A, B, 1, {})
+End
+
+Def WORDEq(A, B)
+    WEq(A, B, 1)
+End
+
+Def WORDEqConst(A, K)
+    WEqConst(A, K, 1)
+End
+
+Def WORDGt(A, B)
+    WGt(A, B, 1)
+End
+
+Def WORDGte(A, B)
+    WGte(A, B, 1)
+End
+
+Def WORDLt(A, B)
+    WLt(A, B, 1)
+End
+
+Def WORDLte(A, B)
+    WLte(A, B, 1)
+End
+
+Def WORDLShift(A, Cont)
+    WLShift(A, 1, "_tmp")
+    Cont
+End
+
+Def WORDRShift(A, Cont)
+    WRShift(A, 1, "_tmp")
+    Cont
+End
+
+Def WORDLShift(A)
+    WORDLShift(A, BCpy("_tmp", WNthBit(A, 1, 1)))
+End
+
+Def WORDRShift(A)
+    WORDRShift(A, BCpy("_tmp", WNthBit(A, 1, 4)))
+End

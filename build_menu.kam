@@ -1,0 +1,6 @@
+@import "technofac/belts/main"
+
+"crafting" modify append {
+    { Furniture {{ ForAllExistingBelts(Belt) } "WOOD" 0 } "Conveyor belt" "Belts" }
+    { Furniture {{ ForAllExistingBeltItems(BeltItem) } "WOOD" 0 } "Belt payload" "Belt Items (debug)" }
+}

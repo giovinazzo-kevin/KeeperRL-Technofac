@@ -1,0 +1,6 @@
+Def Identity(X) X End
+Def Quoted(X) "X" End
+
+Def FurnitureType(X) FurnitureType X End
+Def PlaceFurniture(X) PlaceFurniture X End
+Def RemoveFurniture(X) RemoveFurniture X End

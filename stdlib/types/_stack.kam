@@ -1,0 +1,32 @@
+@import "word"
+
+Def STACK(Var, DefaultValue)
+Chain {
+    WORD(Var*SP, 0)
+    ARRAY(Var, DefaultValue)
+}
+End
+
+Def STACK(Var) STACK(Var, 0) End
+
+Def STACKPushBase(Var, Value, Method, StackOverflow)
+    Chain {
+        Method(Var, Var*SP, Value)
+        WORDInc(Var*SP, StackOverflow)
+    }
+End
+
+Def STACKPush(Var, Value, StackOverflow)
+    STACKPushBase(Var, Value, ARRAYCpyFrom, StackOverflow)
+End
+
+Def STACKPushConst(Var, Value, StackOverflow)
+    STACKPushBase(Var, Value, ARRAYSet, StackOverflow)
+End
+
+Def STACKPop(Var, Into, StackUnderflow)
+    Chain {
+        WORDDec(Var*SP, StackUnderflow)
+        ARRAYCpyTo(Var, Var*SP, Into)
+    }
+End

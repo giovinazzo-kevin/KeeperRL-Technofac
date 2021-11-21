@@ -1,0 +1,176 @@
+@import "binary"
+
+Def WNthBit(Var, Word, Bit) NthBit(Var, Word_Bit) End
+
+Def W(Var, Word, A, B, C, D)
+	Set(WNthBit(Var, Word, 1), D)
+	Set(WNthBit(Var, Word, 2), C)
+	Set(WNthBit(Var, Word, 3), B)
+	Set(WNthBit(Var, Word, 4), A) 
+End
+
+Def G(Var, Word, A, B, C, D)
+And {
+	D(_,_,_,_) Get(WNthBit(Var, Word, 1))
+	C(_,_,_,_) Get(WNthBit(Var, Word, 2))
+	B(_,_,_,_) Get(WNthBit(Var, Word, 3))
+	A(_,_,_,_) Get(WNthBit(Var, Word, 4)) 
+}
+End
+
+# ASSIGNMENT CONSTRUCTORS
+
+Def 0(Var, Word) W(Var, Word, 0, 0, 0, 0) End
+Def 1(Var, Word) W(Var, Word, 0, 0, 0, 1) End
+Def 2(Var, Word) W(Var, Word, 0, 0, 1, 0) End
+Def 3(Var, Word) W(Var, Word, 0, 0, 1, 1) End
+Def 4(Var, Word) W(Var, Word, 0, 1, 0, 0) End
+Def 5(Var, Word) W(Var, Word, 0, 1, 0, 1) End
+Def 6(Var, Word) W(Var, Word, 0, 1, 1, 0) End
+Def 7(Var, Word) W(Var, Word, 0, 1, 1, 1) End
+Def 8(Var, Word) W(Var, Word, 1, 0, 0, 0) End
+Def 9(Var, Word) W(Var, Word, 1, 0, 0, 1) End
+Def A(Var, Word) W(Var, Word, 1, 0, 1, 0) End
+Def B(Var, Word) W(Var, Word, 1, 0, 1, 1) End
+Def C(Var, Word) W(Var, Word, 1, 1, 0, 0) End
+Def D(Var, Word) W(Var, Word, 1, 1, 0, 1) End
+Def E(Var, Word) W(Var, Word, 1, 1, 1, 0) End
+Def F(Var, Word) W(Var, Word, 1, 1, 1, 1) End
+
+# COMPARISON CONSTRUCTORS
+
+Def 0(_, _, _, _) Not End
+Def 1(_, _, _, _) End
+
+Def 0(Var, Word, _) G(Var, Word, 0, 0, 0, 0) End
+Def 1(Var, Word, _) G(Var, Word, 0, 0, 0, 1) End
+Def 2(Var, Word, _) G(Var, Word, 0, 0, 1, 0) End
+Def 3(Var, Word, _) G(Var, Word, 0, 0, 1, 1) End
+Def 4(Var, Word, _) G(Var, Word, 0, 1, 0, 0) End
+Def 5(Var, Word, _) G(Var, Word, 0, 1, 0, 1) End
+Def 6(Var, Word, _) G(Var, Word, 0, 1, 1, 0) End
+Def 7(Var, Word, _) G(Var, Word, 0, 1, 1, 1) End
+Def 8(Var, Word, _) G(Var, Word, 1, 0, 0, 0) End
+Def 9(Var, Word, _) G(Var, Word, 1, 0, 0, 1) End
+Def A(Var, Word, _) G(Var, Word, 1, 0, 1, 0) End
+Def B(Var, Word, _) G(Var, Word, 1, 0, 1, 1) End
+Def C(Var, Word, _) G(Var, Word, 1, 1, 0, 0) End
+Def D(Var, Word, _) G(Var, Word, 1, 1, 0, 1) End
+Def E(Var, Word, _) G(Var, Word, 1, 1, 1, 0) End
+Def F(Var, Word, _) G(Var, Word, 1, 1, 1, 1) End
+
+# CHAINABLE WORD FUNCTIONS
+
+Def WRandom(Var, Word)
+    BRandom(WNthBit(Var, Word, 1))
+    BRandom(WNthBit(Var, Word, 2))
+    BRandom(WNthBit(Var, Word, 3))
+    BRandom(WNthBit(Var, Word, 4))
+End
+
+
+Def WInc(Var, Word, Cont)
+    BInc(WNthBit(Var, Word, 1),
+        BInc(WNthBit(Var, Word, 2),
+            BInc(WNthBit(Var, Word, 3),
+                BInc(WNthBit(Var, Word, 4),
+                    Cont ))))
+End
+
+Def WDec(Var, Word, Cont)
+    BDec(WNthBit(Var, Word, 1),
+        BDec(WNthBit(Var, Word, 2),
+            BDec(WNthBit(Var, Word, 3),
+                BDec(WNthBit(Var, Word, 4),
+                    Cont ))))
+End
+
+Def WAdd(A, B, Word, Cont)
+Chain {
+    BAdd(WNthBit(A, Word, 1), WNthBit(B, Word, 1), 
+        BAdd(WNthBit(A, Word, 2), WNthBit(B, Word, 2), 
+            BAdd(WNthBit(A, Word, 3), WNthBit(B, Word, 3), 
+                BAdd(WNthBit(A, Word, 4), WNthBit(B, Word, 4),
+                    Cont ))))
+}
+End
+
+Def WSub(A, B, Word, Cont)
+Chain {
+    BSub(WNthBit(A, Word, 1), WNthBit(B, Word, 1), 
+        BSub(WNthBit(A, Word, 2), WNthBit(B, Word, 2), 
+            BSub(WNthBit(A, Word, 3), WNthBit(B, Word, 3), 
+                BSub(WNthBit(A, Word, 4), WNthBit(B, Word, 4),
+                    Cont ))))
+}
+End
+
+Def WCpy(A, B, Word)
+    BCpy(WNthBit(A, Word, 1), WNthBit(B, Word, 1))
+    BCpy(WNthBit(A, Word, 2), WNthBit(B, Word, 2))
+    BCpy(WNthBit(A, Word, 3), WNthBit(B, Word, 3))
+    BCpy(WNthBit(A, Word, 4), WNthBit(B, Word, 4))
+End
+
+Def WEq(A, B, Word)
+    And {
+        BEq(WNthBit(A, Word, 1), WNthBit(B, Word, 1))
+        BEq(WNthBit(A, Word, 2), WNthBit(B, Word, 2))
+        BEq(WNthBit(A, Word, 3), WNthBit(B, Word, 3))
+        BEq(WNthBit(A, Word, 4), WNthBit(B, Word, 4))
+    }
+End
+
+Def WEqConst(A, K, Word)
+    K(A, Word, _)
+End
+
+Def WGt(A, B, Word)
+    Or { 
+        BGt(WNthBit(A, Word, 1), WNthBit(B, Word, 1))
+        BGt(WNthBit(A, Word, 2), WNthBit(B, Word, 2))
+        BGt(WNthBit(A, Word, 3), WNthBit(B, Word, 3))
+        BGt(WNthBit(A, Word, 4), WNthBit(B, Word, 4))
+    }
+End
+
+Def WGte(A, B, Word)
+    Or { 
+        BGte(WNthBit(A, Word, 1), WNthBit(B, Word, 1))
+        BGte(WNthBit(A, Word, 2), WNthBit(B, Word, 2))
+        BGte(WNthBit(A, Word, 3), WNthBit(B, Word, 3))
+        BGte(WNthBit(A, Word, 4), WNthBit(B, Word, 4))
+    }
+End
+
+Def WLt(A, B, Word)
+    Or { 
+        BLt(WNthBit(A, Word, 1), WNthBit(B, Word, 1))
+        BLt(WNthBit(A, Word, 2), WNthBit(B, Word, 2))
+        BLt(WNthBit(A, Word, 3), WNthBit(B, Word, 3))
+        BLt(WNthBit(A, Word, 4), WNthBit(B, Word, 4))
+    }
+End
+
+Def WLte(A, B, Word)
+    Or { 
+        BLte(WNthBit(A, Word, 1), WNthBit(B, Word, 1))
+        BLte(WNthBit(A, Word, 2), WNthBit(B, Word, 2))
+        BLte(WNthBit(A, Word, 3), WNthBit(B, Word, 3))
+        BLte(WNthBit(A, Word, 4), WNthBit(B, Word, 4))
+    }
+End
+
+Def WLShift(A, Word, Tmp)
+    BCpy(WNthBit(A, Word, 4), Tmp)
+    BCpy(WNthBit(A, Word, 3), WNthBit(A, Word, 4))
+    BCpy(WNthBit(A, Word, 2), WNthBit(A, Word, 3))
+    BCpy(WNthBit(A, Word, 1), WNthBit(A, Word, 2))
+End
+
+Def WRShift(A, Word, Tmp)
+    BCpy(WNthBit(A, Word, 1), Tmp)
+    BCpy(WNthBit(A, Word, 2), WNthBit(A, Word, 1))
+    BCpy(WNthBit(A, Word, 3), WNthBit(A, Word, 2))
+    BCpy(WNthBit(A, Word, 4), WNthBit(A, Word, 3))
+End

@@ -1,0 +1,45 @@
+@import "../utils/vanilla-effects-as-macros"
+
+# Guarantees that each available direction is chosen randomly without altering throughput when there's fewer than 4 available directions
+Def Permutate(A, B, C, D)
+  ChooseRandom {
+    FirstSuccessful { A B C D }
+    FirstSuccessful { B C D A }
+    FirstSuccessful { C D A B }
+    FirstSuccessful { D A B C }
+  }
+End
+
+Def Belt(Direction) "TECHNOFAC_BASIC_BELT_Direction" End
+Def BeltViewId(Direction) "snta_belt_Direction" End
+
+Def ForAllExistingBelts(Action)
+  Action(n)
+  Action(ne)
+  Action(e)
+  Action(es)
+  Action(s)
+  Action(sw)
+  Action(w)
+  Action(wn)
+End
+
+Def BeltType(X) FurnitureType(Belt(X)) End
+
+Def IsBelt() 
+Or {
+  ForAllExistingBelts(BeltType)
+}
+End
+
+Def MakeBelt(Direction)
+    Belt(Direction)
+    {
+        viewId = { BeltViewId(Direction) }
+        name = "conveyor belt (Direction)"
+    }
+End
+
+Def MakeBeltViewId(Direction)
+  { viewId = BeltViewId(Direction) symbol = "F" color = ColorId GRAY animated = true }
+End

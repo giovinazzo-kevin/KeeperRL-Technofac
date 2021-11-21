@@ -1,0 +1,43 @@
+@import "../types/word"
+
+Def MakeLock(Name, Layer, ViewLayer, Color)
+    "EFFECTS#_LOCK_Name"
+    {
+        name = "Ownership lock (Name)"
+        viewId = { "guard_zone" Color }
+        layer = Layer
+        viewLayer = ViewLayer
+        xForgetAfterBuilding = true
+    }
+End
+
+Def AcquireLock(Name, MaxOwners, OnAcquire, Finally)
+    FirstSuccessful {
+        Filter And { Not FurnitureType "EFFECTS#_LOCK_Name" Not WORDEqConst(_L_Name, MaxOwners) } Chain { 
+            WORDInc(_L_Name)
+            PlaceFurniture "EFFECTS#_LOCK_Name"
+            OnAcquire
+            Finally
+        }
+        Filter FurnitureType "EFFECTS#_LOCK_Name" Chain { Finally }
+    }
+End
+
+Def AcquireLock(Name, MaxOwners, Body)
+    AcquireLock(Name, MaxOwners, {}, Body)
+End
+
+Def AcquireLock(Name, Body)
+    AcquireLock(Name, 1, {}, Body)
+End
+
+Def OwnsLock(Name)
+    And { FurnitureType "EFFECTS#_LOCK_Name" Not WORDEqConst(_L_Name, 0)  }
+End
+
+Def ReleaseLock(Name) 
+    Filter FurnitureType "EFFECTS#_LOCK_Name" Chain { 
+        WORDDec(_L_Name)
+        RemoveFurniture "EFFECTS#_LOCK_Name"
+    }
+End
