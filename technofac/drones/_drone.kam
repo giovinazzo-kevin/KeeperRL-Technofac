@@ -1,0 +1,40 @@
+@import "../utils/utils"
+
+Def Drone(Type) "TECHNOFAC_DRONE_Type" End
+Def DroneViewId(Type) "snta_drone_Type" End
+
+Def ForAllExistingDrones(Action)
+  Action(explosive)
+End
+
+Def DroneType(X) CreatureId(Drone(X)) End
+
+Def IsDrone() 
+Or {
+  ForAllExistingDrones(DroneType)
+}
+End
+
+Def MakeDrone(Type, Spells)
+    Drone(Type)
+    {
+        viewId = { DroneViewId(Type) }
+        name = { name = "Type drone" }
+        attr = {
+            DAMAGE 20
+            DEFENSE 20
+            SPELL_DAMAGE 20
+            RANGED_DAMAGE 20
+        }
+        body = {
+            type = NonHumanoid SMALL
+        }
+        spells = Spells
+        chatReactionFriendly = "beeps"
+        chatReactionHostile = "*beeps menacingly*"
+    }
+End
+
+Def MakeDroneViewId(Type)
+  { viewId = DroneViewId(Type) symbol = "D" color = ColorId GRAY animated = false }
+End

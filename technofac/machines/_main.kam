@@ -1,4 +1,5 @@
 @import "machine"
+@import "../drones/drone"
 
 Def MachinesModuleInitializeFurniture()
     "TECHNOFAC_WALL_PLACEHOLDER" { name = "placeholder" viewId = { "tile_gas" Rgb 0 0 0 0 } xForgetAfterBuilding = true }
@@ -22,6 +23,20 @@ Def MachinesModuleInitializeFurniture()
             }
             Filter Get("_CUT") Chain { LoadOutputOntoBelt(wood, {}) EmitGas "BLACK_SMOKE" 1 }
         )
+    }, {},
+        lightEmission = 5.0
+        canBuildOutsideOfTerritory = true
+    )
+
+    Make1x1Machine(drone_assembler, {
+        AssemblerEffect(iron, infernite, drone_explosive)
+    }, {},
+        lightEmission = 5.0
+        canBuildOutsideOfTerritory = true
+    )
+
+    Make1x1Machine(drone_spawner, {
+        GolemEffect(drone_explosive, Drone(explosive))
     }, {},
         lightEmission = 5.0
         canBuildOutsideOfTerritory = true

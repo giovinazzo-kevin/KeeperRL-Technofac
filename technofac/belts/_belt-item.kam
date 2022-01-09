@@ -8,6 +8,7 @@ Def BeltItem(Material) "TECHNOFAC_BELT_ITEM_Material" End
 Def BeltItemViewId(Material) "belt_Material" End
 
 Def ForAllExistingBeltItems(Action)
+    # Raw resources
     Action(wood)
     Action(iron)
     Action(stone)
@@ -15,6 +16,8 @@ Def ForAllExistingBeltItems(Action)
     Action(adamantium)
     Action(adoxium)
     Action(infernite)
+    # Assembled items
+    Action(drone_explosive)
 End
 
 Def BeltItemType(X) FurnitureType(BeltItem(X)) End
@@ -49,12 +52,15 @@ Def MakeBeltItem(Material)
           Chain {
             Set("_MOVED", 0)
             FirstSuccessful {
-                Filter Or { BeltType(wn) BeltType(n ) } Chain { NthNeighbor(3, i, PlaceBeltItem(Material, false, Set("_MOVED", 1))) }
-                Filter Or { BeltType(ne) BeltType(e ) } Chain { NthNeighbor(7, i, PlaceBeltItem(Material, true, Set("_MOVED", 1))) }
-                Filter Or { BeltType(es) BeltType(s ) } Chain { NthNeighbor(5, i, PlaceBeltItem(Material, true, Set("_MOVED", 1))) }
-                Filter Or { BeltType(sw) BeltType(w ) } Chain { NthNeighbor(1, i, PlaceBeltItem(Material, false, Set("_MOVED", 1))) }
+                Filter Or { BeltType(wn) BeltType(n ) } Chain { 
+                  NthNeighbor(3, i, Filter IsBelt() PlaceBeltItem(Material, false, Set("_MOVED", 1))) }
+                Filter Or { BeltType(ne) BeltType(e ) } Chain { 
+                  NthNeighbor(7, i, Filter IsBelt() PlaceBeltItem(Material, true, Set("_MOVED", 1))) }
+                Filter Or { BeltType(es) BeltType(s ) } Chain { 
+                  NthNeighbor(5, i, Filter IsBelt() PlaceBeltItem(Material, true, Set("_MOVED", 1))) }
+                Filter Or { BeltType(sw) BeltType(w ) } Chain { 
+                  NthNeighbor(1, i, Filter IsBelt() PlaceBeltItem(Material, false, Set("_MOVED", 1))) }
                 Filter IsMachine() Chain { LoadOutputOntoBelt(Material, Set("_MOVED", 1)) }
-                RemoveFurniture(BeltItem(Material))
             }
             Filter Get("_MOVED") Chain {
               # DrainPower(0x1())

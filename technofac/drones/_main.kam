@@ -1,0 +1,11 @@
+@import "drone"
+@import "../utils/utils"
+
+Def DronesModuleInitializeCreatures()
+    # A drone whose only purpose is to lob itself at enemies and explode in a fireball of death
+    MakeDrone(explosive, {"explode"})
+End
+
+Def DronesModuleInitializeTiles()
+    ForAllExistingDrones(MakeDroneViewId)
+End

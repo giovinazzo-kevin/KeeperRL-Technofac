@@ -1,0 +1,14 @@
+"explode" {
+  symbol = "💥"
+  effect = Chain {
+    Area 3 Chain {
+        Fire
+        Damage SPELL_DAMAGE SPELL
+        Blast
+    }
+    Suicide TURN_INVISIBLE
+  }
+  cooldown = 0
+  sound = SPELL_BLAST
+  fx = {FIREBALL}
+}

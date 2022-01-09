@@ -1,5 +1,7 @@
 @import "technofac/belts/main"
 @import "technofac/machines/main"
+@import "technofac/drones/main"
 
 BeltsModuleInitializeTiles()
 MachinesModuleInitializeTiles()
+DronesModuleInitializeTiles()

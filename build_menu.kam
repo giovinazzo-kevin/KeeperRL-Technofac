@@ -6,4 +6,6 @@
     { Furniture {{ ForAllExistingBeltItems(BeltItem) } "WOOD" 0 } "Belt payload" "Belt Items (debug)" }
     { Furniture {{ Machine(flatdrill_Unpacker) } "WOOD" 0 } "Drill" "Machines" }
     { Furniture {{ Machine(lumberjack) } "WOOD" 0 } "Lumberjack" "Machines" }
+    { Furniture {{ Machine(drone_assembler) } "WOOD" 0 } "Drone assembler" "Machines" }
+    { Furniture {{ Machine(drone_spawner) } "WOOD" 0 } "Drone spawner" "Machines" }
 }
